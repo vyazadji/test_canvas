@@ -1,6 +1,7 @@
 import ViewClass from './View'
 import ComponentClass from './Component'
 import ComponentUIClass from './ComponentUI'
+import DateSourceClass from './DataSource'
 
 interface App {
   appElement: HTMLElement
@@ -16,14 +17,17 @@ class Application implements App {
   start() {
     const view = new ViewClass(400, 400)
 
-    // const dataSource1 = new DateSource()
     const componentHtmlUi = new ComponentUIClass()
     const component1 = new ComponentClass(componentHtmlUi)
-    // component1.addSource(dataSource1)
+
+    const dataSource1 = new DateSourceClass()
+    component1.addSource(dataSource1)
 
     view.addComponent(component1)
 
-    this.appElement.innerHTML = view.start()
+    this.appElement.appendChild(view.start())
+
+    dataSource1.start()
   }
 }
 

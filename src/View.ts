@@ -1,28 +1,51 @@
-// import { View } from './type'
 import type { Component } from './type'
 
 class ViewDashboard {
   // appElement: HTMLElement
   height: number
   width: number
-  div: string
+  domElement: HTMLElement
   components: Component[]
 
   constructor(height: number, width: number) {
     this.components = []
     this.height = height
     this.width = width
-    this.div = `<div>View</div><div style="height: ${height}px; width: ${width}px; border: 1px solid red">`
+
+    const domElement = document.createElement('div')
+    domElement.style.border = '1px solid red'
+    domElement.style.height = height + 'px'
+    domElement.style.width = width + 'px'
+
+    this.domElement = domElement
   }
 
   addComponent(component: Component) {
     this.components.push(component)
-    // this.div = this.div + component.draw()
+  }
+
+  private getComponentWrapper(): HTMLElement {
+    const componentDomWrapper = document.createElement('div')
+
+    // Add View Wrapper for Component in View
+    // componentDomWrapper.textContent = '[init wrapper component ...]'
+
+    componentDomWrapper.style.border = '1px solid green'
+    componentDomWrapper.style.height = '30px'
+    componentDomWrapper.style.width = '30px'
+
+    return componentDomWrapper
   }
 
   start() {
-    this.div = this.div + this.components[0].draw(1)
-    return this.div + '</div>'
+    for (let index = 0; index < this.components.length; index++) {
+      const componentElement = this.components[index].getUIElement()
+      const wrapperElement = this.getComponentWrapper()
+      wrapperElement.appendChild(componentElement)
+      this.domElement.appendChild(wrapperElement)
+    }
+
+    return this.domElement
   }
 }
 

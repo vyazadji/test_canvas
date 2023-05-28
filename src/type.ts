@@ -14,11 +14,24 @@ export interface Component {
   componentUI: ComponentUI
   type: string // describe type of component
   // addSource: (source: Source) => void
-  draw: (data: number) => string
+  getUIElement: () => HTMLElement
+  draw: (data: number) => void
 }
 
 // UI of component
 export interface ComponentUI {
   type: string
-  draw: (data: number) => string //
+  draw: (data: number) => void //
+  getElement: () => HTMLElement
+}
+
+// Data Source
+export interface DataSource {
+  start: () => void
+  addListener: (listener: DataSourceListener) => void
+}
+
+export interface DataSourceListener {
+  addSource: (dataSource: DataSource) => void
+  onDataChange: (data: number) => void
 }

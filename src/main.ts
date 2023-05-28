@@ -8,5 +8,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `
 
-const app1 = new app(document.querySelector<HTMLDivElement>('#app1')!)
-app1.start()
+document.addEventListener('DOMContentLoaded', (_event) => {
+  const app1 = new app(document.querySelector<HTMLDivElement>('#app1')!)
+  app1.start()
+})
