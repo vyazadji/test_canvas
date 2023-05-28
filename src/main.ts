@@ -1,13 +1,12 @@
 import './style.css'
-import setupCounter from './counter.ts'
+import app from './app.ts'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <h1>Test component decomposition</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
+    <div id="view1"/>
   </div>
 `
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const app1 = new app(document.querySelector<HTMLDivElement>('#view1')!)
+app1.start()
