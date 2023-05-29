@@ -26,10 +26,6 @@ class ViewDashboard {
 
   private getComponentWrapper(): HTMLElement {
     const componentDomWrapper = document.createElement('div')
-
-    // Add View Wrapper for Component in View
-    // componentDomWrapper.textContent = '[init wrapper component ...]'
-
     componentDomWrapper.style.border = '1px solid green'
     componentDomWrapper.style.height = '30px'
     componentDomWrapper.style.width = '30px'
