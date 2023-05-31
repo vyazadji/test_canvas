@@ -1,20 +1,15 @@
 import { ComponentUI } from './type'
 import { fabric } from 'fabric'
 
-// type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>
-
-// UI Canvas implementation of component
+// UI Fabric Canvas implementation of component
 class ComponentUICanvasFabricClass implements ComponentUI {
-  type: string
-  private container: HTMLDivElement
+  private containerEl: HTMLDivElement
   private canvas: fabric.StaticCanvas
 
   constructor(serializedCanvas: object) {
-    this.type = 'number'
-
-    this.container = document.createElement('div')
+    this.containerEl = document.createElement('div')
     const canvasEl = document.createElement('canvas')
-    this.container.appendChild(canvasEl)
+    this.containerEl.appendChild(canvasEl)
 
     this.canvas = new fabric.StaticCanvas(canvasEl)
     this.canvas.loadFromJSON(serializedCanvas, () => {
@@ -27,7 +22,7 @@ class ComponentUICanvasFabricClass implements ComponentUI {
   }
 
   getElement(): HTMLDivElement {
-    return this.container
+    return this.containerEl
   }
 }
 

@@ -1,7 +1,7 @@
 import { fabric } from 'fabric'
 
 class CanvasEditor {
-  canvas?: fabric
+  canvas: fabric.Canvas
 
   constructor() {
     this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: 200, height: 200 })
@@ -9,14 +9,15 @@ class CanvasEditor {
     this.addMenuButtons()
   }
 
-  onAddElement(_serializedCanvas: object) {
-    alert('pls specify onAddElement')
+  onAddElement(serializedCanvas: object) {
+    console.log('onAddElement', serializedCanvas)
+    alert('need to specify onAddElement')
   }
 
   addMenuButtons() {
     // add line
-    const addRectButton = document.getElementById('addRectButton')!
-    addRectButton.onclick = (_e: MouseEvent) => {
+    const addRect = document.getElementById('addRectButton') as HTMLButtonElement
+    addRect.onclick = () => {
       const rect = new fabric.Rect({
         top: 50,
         left: 50,
@@ -29,8 +30,8 @@ class CanvasEditor {
     }
 
     // add text
-    const addTextButton = document.getElementById('addText')!
-    addTextButton.onclick = (_e: MouseEvent) => {
+    const addText = document.getElementById('addText') as HTMLButtonElement
+    addText.onclick = () => {
       const text = new fabric.Text('28', {
         top: 0,
         left: 0,
@@ -40,16 +41,18 @@ class CanvasEditor {
     }
 
     // Remove selected object on button click
-    document.getElementById('removeElement')!.onclick = () => {
+    const remove = document.getElementById('removeElement') as HTMLButtonElement
+    remove.onclick = () => {
       const activeObject = this.canvas.getActiveObject()
 
       if (activeObject) {
-        this.canvas.remove(activeObject)
+        this.canvas?.remove(activeObject)
       }
     }
 
     // Remove selected object on button click
-    document.getElementById('saveComponent')!.onclick = () => {
+    const addComponent = document.getElementById('saveComponent') as HTMLButtonElement
+    addComponent.onclick = () => {
       const serializedCanvas = this.canvas.toObject()
 
       console.log('add Component, serializedCanvas=>', serializedCanvas)

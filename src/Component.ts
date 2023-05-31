@@ -1,12 +1,9 @@
 import { Component, ComponentUI, DataSourceListener, DataSource } from './type'
 
 class ComponentClass implements Component, DataSourceListener {
-  type: string
-  // data: number
   componentUI: ComponentUI
 
   constructor(componentUI: ComponentUI) {
-    this.type = 'number'
     this.componentUI = componentUI
   }
 

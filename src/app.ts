@@ -1,6 +1,6 @@
 import ViewClass from './View'
 import ComponentClass from './Component'
-import ComponentUIClass from './ComponentUI'
+import ComponentUIHtmlClass from './ComponentUIHtml'
 import ComponentUICanvasClass from './ComponentUICanvas'
 import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 import DateSourceClass from './DataSource'
@@ -22,7 +22,7 @@ class Application implements App {
     const view = new ViewClass(800, 800)
 
     // component1
-    const componentHtmlUi = new ComponentUIClass()
+    const componentHtmlUi = new ComponentUIHtmlClass()
     const component1 = new ComponentClass(componentHtmlUi)
 
     const dataSource1 = new DateSourceClass()
@@ -45,7 +45,7 @@ class Application implements App {
       console.log('test 11', serializedCanvas)
       const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
       const component3 = new ComponentClass(componentFabricCanvas)
-      // const component3.addSource(dataSource2)
+      component3.addSource(dataSource2)
       view.addComponent(component3)
       view.start()
     }

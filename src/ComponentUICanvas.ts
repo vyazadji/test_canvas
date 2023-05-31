@@ -2,36 +2,33 @@ import { ComponentUI } from './type'
 
 // UI Canvas implementation of component
 class ComponentUICanvasClass implements ComponentUI {
-  type: string
-  private canvas: HTMLCanvasElement
+  private canvasEl: HTMLCanvasElement
   private context: CanvasRenderingContext2D
-  private container: HTMLDivElement
+  private containerEl: HTMLDivElement
 
   constructor() {
-    this.type = 'number'
-
-    this.container = document.createElement('div')
-    this.canvas = document.createElement('canvas')
-    this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
+    this.containerEl = document.createElement('div')
+    this.canvasEl = document.createElement('canvas')
+    this.context = this.canvasEl.getContext('2d') as CanvasRenderingContext2D
 
     // Set canvas size
-    this.canvas.width = 30 // adjust size as needed
-    this.canvas.height = 30 // adjust size as needed
+    this.canvasEl.width = 30 // adjust size as needed
+    this.canvasEl.height = 30 // adjust size as needed
 
     // Draw initial number
     // this.draw(number)
 
     // Append canvas to container div
-    this.container.appendChild(this.canvas)
+    this.containerEl.appendChild(this.canvasEl)
   }
 
   draw(number: number) {
     // Clear the canvas
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.context.clearRect(0, 0, this.canvasEl.width, this.canvasEl.height)
 
     // Draw yellow background
     this.context.fillStyle = 'yellow'
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+    this.context.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height)
 
     // Draw the number
     this.context.fillStyle = 'black'
@@ -40,7 +37,7 @@ class ComponentUICanvasClass implements ComponentUI {
   }
 
   getElement(): HTMLDivElement {
-    return this.container
+    return this.containerEl
   }
 }
 

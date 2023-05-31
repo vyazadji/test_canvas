@@ -1,10 +1,9 @@
 import type { Component } from './type'
 
 class ViewDashboard {
-  // appElement: HTMLElement
   height: number
   width: number
-  domElement: HTMLElement
+  containerEl: HTMLElement
   components: Component[]
 
   constructor(height: number, width: number) {
@@ -17,7 +16,7 @@ class ViewDashboard {
     domElement.style.height = height + 'px'
     domElement.style.width = width + 'px'
 
-    this.domElement = domElement
+    this.containerEl = domElement
   }
 
   addComponent(component: Component) {
@@ -34,15 +33,15 @@ class ViewDashboard {
   }
 
   start() {
-    this.domElement.innerHTML = ''
+    this.containerEl.innerHTML = ''
     for (let index = 0; index < this.components.length; index++) {
       const componentElement = this.components[index].getUIElement()
-      const wrapperElement = this.getComponentWrapper()
-      wrapperElement.appendChild(componentElement)
-      this.domElement.appendChild(wrapperElement)
+      const wrapperEl = this.getComponentWrapper()
+      wrapperEl.appendChild(componentElement)
+      this.containerEl.appendChild(wrapperEl)
     }
 
-    return this.domElement
+    return this.containerEl
   }
 }
 
