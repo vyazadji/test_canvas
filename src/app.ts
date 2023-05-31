@@ -3,6 +3,7 @@ import ComponentClass from './Component'
 import ComponentUIClass from './ComponentUI'
 import ComponentUICanvasClass from './ComponentUICanvas'
 import DateSourceClass from './DataSource'
+import CanvasEditor from './CanvasEditor'
 
 interface App {
   appElement: HTMLElement
@@ -16,6 +17,7 @@ class Application implements App {
   }
 
   start() {
+    const canvasEditor = new CanvasEditor()
     const view = new ViewClass(800, 800)
 
     const componentHtmlUi = new ComponentUIClass()

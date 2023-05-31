@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/cat.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Research</title>
-    <script src="https://cdn.jsdelivr.net/npm/fabric"></script>
   </head>
   <body>
     <h1>Test component decomposition</h1>
@@ -16,9 +15,12 @@
       </div>
       <div id="canvasEditor">
         <div id="canvasEditorMenu">
-          <button id="addCanvasLine">addRe</button>
+          <button id="addRectButton">add Rect</button>
+          <button id="addText">add Text</button>
+          <button id="removeElement">Remove Element</button>
+          <button id="saveComponent">Save</button>
         </div>
-        <div id="canvasEditorWorkspace"></div>
+        <canvas id="canvasEditorWorkspace"></canvas>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
