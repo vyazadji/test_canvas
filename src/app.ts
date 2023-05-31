@@ -16,7 +16,7 @@ class Application implements App {
   }
 
   start() {
-    const view = new ViewClass(400, 400)
+    const view = new ViewClass(800, 800)
 
     const componentHtmlUi = new ComponentUIClass()
     const component1 = new ComponentClass(componentHtmlUi)
