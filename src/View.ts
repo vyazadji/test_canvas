@@ -27,13 +27,14 @@ class ViewDashboard {
   private getComponentWrapper(): HTMLElement {
     const componentDomWrapper = document.createElement('div')
     componentDomWrapper.style.border = '1px solid green'
-    componentDomWrapper.style.height = '30px'
-    componentDomWrapper.style.width = '30px'
+    componentDomWrapper.style.height = '200px'
+    componentDomWrapper.style.width = '200px'
 
     return componentDomWrapper
   }
 
   start() {
+    this.domElement.innerHTML = ''
     for (let index = 0; index < this.components.length; index++) {
       const componentElement = this.components[index].getUIElement()
       const wrapperElement = this.getComponentWrapper()

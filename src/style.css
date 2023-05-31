@@ -48,12 +48,6 @@ h1 {
   }
 }
 
-#canvasEditor {
-  /* width: 400px; */
-  /* height: 400px; */
-  /* border: 1px solid blue; */
-}
-
 #canvasEditorWorkspace {
   border: 1px solid blue;
   width: 400px;

@@ -4,13 +4,17 @@ class CanvasEditor {
   canvas?: fabric
 
   constructor() {
-    this.canvas = new fabric.Canvas('canvasEditorWorkspace')
+    this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: 200, height: 200 })
 
     this.addMenuButtons()
   }
 
+  onAddElement(_serializedCanvas: object) {
+    alert('pls specify onAddElement')
+  }
+
   addMenuButtons() {
-    // rect
+    // add line
     const addRectButton = document.getElementById('addRectButton')!
     addRectButton.onclick = (_e: MouseEvent) => {
       const rect = new fabric.Rect({
@@ -24,7 +28,7 @@ class CanvasEditor {
       this.canvas.add(rect)
     }
 
-    // line
+    // add text
     const addTextButton = document.getElementById('addText')!
     addTextButton.onclick = (_e: MouseEvent) => {
       const text = new fabric.Text('28', {
@@ -46,11 +50,10 @@ class CanvasEditor {
 
     // Remove selected object on button click
     document.getElementById('saveComponent')!.onclick = () => {
-      const activeObject = this.canvas.getActiveObject()
+      const serializedCanvas = this.canvas.toObject()
 
-      if (activeObject) {
-        this.canvas.remove(activeObject)
-      }
+      console.log('add Component, serializedCanvas=>', serializedCanvas)
+      this.onAddElement(serializedCanvas)
     }
   }
 }
