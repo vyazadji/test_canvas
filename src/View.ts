@@ -1,3 +1,5 @@
+import Draggable from './utils/Dragable'
+
 import type { Component } from './type'
 
 class ViewDashboard {
@@ -15,6 +17,7 @@ class ViewDashboard {
     domElement.style.border = '1px solid red'
     domElement.style.height = height + 'px'
     domElement.style.width = width + 'px'
+    domElement.style.position = 'relative'
 
     this.containerEl = domElement
   }
@@ -23,11 +26,13 @@ class ViewDashboard {
     this.components.push(component)
   }
 
-  private getComponentWrapper(): HTMLElement {
+  private getComponentWrapper(positionNumber: number): HTMLElement {
     const componentDomWrapper = document.createElement('div')
     componentDomWrapper.style.border = '1px solid green'
     componentDomWrapper.style.height = '200px'
     componentDomWrapper.style.width = '200px'
+    componentDomWrapper.style.position = 'absolute'
+    componentDomWrapper.style.left = positionNumber * 200 + 'px'
 
     return componentDomWrapper
   }
@@ -36,11 +41,12 @@ class ViewDashboard {
     this.containerEl.innerHTML = ''
     for (let index = 0; index < this.components.length; index++) {
       const componentElement = this.components[index].getUIElement()
-      const wrapperEl = this.getComponentWrapper()
+      const wrapperEl = this.getComponentWrapper(index)
       wrapperEl.appendChild(componentElement)
       this.containerEl.appendChild(wrapperEl)
     }
 
+    new Draggable(this.containerEl)
     return this.containerEl
   }
 }
