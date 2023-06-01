@@ -18,7 +18,11 @@ class ComponentUICanvasFabricClass implements ComponentUI {
   }
 
   draw(number: number) {
-    console.log('will drave fabric canvas', number)
+    const textObjects = this.canvas.getObjects('text') as fabric.Text[]
+    textObjects.forEach((text: fabric.Text) => {
+      text.set('text', number.toString())
+    })
+    this.canvas.renderAll()
   }
 
   getElement(): HTMLDivElement {
