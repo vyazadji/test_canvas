@@ -1,6 +1,11 @@
+import { random } from 'lodash'
+
 import Draggable from './utils/Dragable'
 
 import type { Component } from './type'
+
+const COMPONENT_HEIGHT = 50
+const COMPONENT_WIDTH = 50
 
 class ViewDashboard {
   height: number
@@ -26,13 +31,17 @@ class ViewDashboard {
     this.components.push(component)
   }
 
-  private getComponentWrapper(positionNumber: number): HTMLElement {
+  private getComponentWrapper(): HTMLElement {
     const componentDomWrapper = document.createElement('div')
     componentDomWrapper.style.border = '1px solid green'
-    componentDomWrapper.style.height = '50px'
-    componentDomWrapper.style.width = '50px'
+
+    componentDomWrapper.style.height = COMPONENT_HEIGHT + 'px'
+    componentDomWrapper.style.width = COMPONENT_WIDTH + 'px'
+
     componentDomWrapper.style.position = 'absolute'
-    componentDomWrapper.style.left = positionNumber * 50 + 'px'
+
+    componentDomWrapper.style.top = random(this.height - COMPONENT_HEIGHT) + 'px'
+    componentDomWrapper.style.left = random(this.width - COMPONENT_WIDTH) + 'px'
 
     return componentDomWrapper
   }
@@ -41,7 +50,7 @@ class ViewDashboard {
     this.containerEl.innerHTML = ''
     for (let index = 0; index < this.components.length; index++) {
       const componentElement = this.components[index].getUIElement()
-      const wrapperEl = this.getComponentWrapper(index)
+      const wrapperEl = this.getComponentWrapper()
       wrapperEl.appendChild(componentElement)
       this.containerEl.appendChild(wrapperEl)
     }
