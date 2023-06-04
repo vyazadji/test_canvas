@@ -8,31 +8,25 @@ const randomStr = (number: number): string => random(number).toString()
 const SVGNS = 'http://www.w3.org/2000/svg'
 // UI SVG implementation of component
 class ComponentUISvgClass implements ComponentUI {
-  containerEl: HTMLElement
+  containerEl: SVGElement
   textEl: SVGElement
 
   constructor(countElements: number) {
-    this.containerEl = document.createElement('div')
-
     const svg = document.createElementNS(SVGNS, 'svg')
     svg.setAttribute('width', '50')
     svg.setAttribute('height', '50')
+    this.containerEl = svg
 
     const elements = this.getRandomSVGElements(countElements)
-    console.log('pelements', countElements, elements)
 
-    this.textEl = elements[0]
+    this.textEl = elements[0] // text element is always the first
 
     elements.reverse().forEach((el) => {
       svg.appendChild(el)
     })
-
-    // Create a line element
-
-    this.containerEl.appendChild(svg)
   }
 
-  getElement(): HTMLElement {
+  getElement(): SVGElement {
     return this.containerEl
   }
 

@@ -11,14 +11,14 @@ export interface Source {
 // Business logic of component
 export interface Component {
   componentUI: ComponentUI
-  getUIElement: () => HTMLElement
+  getUIElement: () => HTMLElement | SVGElement
   draw: (data: number) => void
 }
 
 // UI of component
 export interface ComponentUI {
   draw: (data: number) => void //
-  getElement: () => HTMLElement
+  getElement: () => HTMLElement | SVGElement
 }
 
 // Data Source

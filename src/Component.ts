@@ -8,7 +8,7 @@ class ComponentClass implements Component, DataSourceListener {
   }
 
   // Component
-  getUIElement(): HTMLElement {
+  getUIElement() {
     return this.componentUI.getElement()
   }
 
