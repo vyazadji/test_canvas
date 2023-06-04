@@ -2,6 +2,7 @@ import { random } from 'lodash'
 
 import type { ComponentUI } from './type'
 import { getRandomColor } from './utils/colors'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
 const randomStr = (number: number): string => random(number).toString()
 
@@ -13,8 +14,8 @@ class ComponentUISvgClass implements ComponentUI {
 
   constructor(countElements: number) {
     const svg = document.createElementNS(SVGNS, 'svg')
-    svg.setAttribute('width', '50')
-    svg.setAttribute('height', '50')
+    svg.setAttribute('width', COMPONENT_WIDTH.toString())
+    svg.setAttribute('height', COMPONENT_HEIGHT.toString())
     this.containerEl = svg
 
     const elements = this.getRandomSVGElements(countElements)

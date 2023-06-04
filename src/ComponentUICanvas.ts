@@ -1,5 +1,7 @@
 import { ComponentUI } from './type'
 
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+
 // UI Canvas implementation of component
 class ComponentUICanvasClass implements ComponentUI {
   private canvasEl: HTMLCanvasElement
@@ -12,8 +14,8 @@ class ComponentUICanvasClass implements ComponentUI {
     this.context = this.canvasEl.getContext('2d') as CanvasRenderingContext2D
 
     // Set canvas size
-    this.canvasEl.width = 50 // adjust size as needed
-    this.canvasEl.height = 50 // adjust size as needed
+    this.canvasEl.width = COMPONENT_WIDTH // adjust size as needed
+    this.canvasEl.height = COMPONENT_HEIGHT // adjust size as needed
 
     // Draw initial number
     // this.draw(number)

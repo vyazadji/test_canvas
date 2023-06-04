@@ -1,16 +1,18 @@
 import { fabric } from 'fabric'
 
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+
 class CanvasEditor {
   canvas: fabric.Canvas
 
   constructor() {
-    this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: 50, height: 50 })
+    this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: COMPONENT_WIDTH, height: COMPONENT_HEIGHT })
 
     this.addMenuButtons()
   }
 
-  onAddElement(serializedCanvas: object) {
-    console.log('onAddElement', serializedCanvas)
+  onAddElement(serializedCanvas: object, count: number) {
+    console.log('onAddElement', serializedCanvas, count)
     alert('need to specify onAddElement')
   }
 
@@ -52,12 +54,15 @@ class CanvasEditor {
     }
 
     // Remove selected object on button click
-    const addComponent = document.getElementById('saveComponent') as HTMLButtonElement
+    const addComponent = document.getElementById('addCanvasComponents') as HTMLButtonElement
     addComponent.onclick = () => {
       const serializedCanvas = this.canvas.toObject()
 
-      console.log('add Component, serializedCanvas=>', serializedCanvas)
-      this.onAddElement(serializedCanvas)
+      const componentsCountEl = document.getElementById('CanvasComponentsCount') as HTMLInputElement
+      const componentsCount = Number(componentsCountEl.value)
+
+      console.log('add Component, serializedCanvas=>', serializedCanvas, componentsCount)
+      this.onAddElement(serializedCanvas, componentsCount)
     }
   }
 }

@@ -42,16 +42,18 @@ class Application implements App {
 
     // Canvas editor
     const canvasEditor = new CanvasEditor()
-    canvasEditor.onAddElement = (serializedCanvas) => {
-      const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
-      const component3 = new ComponentClass(componentFabricCanvas)
-      component3.addSource(dataSource2)
-      view.addComponent(component3)
+    canvasEditor.onAddElement = (serializedCanvas, componentsCount) => {
+      for (let i = 0; i < componentsCount; i++) {
+        const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
+        const component3 = new ComponentClass(componentFabricCanvas)
+        component3.addSource(dataSource2)
+        view.addComponent(component3)
+      }
       view.start()
     }
 
     // SVG components
-    const addSvgButton = document.getElementById('SvgSaveComponents') as HTMLButtonElement
+    const addSvgButton = document.getElementById('addSvgComponents') as HTMLButtonElement
 
     addSvgButton.addEventListener('click', () => {
       const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
