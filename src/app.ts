@@ -69,6 +69,12 @@ class Application implements App {
       view.start()
     })
 
+    // Move Test
+    const moveTestButton = document.getElementById('startMoveTest') as HTMLButtonElement
+    moveTestButton.addEventListener('click', () => {
+      view.moveTest()
+    })
+
     // start View
     this.appElement.appendChild(view.start())
 
