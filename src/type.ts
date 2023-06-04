@@ -18,7 +18,7 @@ export interface Component {
 // UI of component
 export interface ComponentUI {
   draw: (data: number) => void //
-  getElement: () => HTMLElement | SVGElement
+  getElement: () => HTMLElement | SVGElement | HTMLCanvasElement
 }
 
 // Data Source

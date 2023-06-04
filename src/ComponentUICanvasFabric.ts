@@ -5,15 +5,15 @@ import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
 // UI Fabric Canvas implementation of component
 class ComponentUICanvasFabricClass implements ComponentUI {
-  private containerEl: HTMLDivElement
+  private containerEl: HTMLCanvasElement
   private canvas: fabric.StaticCanvas
 
   constructor(serializedCanvas: object) {
-    this.containerEl = document.createElement('div')
     const canvasEl = document.createElement('canvas')
     canvasEl.height = COMPONENT_HEIGHT
     canvasEl.width = COMPONENT_WIDTH
-    this.containerEl.appendChild(canvasEl)
+
+    this.containerEl = canvasEl
 
     this.canvas = new fabric.StaticCanvas(canvasEl)
     this.canvas.loadFromJSON(serializedCanvas, () => {
@@ -29,7 +29,7 @@ class ComponentUICanvasFabricClass implements ComponentUI {
     this.canvas.renderAll()
   }
 
-  getElement(): HTMLDivElement {
+  getElement() {
     return this.containerEl
   }
 }
