@@ -1,6 +1,7 @@
 import ViewClass from './View'
 import ComponentClass from './Component'
 import ComponentUIHtmlClass from './ComponentUIHtml'
+import ComponentUISvgClass from './ComponentUISvg'
 import ComponentUICanvasClass from './ComponentUICanvas'
 import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 import DateSourceClass from './DataSource'
@@ -42,13 +43,31 @@ class Application implements App {
     // Canvas editor
     const canvasEditor = new CanvasEditor()
     canvasEditor.onAddElement = (serializedCanvas) => {
-      console.log('test 11', serializedCanvas)
       const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
       const component3 = new ComponentClass(componentFabricCanvas)
       component3.addSource(dataSource2)
       view.addComponent(component3)
       view.start()
     }
+
+    // SVG components
+    const addSvgButton = document.getElementById('SvgSaveComponents') as HTMLButtonElement
+
+    addSvgButton.addEventListener('click', () => {
+      // const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
+      const svgComponentsCountEl = document.getElementById('SvgComponentsCount') as HTMLInputElement
+
+      // const svgElementsCount = Number(svgElementsCountEl.value)
+      const svgComponentsCount = Number(svgComponentsCountEl.value)
+
+      for (let i = 0; i < svgComponentsCount; i++) {
+        const componentSvgUI = new ComponentUISvgClass()
+        const component = new ComponentClass(componentSvgUI)
+        component.addSource(dataSource2)
+        view.addComponent(component)
+      }
+      view.start()
+    })
 
     // start View
     this.appElement.appendChild(view.start())

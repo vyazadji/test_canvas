@@ -13,14 +13,29 @@
       <div id="menu">
         <button id="addComponent" style="display: none">Add Component</button>
       </div>
-      <div id="canvasEditor">
-        <div id="canvasEditorMenu">
-          <button id="addRectButton">add Rect</button>
-          <button id="addText">add Text</button>
-          <button id="removeElement">Remove Element</button>
-          <button id="saveComponent">Save</button>
+      <div>
+        <div id="canvasEditor">
+          <h3>Add Canvas component</h3>
+          <div id="canvasEditorMenu">
+            <button id="addRectButton">add Rect</button>
+            <button id="addText">add Text</button>
+            <button id="removeElement">Remove</button>
+            <button id="saveComponent">Save</button>
+          </div>
+          <canvas id="canvasEditorWorkspace"></canvas>
         </div>
-        <canvas id="canvasEditorWorkspace"></canvas>
+        <div>
+          <h3>Add SVG component</h3>
+          <div>
+            <span>Count of SVG elements in Component</span>
+            <input value="5" id="SvgElementsCount" type="number" />
+          </div>
+          <div>
+            <span>Count of SVG Component</span>
+            <input value="1" id="SvgComponentsCount" />
+          </div>
+          <button id="SvgSaveComponents">Add SVG Components</button>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

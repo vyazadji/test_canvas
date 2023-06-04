@@ -29,10 +29,10 @@ class ViewDashboard {
   private getComponentWrapper(positionNumber: number): HTMLElement {
     const componentDomWrapper = document.createElement('div')
     componentDomWrapper.style.border = '1px solid green'
-    componentDomWrapper.style.height = '200px'
-    componentDomWrapper.style.width = '200px'
+    componentDomWrapper.style.height = '50px'
+    componentDomWrapper.style.width = '50px'
     componentDomWrapper.style.position = 'absolute'
-    componentDomWrapper.style.left = positionNumber * 200 + 'px'
+    componentDomWrapper.style.left = positionNumber * 50 + 'px'
 
     return componentDomWrapper
   }

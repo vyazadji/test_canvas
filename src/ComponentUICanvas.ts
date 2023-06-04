@@ -12,8 +12,8 @@ class ComponentUICanvasClass implements ComponentUI {
     this.context = this.canvasEl.getContext('2d') as CanvasRenderingContext2D
 
     // Set canvas size
-    this.canvasEl.width = 30 // adjust size as needed
-    this.canvasEl.height = 30 // adjust size as needed
+    this.canvasEl.width = 50 // adjust size as needed
+    this.canvasEl.height = 50 // adjust size as needed
 
     // Draw initial number
     // this.draw(number)

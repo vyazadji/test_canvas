@@ -6,7 +6,7 @@ class ComponentUIHtmlClass implements ComponentUI {
 
   constructor() {
     this.containerEl = document.createElement('div')
-    this.containerEl.textContent = '[init ui component ...]'
+    this.containerEl.textContent = '[...]'
   }
 
   getElement(): HTMLElement {

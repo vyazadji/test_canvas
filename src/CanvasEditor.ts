@@ -4,7 +4,7 @@ class CanvasEditor {
   canvas: fabric.Canvas
 
   constructor() {
-    this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: 200, height: 200 })
+    this.canvas = new fabric.Canvas('canvasEditorWorkspace', { width: 50, height: 50 })
 
     this.addMenuButtons()
   }
@@ -19,10 +19,10 @@ class CanvasEditor {
     const addRect = document.getElementById('addRectButton') as HTMLButtonElement
     addRect.onclick = () => {
       const rect = new fabric.Rect({
-        top: 50,
-        left: 50,
-        width: 60,
-        height: 70,
+        top: 0,
+        left: 0,
+        width: 25,
+        height: 25,
         fill: 'red',
       })
 
@@ -35,6 +35,7 @@ class CanvasEditor {
       const text = new fabric.Text('28', {
         top: 0,
         left: 0,
+        fontSize: 18,
       })
 
       this.canvas.add(text)
