@@ -47,7 +47,13 @@ class ViewDashboard {
     }
 
     new Draggable(this.containerEl)
+    this.updateComponentsCount()
     return this.containerEl
+  }
+
+  updateComponentsCount() {
+    const countEl = document.getElementById('componentCount') as HTMLButtonElement
+    countEl.innerText = this.components.length.toString()
   }
 }
 
