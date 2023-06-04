@@ -54,14 +54,14 @@ class Application implements App {
     const addSvgButton = document.getElementById('SvgSaveComponents') as HTMLButtonElement
 
     addSvgButton.addEventListener('click', () => {
-      // const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
+      const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
       const svgComponentsCountEl = document.getElementById('SvgComponentsCount') as HTMLInputElement
 
-      // const svgElementsCount = Number(svgElementsCountEl.value)
+      const svgElementsCount = Number(svgElementsCountEl.value)
       const svgComponentsCount = Number(svgComponentsCountEl.value)
 
       for (let i = 0; i < svgComponentsCount; i++) {
-        const componentSvgUI = new ComponentUISvgClass()
+        const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
         const component = new ComponentClass(componentSvgUI)
         component.addSource(dataSource2)
         view.addComponent(component)
