@@ -15,7 +15,7 @@
       </div>
       <div>
         <div id="canvasEditor">
-          <h3>Add Canvas component</h3>
+          <h3>Add Canvas (Fabric) component</h3>
           <div id="canvasEditorMenu">
             <button id="addRectButton">add Rect</button>
             <button id="addText">add Text</button>
@@ -23,11 +23,13 @@
           </div>
           <canvas id="canvasEditorWorkspace"></canvas>
           <div>
-            <span>Count of Canvas Component</span>
-            <input value="1" id="CanvasComponentsCount" />
+            <span>Count of Canvas Fabric Component</span>
+            <input value="1" id="CanvasFabricComponentsCount" />
           </div>
-          <button id="addCanvasComponents">Add Canvas Components</button>
+          <button id="addCanvasFabricComponents">Add Canvas (Fabric) Components</button>
         </div>
+        <hr/>
+
         <div>
           <h3>Add SVG component</h3>
           <div>
@@ -40,11 +42,25 @@
           </div>
           <button id="addSvgComponents">Add SVG Components</button>
         </div>
-        <p>
-          <h4>Components count: <span id="componentCount"></span> </h4>
-        </p>
+        <hr/>
+
         <div>
-          <button id="startMoveTest">Start Move Test</button>
+          <h3>Add Canvas component</h3>
+          <div>
+            <span>Count of Canvas Component</span>
+            <input value="1" id="canvasComponentsCount" type="number"/>
+          </div>
+          <button id="addCanvasComponents">Add Canvas Components</button>
+        </div>
+
+        <hr/>
+        <div>
+          <p>
+          <h4>Components count: <span id="componentCount"></span> </h4>
+          </p>
+          <div>
+            <button id="startMoveTest">Start Move Test</button>
+          </div>
         </div>
       </div>
     </div>

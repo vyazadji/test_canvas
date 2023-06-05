@@ -31,14 +31,8 @@ class Application implements App {
 
     view.addComponent(component1)
 
-    // component2
-    const componentCanvasUI = new ComponentUICanvasClass()
-    const component2 = new ComponentClass(componentCanvasUI)
-
+    //
     const dataSource2 = new DateSourceClass()
-    component2.addSource(dataSource2)
-
-    view.addComponent(component2)
 
     // Canvas editor
     const canvasEditor = new CanvasEditor()
@@ -46,6 +40,7 @@ class Application implements App {
       for (let i = 0; i < componentsCount; i++) {
         const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
         const component3 = new ComponentClass(componentFabricCanvas)
+
         component3.addSource(dataSource2)
         view.addComponent(component3)
       }
@@ -65,7 +60,26 @@ class Application implements App {
       for (let i = 0; i < svgComponentsCount; i++) {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
         const component = new ComponentClass(componentSvgUI)
+
         component.addSource(dataSource2)
+        view.addComponent(component)
+      }
+      view.start()
+    })
+
+    // Canvas components
+    const addCanvasButton = document.getElementById('addCanvasComponents') as HTMLButtonElement
+
+    addCanvasButton.addEventListener('click', () => {
+      const canvasComponentsCountEl = document.getElementById('canvasComponentsCount') as HTMLInputElement
+      const componentsCount = Number(canvasComponentsCountEl.value)
+
+      for (let i = 0; i < componentsCount; i++) {
+        const componentCanvasUI = new ComponentUICanvasClass()
+        const component = new ComponentClass(componentCanvasUI)
+
+        component.addSource(dataSource2)
+
         view.addComponent(component)
       }
       view.start()

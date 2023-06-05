@@ -54,11 +54,11 @@ class CanvasEditor {
     }
 
     // Remove selected object on button click
-    const addComponent = document.getElementById('addCanvasComponents') as HTMLButtonElement
+    const addComponent = document.getElementById('addCanvasFabricComponents') as HTMLButtonElement
     addComponent.onclick = () => {
       const serializedCanvas = this.canvas.toObject()
 
-      const componentsCountEl = document.getElementById('CanvasComponentsCount') as HTMLInputElement
+      const componentsCountEl = document.getElementById('CanvasFabricComponentsCount') as HTMLInputElement
       const componentsCount = Number(componentsCountEl.value)
 
       console.log('add Component, serializedCanvas=>', serializedCanvas, componentsCount)
