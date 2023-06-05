@@ -4,7 +4,7 @@ import Draggable from './utils/Dragable'
 
 import type { Component } from './type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH} from './consts'
 
 class ViewDashboard {
   height: number

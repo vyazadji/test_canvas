@@ -31,7 +31,7 @@ h1 {
   display: flex;
 }
 
-#app1 {
+.app {
   padding: 0 2rem;
 }
 

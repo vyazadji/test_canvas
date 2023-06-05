@@ -6,6 +6,7 @@ import ComponentUICanvasClass from './ComponentUICanvas'
 import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 import DateSourceClass from './DataSource'
 import CanvasEditor from './CanvasEditor'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 
 interface App {
   appElement: HTMLElement
@@ -20,7 +21,7 @@ class Application implements App {
 
   start() {
     // View
-    const view = new ViewClass(800, 800)
+    const view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
 
     // component1
     const componentHtmlUi = new ComponentUIHtmlClass()
