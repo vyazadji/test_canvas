@@ -41,6 +41,7 @@ class ViewDashboard {
     componentDomWrapper.style.width = COMPONENT_WIDTH + 'px'
 
     componentDomWrapper.style.position = 'absolute'
+    // componentDomWrapper.style.display = 'block' // Test performance for different display values
 
     componentDomWrapper.style.top = random(this.height - COMPONENT_HEIGHT) + 'px'
     componentDomWrapper.style.left = random(this.width - COMPONENT_WIDTH) + 'px'
@@ -107,10 +108,7 @@ class ViewDashboard {
     el.style.left = leftNew + 'px' // Update element's left position
     el.style.top = topNew + 'px' // Update element's top position
 
-    // if (Number(left) < 100 && Number(top) < 100) {
-    // Stop moving when reaching position (100px, 100px)
     requestAnimationFrame(() => this.moveElement(el)) // Continue moving element in the next frame
-    // }
   }
 
   start() {
