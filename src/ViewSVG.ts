@@ -2,10 +2,15 @@ import type { Component } from './type'
 
 // import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
+const SVGNS = 'http://www.w3.org/2000/svg'
+
+/**
+ * SVG layer
+ */
 class ViewSvgDashboard {
   height: number
   width: number
-  containerEl: HTMLElement
+  containerEl: SVGElement
   components: Component[]
   wrappers: HTMLElement[]
 
@@ -15,13 +20,10 @@ class ViewSvgDashboard {
     this.height = height
     this.width = width
 
-    const domElement = document.createElement('div')
-    domElement.style.border = '1px solid red'
-    domElement.style.height = height + 'px'
-    domElement.style.width = width + 'px'
-    domElement.style.position = 'relative'
-
-    this.containerEl = domElement
+    this.containerEl = document.createElementNS(SVGNS, 'svg')
+    this.containerEl.setAttribute('height', this.height.toString())
+    this.containerEl.setAttribute('width', this.width.toString())
+    this.containerEl.style.border = '1px solid red'
   }
 
   addComponent(component: Component) {
@@ -29,6 +31,15 @@ class ViewSvgDashboard {
   }
 
   start() {
+    this.containerEl.innerHTML = '' // clear
+    for (let index = 0; index < this.components.length; index++) {
+      const componentElement = this.components[index].getUIElement()
+      this.containerEl.appendChild(componentElement)
+    }
+
+    // new Draggable(this.containerEl)
+    this.updateComponentsCount()
+
     return this.containerEl
   }
 

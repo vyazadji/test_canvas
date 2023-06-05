@@ -2,7 +2,7 @@ import { random } from 'lodash'
 
 import type { ComponentUI } from './type'
 import { getRandomColor } from './utils/colors'
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 
 const randomStr = (number: number): string => random(number).toString()
 
@@ -12,10 +12,23 @@ class ComponentUISvgClass implements ComponentUI {
   containerEl: SVGElement
   textEl: SVGElement
 
-  constructor(countElements: number) {
-    const svg = document.createElementNS(SVGNS, 'svg')
+  /**
+   * @countElements number - count of elements generated inside this component
+   * @baseElement string - in HTML view we use "svg" component in SVG layout we use "g"
+   */
+  constructor(countElements: number, baseElement = 'svg') {
+    const svg = document.createElementNS(SVGNS, baseElement)
     svg.setAttribute('width', COMPONENT_WIDTH.toString())
     svg.setAttribute('height', COMPONENT_HEIGHT.toString())
+
+    // set random positin for <g>
+    if (baseElement === 'g') {
+      // Set the transform attribute to move the group to a random position
+      svg.setAttribute(
+        'transform',
+        `translate(${randomStr(VIEW_WIDTH - COMPONENT_WIDTH)}, ${randomStr(VIEW_HEIGHT - COMPONENT_HEIGHT)})`
+      )
+    }
     this.containerEl = svg
 
     const elements = this.getRandomSVGElements(countElements)
@@ -38,8 +51,8 @@ class ComponentUISvgClass implements ComponentUI {
     const elements = [
       (): SVGElement => {
         const text = document.createElementNS(SVGNS, 'text')
-        text.setAttribute('x', randomStr(40))
-        text.setAttribute('y', randomStr(40))
+        text.setAttribute('x', randomStr(COMPONENT_WIDTH - 10))
+        text.setAttribute('y', randomStr(COMPONENT_HEIGHT - 10))
         text.textContent = '[...]'
         return text
       },
@@ -60,19 +73,19 @@ class ComponentUISvgClass implements ComponentUI {
       },
       (): SVGElement => {
         const line = document.createElementNS(SVGNS, 'line')
-        line.setAttribute('x1', randomStr(50))
-        line.setAttribute('y1', randomStr(50))
-        line.setAttribute('x2', randomStr(50))
-        line.setAttribute('y2', randomStr(50))
+        line.setAttribute('x1', randomStr(COMPONENT_WIDTH))
+        line.setAttribute('y1', randomStr(COMPONENT_HEIGHT))
+        line.setAttribute('x2', randomStr(COMPONENT_WIDTH))
+        line.setAttribute('y2', randomStr(COMPONENT_HEIGHT))
         line.setAttribute('stroke-width', randomStr(4))
         line.setAttribute('stroke', getRandomColor())
         return line
       },
       (): SVGElement => {
         const circle = document.createElementNS(SVGNS, 'circle')
-        circle.setAttribute('cx', randomStr(30))
-        circle.setAttribute('cy', randomStr(30))
-        circle.setAttribute('r', randomStr(25))
+        circle.setAttribute('cx', randomStr(COMPONENT_WIDTH - 10))
+        circle.setAttribute('cy', randomStr(COMPONENT_HEIGHT - 10))
+        circle.setAttribute('r', randomStr(COMPONENT_HEIGHT / 2))
         circle.setAttribute('fill', getRandomColor())
         return circle
       },
