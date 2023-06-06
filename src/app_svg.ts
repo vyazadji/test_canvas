@@ -2,8 +2,8 @@ import ViewSVGClass from './ViewSVG'
 import ComponentClass from './Component'
 import ComponentUISvgClass from './ComponentUISvg'
 import DateSourceClass from './DataSource'
-//
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import { getInputNumber, addClick } from './utils/helpers'
 
 interface App {
   appElement: HTMLElement
@@ -20,8 +20,7 @@ class Application implements App {
     // View
     const view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
 
-    const dataSource1 = new DateSourceClass()
-    const dataSource2 = new DateSourceClass()
+    const dataSource = new DateSourceClass()
 
     // Add Svg Grouped component
     const addSvgButton = document.getElementById('addSvgComponents') as HTMLButtonElement
@@ -37,13 +36,19 @@ class Application implements App {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount, 'g')
         const component = new ComponentClass(componentSvgUI)
 
-        component.addSource(dataSource2)
+        component.addSource(dataSource)
         view.addComponent(component)
       }
       view.start()
     })
 
     this.appElement.appendChild(view.start())
+
+    // Data Source Settings
+    addClick('setDataSourceSettings', () => {
+      const interval = getInputNumber('updateInterval')
+      dataSource.updateInterval(interval * 1_000)
+    })
 
     // Move Test
     const moveTestButton = document.getElementById('startMoveTest') as HTMLButtonElement
@@ -52,8 +57,7 @@ class Application implements App {
     })
 
     // start DataSources
-    dataSource1.start()
-    dataSource2.start()
+    dataSource.start()
   }
 }
 

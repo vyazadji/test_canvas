@@ -8,6 +8,8 @@ import DateSourceClass from './DataSource'
 import CanvasEditor from './CanvasEditor'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 
+import { getInputNumber, addClick } from './utils/helpers'
+
 interface App {
   appElement: HTMLElement
 }
@@ -31,7 +33,7 @@ class Application implements App {
     view.addComponent(component1) */
 
     //
-    const dataSource2 = new DateSourceClass()
+    const dataSource = new DateSourceClass()
 
     // Canvas editor
     const canvasEditor = new CanvasEditor()
@@ -40,7 +42,7 @@ class Application implements App {
         const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
         const component3 = new ComponentClass(componentFabricCanvas)
 
-        component3.addSource(dataSource2)
+        component3.addSource(dataSource)
         view.addComponent(component3)
       }
       view.start()
@@ -60,7 +62,7 @@ class Application implements App {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
         const component = new ComponentClass(componentSvgUI)
 
-        component.addSource(dataSource2)
+        component.addSource(dataSource)
         view.addComponent(component)
       }
       view.start()
@@ -77,7 +79,7 @@ class Application implements App {
         const componentCanvasUI = new ComponentUICanvasClass()
         const component = new ComponentClass(componentCanvasUI)
 
-        component.addSource(dataSource2)
+        component.addSource(dataSource)
 
         view.addComponent(component)
       }
@@ -97,11 +99,17 @@ class Application implements App {
         const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)
         const component = new ComponentClass(componentHtmlUI)
 
-        component.addSource(dataSource2)
+        component.addSource(dataSource)
 
         view.addComponent(component)
       }
       view.start()
+    })
+
+    // Data Source Settings
+    addClick('setDataSourceSettings', () => {
+      const interval = getInputNumber('updateInterval')
+      dataSource.updateInterval(interval * 1_000)
     })
 
     // Move Test
@@ -114,8 +122,7 @@ class Application implements App {
     this.appElement.appendChild(view.start())
 
     // start DataSources
-    // dataSource1.start()
-    dataSource2.start()
+    dataSource.start()
   }
 }
 
