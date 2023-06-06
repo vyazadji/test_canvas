@@ -50,8 +50,13 @@ class ViewSvgDashboard {
    * Start move test
    * All components be moved progrmatically
    */
-  moveTest() {
-    this.components.forEach((component) => {
+  moveTest(movedComponentsCount = 0) {
+    let movedComponents = this.components
+    if (movedComponentsCount !== 0) {
+      // 0 - means all components
+      movedComponents = this.components.slice(0, movedComponentsCount)
+    }
+    movedComponents.forEach((component) => {
       const el = component.getUIElement() as SVGElement
       // randomly choose moving directions
       const x = Math.random() < 0.5 ? -1 : 1

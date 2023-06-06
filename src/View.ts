@@ -53,8 +53,13 @@ class ViewDashboard {
    * Start move test
    * All wrappers of elements will be moved progrmatically
    */
-  moveTest() {
-    this.wrappers.forEach((el) => {
+  moveTest(movedComponentsCount = 0) {
+    let movedComponents = this.wrappers
+    if (movedComponentsCount !== 0) {
+      // 0 - means all components
+      movedComponents = this.wrappers.slice(0, movedComponentsCount)
+    }
+    movedComponents.forEach((el) => {
       // randomly choose moving directions
       const x = Math.random() < 0.5 ? -1 : 1
       const y = Math.random() < 0.5 ? -1 : 1

@@ -113,9 +113,9 @@ class Application implements App {
     })
 
     // Move Test
-    const moveTestButton = document.getElementById('startMoveTest') as HTMLButtonElement
-    moveTestButton.addEventListener('click', () => {
-      view.moveTest()
+    addClick('startMoveTest', () => {
+      const movedComponentsCount = getInputNumber('movedComponentsCount')
+      view.moveTest(movedComponentsCount)
     })
 
     // start View
