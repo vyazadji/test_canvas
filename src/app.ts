@@ -23,14 +23,12 @@ class Application implements App {
     // View
     const view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
 
-    // component1
-    const componentHtmlUi = new ComponentUIHtmlClass()
+    // component html 1
+    /* const componentHtmlUi = new ComponentUIHtmlClass()
     const component1 = new ComponentClass(componentHtmlUi)
-
     const dataSource1 = new DateSourceClass()
     component1.addSource(dataSource1)
-
-    view.addComponent(component1)
+    view.addComponent(component1) */
 
     //
     const dataSource2 = new DateSourceClass()
@@ -86,6 +84,26 @@ class Application implements App {
       view.start()
     })
 
+    // Add HTML components
+    const addHtmlButton = document.getElementById('addHtmlComponents') as HTMLButtonElement
+
+    addHtmlButton.addEventListener('click', () => {
+      const htmlElementsCountEl = document.getElementById('htmlElementsCount') as HTMLInputElement
+      const htmlComponentsCountEl = document.getElementById('htmlComponentsCount') as HTMLInputElement
+      const elementsCount = Number(htmlElementsCountEl.value)
+      const componentsCount = Number(htmlComponentsCountEl.value)
+
+      for (let i = 0; i < componentsCount; i++) {
+        const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)
+        const component = new ComponentClass(componentHtmlUI)
+
+        component.addSource(dataSource2)
+
+        view.addComponent(component)
+      }
+      view.start()
+    })
+
     // Move Test
     const moveTestButton = document.getElementById('startMoveTest') as HTMLButtonElement
     moveTestButton.addEventListener('click', () => {
@@ -96,7 +114,7 @@ class Application implements App {
     this.appElement.appendChild(view.start())
 
     // start DataSources
-    dataSource1.start()
+    // dataSource1.start()
     dataSource2.start()
   }
 }
