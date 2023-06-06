@@ -28,6 +28,7 @@ class ComponentUISvgClass implements ComponentUI {
         'transform',
         `translate(${randomStr(VIEW_WIDTH - COMPONENT_WIDTH)}, ${randomStr(VIEW_HEIGHT - COMPONENT_HEIGHT)})`
       )
+      // Note <g> doesn't support border
     }
     this.containerEl = svg
 

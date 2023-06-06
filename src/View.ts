@@ -4,7 +4,7 @@ import Draggable from './utils/Dragable'
 
 import type { Component } from './type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH} from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
 class ViewDashboard {
   height: number
@@ -55,6 +55,7 @@ class ViewDashboard {
    */
   moveTest() {
     this.wrappers.forEach((el) => {
+      // randomly choose moving directions
       const x = Math.random() < 0.5 ? -1 : 1
       const y = Math.random() < 0.5 ? -1 : 1
       // 0 - not move
@@ -112,7 +113,7 @@ class ViewDashboard {
   }
 
   start() {
-    this.containerEl.innerHTML = ''
+    this.containerEl.innerHTML = '' // clear
     for (let index = 0; index < this.components.length; index++) {
       const componentElement = this.components[index].getUIElement()
       const wrapperEl = this.getComponentWrapper()

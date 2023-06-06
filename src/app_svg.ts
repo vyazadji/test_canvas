@@ -45,6 +45,12 @@ class Application implements App {
 
     this.appElement.appendChild(view.start())
 
+    // Move Test
+    const moveTestButton = document.getElementById('startMoveTest') as HTMLButtonElement
+    moveTestButton.addEventListener('click', () => {
+      view.moveTest()
+    })
+
     // start DataSources
     dataSource1.start()
     dataSource2.start()
