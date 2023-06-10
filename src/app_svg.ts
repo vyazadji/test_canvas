@@ -9,6 +9,9 @@ interface App {
   appElement: HTMLElement
 }
 
+/**
+ * Application with SVG layer
+ */
 class Application implements App {
   appElement: HTMLElement
 
@@ -23,7 +26,7 @@ class Application implements App {
     const dataSource = new DateSourceClass()
 
     // Add Svg Grouped component
-    const addSvgButton = document.getElementById('addSvgComponents') as HTMLButtonElement
+    const addSvgButton = document.getElementById('addSvgComponentsInSvgView') as HTMLButtonElement
 
     addSvgButton.addEventListener('click', () => {
       const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement

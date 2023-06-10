@@ -14,6 +14,9 @@ interface App {
   appElement: HTMLElement
 }
 
+/**
+ * Application with HTML layer
+ */
 class Application implements App {
   appElement: HTMLElement
 
