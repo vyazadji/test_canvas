@@ -5,31 +5,75 @@
     <link rel="icon" type="image/svg+xml" href="/cat.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Research</title>
-    <script type="module" crossorigin src="/assets/index-9319f753.js"></script>
-    <link rel="stylesheet" href="/assets/index-f4921144.css">
+    <script type="module" crossorigin src="/assets/index-a5684b70.js"></script>
+    <link rel="stylesheet" href="/assets/index-5ac051a3.css">
   </head>
   <body>
-    <h1>Test HTML 1 layer component decomposition</h1>
+    <h1>Test <span id="viewName">...</span> layer component decomposition</h1>
     <div class="apps">
-      <div id="app_html" class="app"></div>
+      <div id="app" class="app"></div>
       <div>
-        <div id="canvasEditor">
-          <h3>Add Canvas (Fabric) component</h3>
-          <div id="canvasEditorMenu">
-            <button id="addRectButton">add Rect</button>
-            <button id="addText">add Text</button>
-            <button id="removeElement">Remove</button>
+        <!-- HTML VIEW ONLY -->
+        <div class="view_html_only" style="display: none">
+          <div id="canvasEditor">
+            <h3>Add Canvas (Fabric) component</h3>
+            <div id="canvasEditorMenu">
+              <button id="addRectButton">add Rect</button>
+              <button id="addText">add Text</button>
+              <button id="removeElement">Remove</button>
+            </div>
+            <canvas id="canvasEditorWorkspace"></canvas>
+            <div>
+              <span>Count of Canvas Fabric Component</span>
+              <input value="1" id="CanvasFabricComponentsCount" />
+            </div>
+            <button id="addCanvasFabricComponents">Add Canvas (Fabric) Components</button>
           </div>
-          <canvas id="canvasEditorWorkspace"></canvas>
+          <hr/>
+
           <div>
-            <span>Count of Canvas Fabric Component</span>
-            <input value="1" id="CanvasFabricComponentsCount" />
+            <h3>Add SVG component</h3>
+            <div>
+              <span>Count of SVG elements in Component</span>
+              <input value="5" id="SvgElementsCount" type="number" />
+            </div>
+            <div>
+              <span>Count of SVG Component</span>
+              <input value="1" id="SvgComponentsCount" />
+            </div>
+            <button id="addSvgComponents">Add SVG Components</button>
           </div>
-          <button id="addCanvasFabricComponents">Add Canvas (Fabric) Components</button>
+          <hr/>
+
+          <div>
+            <h3>Add Canvas components</h3>
+            <div>
+              <span>Count of Canvas Component</span>
+              <input value="1" id="canvasComponentsCount" type="number"/>
+            </div>
+            <button id="addCanvasComponents">Add Canvas Components</button>
+          </div>
+
+          <hr/>
+
+          <div>
+            <h3>Add HTML components</h3>
+            <div>
+              <span>Count of Html elements in Component</span>
+              <input value="1" id="htmlElementsCount" type="number" min="1" />
+            </div>
+            <div>
+              <span>Count of HTML Component</span>
+              <input value="10" id="htmlComponentsCount" type="number"/>
+            </div>
+            <button id="addHtmlComponents">Add Html Components</button>
+          </div>
         </div>
         <hr/>
+        <!-- /HTML VIEW ONLY -->
 
-        <div>
+        <!-- SVG VIEW ONLY -->
+        <div class="view_svg_only" style="display: none">
           <h3>Add SVG component</h3>
           <div>
             <span>Count of SVG elements in Component</span>
@@ -39,36 +83,11 @@
             <span>Count of SVG Component</span>
             <input value="1" id="SvgComponentsCount" />
           </div>
-          <button id="addSvgComponents">Add SVG Components</button>
+          <button id="addSvgComponentsInSvgView">Add SVG Components</button>
         </div>
         <hr/>
 
-        <div>
-          <h3>Add Canvas components</h3>
-          <div>
-            <span>Count of Canvas Component</span>
-            <input value="1" id="canvasComponentsCount" type="number"/>
-          </div>
-          <button id="addCanvasComponents">Add Canvas Components</button>
-        </div>
-
-        <hr/>
-
-        <div>
-          <h3>Add HTML components</h3>
-          <div>
-            <span>Count of Html elements in Component</span>
-            <input value="1" id="htmlElementsCount" type="number" min="1" />
-          </div>
-          <div>
-            <span>Count of HTML Component</span>
-            <input value="10" id="htmlComponentsCount" type="number"/>
-          </div>
-          <button id="addHtmlComponents">Add Html Components</button>
-        </div>
-
-        <hr/>
-
+        <!-- General -->
         <div>
           <h3>Data source settings</h3>
           <div>
@@ -91,7 +110,9 @@
           <button id="startMoveTest">Start Move Test</button>
         </div>
         <hr/>
-        <a href="/svg_layer.html">Go to SVG layer</a>
+        <a href="/index.html?view=html">HTML layer</a>
+        <a href="/index.html?view=svg">SVG layer</a> 
+        <!-- /General -->
       </div>
     </div>
     
