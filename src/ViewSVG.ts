@@ -31,7 +31,7 @@ class ViewSvgDashboard {
   start() {
     this.containerEl.innerHTML = '' // clear
     for (let index = 0; index < this.components.length; index++) {
-      const componentElement = this.components[index].getUIElement()
+      const componentElement = this.components[index].getUIElement() as SVGElement
       this.containerEl.appendChild(componentElement)
     }
 

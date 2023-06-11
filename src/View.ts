@@ -120,7 +120,7 @@ class ViewDashboard {
   start() {
     this.containerEl.innerHTML = '' // clear
     for (let index = 0; index < this.components.length; index++) {
-      const componentElement = this.components[index].getUIElement()
+      const componentElement = this.components[index].getUIElement() as HTMLElement
       const wrapperEl = this.getComponentWrapper()
       wrapperEl.appendChild(componentElement)
       this.containerEl.appendChild(wrapperEl)
