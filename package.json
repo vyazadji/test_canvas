@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:gh-pages": "yarn build && rm -rf docs/* && cp -R dist/* docs/",
     "preview": "vite preview"
   },
   "devDependencies": {

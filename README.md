@@ -18,8 +18,18 @@ yarn dev
 
 ## Build project
 
+### Local build the project.
+
+The result will be in `/dist`
+
 ```
 yarn build
 ```
 
-To present the project via Github pages need to copy content of folder `/dist` into `/docs`
+### Build for Github pages
+
+```
+yarn build:gh-pages
+```
+
+It copies all files from `/dist` into `/docs` to host the project in Github pages
