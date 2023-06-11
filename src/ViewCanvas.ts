@@ -1,6 +1,7 @@
 import type { Component } from './type'
+import ComponentUIRawCanvasClass from './ComponentUIRawCanvas'
 
-// import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
 /**
  * Canvas layer
@@ -56,36 +57,34 @@ class ViewCanvasDashboard {
    * Start move test
    * All components be moved progrmatically
    */
-  /* moveTest(movedComponentsCount = 0) {
+  moveTest(movedComponentsCount = 0) {
     let movedComponents = this.components
     if (movedComponentsCount !== 0) {
       // 0 - means all components
       movedComponents = this.components.slice(0, movedComponentsCount)
     }
     movedComponents.forEach((component) => {
-      const el = component.getUIElement() as SVGElement
+      const el = component.getUIElement() as ComponentUIRawCanvasClass
       // randomly choose moving directions
       const x = Math.random() < 0.5 ? -1 : 1
       const y = Math.random() < 0.5 ? -1 : 1
       // 0 - not move
       // -1 move left or top
       // 1 move right or bottom
-      el.setAttribute('data-direction-x', x.toString()) // 0 means it will not move left-right
-      el.setAttribute('data-direction-y', y.toString()) // 0 means not move top-bottom
+      el.directionX = x // 0 means it will not move left-right
+      el.directionY = y // 0 means not move top-bottom
       this.moveElement(el)
     })
-  } */
+  }
 
   /**
    * This function change position of one element
    * We calculate the next position base on direction x and y
    */
-  /* moveElement(el: SVGElement) {
+  moveElement(el: ComponentUIRawCanvasClass) {
     // current position
-    const transform = el.getAttribute('transform') as string
-    const matches = /translate\((.*?),(.*?)\)/.exec(transform)
-    const left = matches ? parseFloat(matches[1]) : 0
-    const top = matches ? parseFloat(matches[2]) : 0
+    const left = el.x
+    const top = el.y
 
     // detect direction
 
@@ -93,36 +92,37 @@ class ViewCanvasDashboard {
     if (left > this.width - COMPONENT_WIDTH) {
       // right border -> move element to the left
       const new_direction_x = -1
-      el.setAttribute('data-direction-x', new_direction_x.toString())
+      el.directionX = new_direction_x
     } else if (left < 1) {
       // left border -> move element to the right
       const new_direction_x = 1
-      el.setAttribute('data-direction-x', new_direction_x.toString())
+      el.directionX = new_direction_x
     }
 
-    const direction_x = Number(el.dataset.directionX)
+    const direction_x = el.directionX
 
     // Y direction
     if (top > this.height - COMPONENT_HEIGHT) {
       // bottom border -> move element to the top
       const new_direction_y = -1
-      el.setAttribute('data-direction-y', new_direction_y.toString())
+      el.directionY = new_direction_y
     } else if (top < 1) {
       // top border -> move element to the bottom
       const new_direction_y = 1
-      el.setAttribute('data-direction-y', new_direction_y.toString())
+      el.directionY = new_direction_y
     }
 
-    const direction_y = Number(el.dataset.directionY)
+    const direction_y = el.directionY
 
     const leftNew = left + 1 * direction_x
     const topNew = top + 1 * direction_y
 
-    // svg way how to change position
-    el.setAttribute('transform', `translate(${leftNew}, ${topNew})`) // Update element's position
+    // canvas way how to change position
+
+    el.move(leftNew, topNew)
 
     requestAnimationFrame(() => this.moveElement(el)) // Continue moving element in the next frame
-  } */
+  }
 }
 
 export default ViewCanvasDashboard

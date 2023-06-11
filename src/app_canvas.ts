@@ -48,10 +48,10 @@ class ApplicationCanvas implements App {
     })
 
     // Move Test
-    /* addClick('startMoveTest', () => {
+    addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
       view.moveTest(movedComponentsCount)
-    }) */
+    })
 
     // start DataSources
     dataSource.start()
