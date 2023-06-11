@@ -52,7 +52,7 @@ const figureTemplates = [
       const randomX2 = randomX / 2
       const randomY2 = randomY / 2
       context.beginPath()
-      context.arc(x + randomX2, y + randomY2, randomX2, 0, Math.PI * 2, true) // Внешняя окружность
+      context.arc(x + randomX2, y + randomY2, randomX2, 0, Math.PI * 2, true)
       context.stroke()
     },
   },
@@ -99,7 +99,7 @@ class ComponentUIRawCanvasClass implements ComponentUI {
     this.dataSourceNumber = number
     this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
 
-    // Draw yellow background
+    // Draw some figure
     figureTemplates[this.figure].getFigure(
       this.context,
       this.backgroundColor,
@@ -122,10 +122,6 @@ class ComponentUIRawCanvasClass implements ComponentUI {
     this.x = leftNew
     this.y = topNew
 
-    this.reDraw()
-  }
-
-  reDraw() {
     this.draw(this.dataSourceNumber)
   }
 
