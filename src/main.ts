@@ -1,10 +1,12 @@
 import './style.css'
 import app_html from './app'
 import app_svg from './app_svg'
+import app_canvas from './app_canvas'
 
 const VIEW = {
   HTML: 'html',
   SVG: 'svg',
+  CANVAS: 'canvas',
 } as const
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     app.start()
   } else if (view === VIEW.SVG) {
     const app = new app_svg(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app.start()
+  } else if (view === VIEW.CANVAS) {
+    const app = new app_canvas(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
     app.start()
   } else {
     alert('"view" is unknown. Please set correct view')

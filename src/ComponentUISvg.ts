@@ -7,7 +7,10 @@ import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './co
 const randomStr = (number: number): string => random(number).toString()
 
 const SVGNS = 'http://www.w3.org/2000/svg'
-// UI SVG implementation of component
+/**
+ * UI SVG implementation of component
+ * Use in both HTML and SVG layers
+ */
 class ComponentUISvgClass implements ComponentUI {
   containerEl: SVGElement
   textEl: SVGElement

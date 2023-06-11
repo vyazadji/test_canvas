@@ -2,7 +2,11 @@ import { ComponentUI } from './type'
 
 import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
-// UI Canvas implementation of component
+/**
+ * UI Canvas implementation of component.
+ * It contains the canvas and children components
+ * Use in HTML view
+ */
 class ComponentUICanvasClass implements ComponentUI {
   private context: CanvasRenderingContext2D
   private containerEl: HTMLCanvasElement
