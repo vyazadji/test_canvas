@@ -52,14 +52,9 @@ class Application implements App {
     }
 
     // SVG components
-    const addSvgButton = document.getElementById('addSvgComponents') as HTMLButtonElement
-
-    addSvgButton.addEventListener('click', () => {
-      const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
-      const svgComponentsCountEl = document.getElementById('SvgComponentsCount') as HTMLInputElement
-
-      const svgElementsCount = Number(svgElementsCountEl.value)
-      const svgComponentsCount = Number(svgComponentsCountEl.value)
+    addClick('addSvgInHtmlComponents', () => {
+      const svgElementsCount = getInputNumber('svgElementsInHtmlCount')
+      const svgComponentsCount = getInputNumber('svgComponentsInHtmlCount')
 
       for (let i = 0; i < svgComponentsCount; i++) {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
@@ -72,11 +67,8 @@ class Application implements App {
     })
 
     // Canvas components
-    const addCanvasButton = document.getElementById('addCanvasComponents') as HTMLButtonElement
-
-    addCanvasButton.addEventListener('click', () => {
-      const canvasComponentsCountEl = document.getElementById('canvasComponentsCount') as HTMLInputElement
-      const componentsCount = Number(canvasComponentsCountEl.value)
+    addClick('addCanvasComponents', () => {
+      const componentsCount = getInputNumber('canvasComponentsCount')
 
       for (let i = 0; i < componentsCount; i++) {
         const componentCanvasUI = new ComponentUICanvasClass()
@@ -90,13 +82,9 @@ class Application implements App {
     })
 
     // Add HTML components
-    const addHtmlButton = document.getElementById('addHtmlComponents') as HTMLButtonElement
-
-    addHtmlButton.addEventListener('click', () => {
-      const htmlElementsCountEl = document.getElementById('htmlElementsCount') as HTMLInputElement
-      const htmlComponentsCountEl = document.getElementById('htmlComponentsCount') as HTMLInputElement
-      const elementsCount = Number(htmlElementsCountEl.value)
-      const componentsCount = Number(htmlComponentsCountEl.value)
+    addClick('addHtmlComponents', () => {
+      const elementsCount = getInputNumber('htmlElementsCount')
+      const componentsCount = getInputNumber('htmlComponentsCount')
 
       for (let i = 0; i < componentsCount; i++) {
         const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)

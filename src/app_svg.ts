@@ -26,14 +26,9 @@ class Application implements App {
     const dataSource = new DateSourceClass()
 
     // Add Svg Grouped component
-    const addSvgButton = document.getElementById('addSvgComponentsInSvgView') as HTMLButtonElement
-
-    addSvgButton.addEventListener('click', () => {
-      const svgElementsCountEl = document.getElementById('SvgElementsCount') as HTMLInputElement
-      const svgComponentsCountEl = document.getElementById('SvgComponentsCount') as HTMLInputElement
-
-      const svgElementsCount = Number(svgElementsCountEl.value)
-      const svgComponentsCount = Number(svgComponentsCountEl.value)
+    addClick('addSvgComponentsInSvg', () => {
+      const svgElementsCount = getInputNumber('svgElementsInSvgCount')
+      const svgComponentsCount = getInputNumber('svgComponentsInSvgCount')
 
       for (let i = 0; i < svgComponentsCount; i++) {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount, 'g')
