@@ -13,13 +13,16 @@ class ViewDashboard {
   components: Component[]
   wrappers: HTMLElement[]
   moved2Components: HTMLElement[]
+  moved2Directions: Array<number[]>
 
   constructor(height: number, width: number) {
     this.components = []
     this.wrappers = []
-    this.moved2Components = []
     this.height = height
     this.width = width
+
+    this.moved2Components = []
+    this.moved2Directions = []
 
     const domElement = document.createElement('div')
     domElement.style.border = '1px solid red'
@@ -130,6 +133,7 @@ class ViewDashboard {
    * All wrappers of elements will be moved progrmatically
    */
   moveTest2(movedComponentsCount = 0) {
+    this.moved2Directions = []
     this.moved2Components = this.wrappers
     if (movedComponentsCount !== 0) {
       // 0 - means all components
@@ -142,8 +146,9 @@ class ViewDashboard {
       // 0 - not move
       // -1 move left or top
       // 1 move right or bottom
-      el.setAttribute('data-direction-x', directionX.toString()) // 0 means it will not move left-right
-      el.setAttribute('data-direction-y', directionY.toString()) // 0 means not move top-bottom
+      // el.setAttribute('data-direction-x', directionX.toString()) // 0 means it will not move left-right
+      // el.setAttribute('data-direction-y', directionY.toString()) // 0 means not move top-bottom
+      this.moved2Directions.push([directionX, directionY])
 
       // reset position -> migrate to translate
       const x = el.style.left
@@ -175,27 +180,33 @@ class ViewDashboard {
       if (left > this.width - COMPONENT_WIDTH) {
         // right border -> move element to the left
         const new_direction_x = -1
-        el.setAttribute('data-direction-x', new_direction_x.toString())
+        // el.setAttribute('data-direction-x', new_direction_x.toString())
+        this.moved2Directions[i][0] = new_direction_x
       } else if (left < 1) {
         // left border -> move element to the right
         const new_direction_x = 1
-        el.setAttribute('data-direction-x', new_direction_x.toString())
+        // el.setAttribute('data-direction-x', new_direction_x.toString())
+        this.moved2Directions[i][0] = new_direction_x
       }
 
-      const direction_x = Number(el.dataset.directionX)
+      // const direction_x = Number(el.dataset.directionX)
+      const direction_x = this.moved2Directions[i][0]
 
       // Y direction
       if (top > this.height - COMPONENT_HEIGHT) {
         // bottom border -> move element to the top
         const new_direction_y = -1
-        el.setAttribute('data-direction-y', new_direction_y.toString())
+        // el.setAttribute('data-direction-y', new_direction_y.toString())
+        this.moved2Directions[i][1] = new_direction_y
       } else if (top < 1) {
         // top border -> move element to the bottom
         const new_direction_y = 1
-        el.setAttribute('data-direction-y', new_direction_y.toString())
+        // el.setAttribute('data-direction-y', new_direction_y.toString())
+        this.moved2Directions[i][1] = new_direction_y
       }
 
-      const direction_y = Number(el.dataset.directionY)
+      // const direction_y = Number(el.dataset.directionY)
+      const direction_y = this.moved2Directions[i][1]
 
       const oneFrameDistance = 1
       const leftNew = left + oneFrameDistance * direction_x
