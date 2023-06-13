@@ -109,6 +109,12 @@ class Application implements App {
       view.moveTest(movedComponentsCount)
     })
 
+    // Move Test2
+    addClick('startMoveTest2', () => {
+      const movedComponentsCount = getInputNumber('movedComponentsCount')
+      view.moveTest2(movedComponentsCount)
+    })
+
     // start View
     this.appElement.appendChild(view.start())
 

@@ -18,8 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
   viewNameEl.innerText = view
 
   // show settings
-  const settings = document.querySelector<HTMLDivElement>(`.view_${view}_only`) as HTMLDivElement
-  settings.style.display = 'block'
+  const settings: NodeListOf<HTMLDivElement> = document.querySelectorAll(`.view_${view}_only`)
+  settings.forEach((setting: HTMLDivElement) => {
+    setting.style.display = 'block'
+  })
 
   // start app
   if (view === VIEW.HTML) {
