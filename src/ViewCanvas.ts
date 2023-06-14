@@ -81,12 +81,10 @@ class ViewCanvasDashboard {
   moveElements() {
     for (let i = 0; i < this.movedComponents.length; i++) {
       // update position
-      this.positionManager.calculateNextPosition(i)
+      const [x, y] = this.positionManager.calculateNextPosition(i)
 
       // set new position
       const el = this.movedComponents[i].getUIElement() as ComponentUIRawCanvasClass
-      const x = this.positionManager.positions[i].x
-      const y = this.positionManager.positions[i].y
       el.move(x, y)
     }
 

@@ -83,12 +83,11 @@ class ViewSvgDashboard {
     // calculate new positions
     for (let i = 0; i < this.movedComponents.length; i++) {
       // update position
-      this.positionManager.calculateNextPosition(i)
+      const [x, y] = this.positionManager.calculateNextPosition(i)
 
       // set new position
       const el = this.movedComponents[i].getUIElement() as SVGElement
-      const translate =
-        'translate(' + this.positionManager.positions[i].x + ', ' + this.positionManager.positions[i].y + ')'
+      const translate = 'translate(' + x + ', ' + y + ')'
       // Update element's position
       el.setAttribute('transform', translate)
     }
