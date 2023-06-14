@@ -1,6 +1,7 @@
 import { random } from 'lodash'
 
 import Draggable from './utils/Dragable'
+import PositionManager from './PositionManager'
 
 import type { Component } from './type'
 
@@ -12,8 +13,8 @@ class ViewDashboard {
   containerEl: HTMLElement
   components: Component[]
   wrappers: HTMLElement[]
-  moved2Components: HTMLElement[]
-  moved2Directions: Array<number[]>
+  movedComponents: HTMLElement[]
+  positionManager: PositionManager
 
   constructor(height: number, width: number) {
     this.components = []
@@ -21,8 +22,11 @@ class ViewDashboard {
     this.height = height
     this.width = width
 
-    this.moved2Components = []
-    this.moved2Directions = []
+    this.movedComponents = []
+    this.positionManager = new PositionManager({
+      viewWidth: this.width,
+      viewHeight: this.height,
+    })
 
     const domElement = document.createElement('div')
     domElement.style.border = '1px solid red'
@@ -79,6 +83,7 @@ class ViewDashboard {
       // 1 move right or bottom
       el.setAttribute('data-direction-x', x.toString()) // 0 means it will not move left-right
       el.setAttribute('data-direction-y', y.toString()) // 0 means not move top-bottom
+
       this.moveElement(el)
     })
   }
@@ -133,28 +138,19 @@ class ViewDashboard {
    * All wrappers of elements will be moved progrmatically
    */
   moveTest2(movedComponentsCount = 0) {
-    this.moved2Directions = []
-    this.moved2Components = this.wrappers
+    this.movedComponents = this.wrappers
     if (movedComponentsCount !== 0) {
       // 0 - means all components
-      this.moved2Components = this.wrappers.slice(0, movedComponentsCount)
+      this.movedComponents = this.wrappers.slice(0, movedComponentsCount)
     }
-    this.moved2Components.forEach((el) => {
-      // randomly choose moving directions
-      const directionX = Math.random() < 0.5 ? -1 : 1
-      const directionY = Math.random() < 0.5 ? -1 : 1
-      // 0 - not move
-      // -1 move left or top
-      // 1 move right or bottom
-      // el.setAttribute('data-direction-x', directionX.toString()) // 0 means it will not move left-right
-      // el.setAttribute('data-direction-y', directionY.toString()) // 0 means not move top-bottom
-      this.moved2Directions.push([directionX, directionY])
-
-      // reset position -> migrate to translate
+    this.movedComponents.forEach((el) => {
+      // get positions
       const x = el.style.left
       const y = el.style.top
 
-      // el.style.position = 'absolute'
+      this.positionManager.addPosition(parseInt(x, 10), parseInt(y, 10))
+
+      // reset position -> migrate to translate
       el.style.left = '0'
       el.style.top = '0'
       el.style.transform = `translate(${x}, ${y})`
@@ -164,72 +160,17 @@ class ViewDashboard {
   }
 
   moveElements2() {
-    const newPositions = []
-    for (let i = 0; i < this.moved2Components.length; i++) {
-      const el = this.moved2Components[i] as HTMLElement
+    for (let i = 0; i < this.movedComponents.length; i++) {
+      // update position
+      this.positionManager.calculateNextPosition(i)
 
-      // current position
-      const transform = getComputedStyle(el).getPropertyValue('transform')
-      const amounts = transform.match(/-?[\d.]+/g)
-      const left = amounts ? parseFloat(amounts[4]) : 0
-      const top = amounts ? parseFloat(amounts[5]) : 0
+      const el = this.movedComponents[i] as HTMLElement
+      const x = this.positionManager.positions[i].x
+      const y = this.positionManager.positions[i].y
 
-      // console.log({ i, transform, amounts, left, top })
-
-      // X direction
-      if (left > this.width - COMPONENT_WIDTH) {
-        // right border -> move element to the left
-        const new_direction_x = -1
-        // el.setAttribute('data-direction-x', new_direction_x.toString())
-        this.moved2Directions[i][0] = new_direction_x
-      } else if (left < 1) {
-        // left border -> move element to the right
-        const new_direction_x = 1
-        // el.setAttribute('data-direction-x', new_direction_x.toString())
-        this.moved2Directions[i][0] = new_direction_x
-      }
-
-      // const direction_x = Number(el.dataset.directionX)
-      const direction_x = this.moved2Directions[i][0]
-
-      // Y direction
-      if (top > this.height - COMPONENT_HEIGHT) {
-        // bottom border -> move element to the top
-        const new_direction_y = -1
-        // el.setAttribute('data-direction-y', new_direction_y.toString())
-        this.moved2Directions[i][1] = new_direction_y
-      } else if (top < 1) {
-        // top border -> move element to the bottom
-        const new_direction_y = 1
-        // el.setAttribute('data-direction-y', new_direction_y.toString())
-        this.moved2Directions[i][1] = new_direction_y
-      }
-
-      // const direction_y = Number(el.dataset.directionY)
-      const direction_y = this.moved2Directions[i][1]
-
-      const oneFrameDistance = 1
-      const leftNew = left + oneFrameDistance * direction_x
-      const topNew = top + oneFrameDistance * direction_y
-
-      newPositions.push([leftNew, topNew])
-
-      // Update the translation - this is a bad practice -> 8Fps
-      // el.style.transform = `translate(${leftNew}px, ${topNew}px)`
+      el.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
     }
 
-    for (let i = 0; i < this.moved2Components.length; i++) {
-      const el = this.moved2Components[i] as HTMLElement
-      const leftNew = newPositions[i][0]
-      const topNew = newPositions[i][1]
-      el.style.transform = `translate(${leftNew}px, ${topNew}px)`
-      // didn't help and ddon't change anything
-      // setTimeout(() => {
-      //   el.style.transform = `translate(${leftNew}px, ${topNew}px)`
-      // }, 0)
-    }
-
-    // Call the function again in the next frame
     requestAnimationFrame(() => this.moveElements2())
   }
   //
