@@ -46,7 +46,7 @@ class PositionManager {
     })
   }
 
-  calculateNextPosition(i: number) {
+  calculateNextPosition(i: number): number[] {
     const position = this.positions[i]
 
     // X direction
@@ -69,6 +69,8 @@ class PositionManager {
 
     position.x = position.x + 1 * position.directionX
     position.y = position.y + 1 * position.directionY
+
+    return [position.x, position.y]
   }
 }
 
