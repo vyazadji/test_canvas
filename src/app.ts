@@ -11,10 +11,14 @@ import type { App, DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
 
+interface AppHTML extends App {
+  addSvgInHtmlComponents: (componentsCount: number, elementsCount: number) => void
+}
+
 /**
  * Application with HTML layer
  */
-class Application implements App {
+class Application implements AppHTML {
   appElement: HTMLElement
   dataSource: DataSource
   view: ViewClass
@@ -23,24 +27,14 @@ class Application implements App {
     this.appElement = appElement
     this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
+
+    this.initButtonBindings()
   }
 
-  start() {
-    // View
-    this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
-
-    // Canvas editor
-    const canvasEditor = new CanvasEditor()
-    canvasEditor.onAddElement = (serializedCanvas, componentsCount) => {
-      for (let i = 0; i < componentsCount; i++) {
-        const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
-        const component3 = new ComponentClass(componentFabricCanvas)
-
-        component3.addSource(this.dataSource)
-        this.view.addComponent(component3)
-      }
-      this.view.start()
-    }
+  initButtonBindings() {
+    //
+    // Init add components
+    //
 
     // SVG components
     addClick('addSvgInHtmlComponents', () => {
@@ -50,19 +44,16 @@ class Application implements App {
       this.addSvgInHtmlComponents(svgComponentsCount, svgElementsCount)
     })
 
+    // Canvas editor
+    const canvasEditor = new CanvasEditor()
+    canvasEditor.onAddElement = (serializedCanvas, componentsCount) => {
+      this.addCanvasFabricComponents(serializedCanvas, componentsCount)
+    }
+
     // Canvas components
     addClick('addCanvasComponents', () => {
       const componentsCount = getInputNumber('canvasComponentsCount')
-
-      for (let i = 0; i < componentsCount; i++) {
-        const componentCanvasUI = new ComponentUICanvasClass()
-        const component = new ComponentClass(componentCanvasUI)
-
-        component.addSource(this.dataSource)
-
-        this.view.addComponent(component)
-      }
-      this.view.start()
+      this.addCanvasComponents(componentsCount)
     })
 
     // Add HTML components
@@ -70,16 +61,12 @@ class Application implements App {
       const elementsCount = getInputNumber('htmlElementsCount')
       const componentsCount = getInputNumber('htmlComponentsCount')
 
-      for (let i = 0; i < componentsCount; i++) {
-        const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)
-        const component = new ComponentClass(componentHtmlUI)
-
-        component.addSource(this.dataSource)
-
-        this.view.addComponent(component)
-      }
-      this.view.start()
+      this.addHtmlComponents(componentsCount, elementsCount)
     })
+
+    //
+    // Service buttons
+    //
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
@@ -98,12 +85,52 @@ class Application implements App {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
       this.view.moveTest2(movedComponentsCount)
     })
+  }
+
+  start() {
+    // View
+    this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
 
     // start View
     this.appElement.appendChild(this.view.start())
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addHtmlComponents(componentsCount: number, elementsCount: number) {
+    for (let i = 0; i < componentsCount; i++) {
+      const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)
+      const component = new ComponentClass(componentHtmlUI)
+
+      component.addSource(this.dataSource)
+
+      this.view.addComponent(component)
+    }
+    this.view.start()
+  }
+
+  addCanvasFabricComponents(serializedCanvas: object, componentsCount: number) {
+    for (let i = 0; i < componentsCount; i++) {
+      const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
+      const component3 = new ComponentClass(componentFabricCanvas)
+
+      component3.addSource(this.dataSource)
+      this.view.addComponent(component3)
+    }
+    this.view.start()
+  }
+
+  addCanvasComponents(componentsCount: number) {
+    for (let i = 0; i < componentsCount; i++) {
+      const componentCanvasUI = new ComponentUICanvasClass()
+      const component = new ComponentClass(componentCanvasUI)
+
+      component.addSource(this.dataSource)
+
+      this.view.addComponent(component)
+    }
+    this.view.start()
   }
 
   addSvgInHtmlComponents(svgComponentsCount: number, svgElementsCount: number) {
