@@ -6,10 +6,14 @@ import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
 import type { App, DataSource } from './type'
 
+export interface AppCanvas extends App {
+  addRawCanvasComponents: (componentsCount: number) => void
+}
+
 /**
  * Application with Canvas layer
  */
-class ApplicationCanvas implements App {
+class ApplicationCanvas implements AppCanvas {
   appElement: HTMLElement
   dataSource: DataSource
   view: ViewCanvas

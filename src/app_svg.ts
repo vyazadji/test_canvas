@@ -6,10 +6,14 @@ import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
 import type { App, DataSource } from './type'
 
+export interface AppSVG extends App {
+  addSvgComponentsInSvg: (componentsCount: number, elementsCount: number) => void
+}
+
 /**
  * Application with SVG layer
  */
-class Application implements App {
+class Application implements AppSVG {
   appElement: HTMLElement
   dataSource: DataSource
   view: ViewSVGClass

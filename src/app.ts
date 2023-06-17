@@ -11,7 +11,7 @@ import type { App, DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
 
-interface AppHTML extends App {
+export interface AppHTML extends App {
   addSvgInHtmlComponents: (componentsCount: number, elementsCount: number) => void
 }
 
