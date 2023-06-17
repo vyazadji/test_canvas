@@ -18,29 +18,24 @@ class ApplicationCanvas implements App {
     this.appElement = appElement
     this.view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
+
+    this.initButtonBindings()
   }
 
-  start() {
-    // View
-    this.view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
-
-    this.dataSource = new DateSourceClass()
+  initButtonBindings() {
+    //
+    // Init add components
+    //
 
     // Add Canvas component
     addClick('addRawCanvasInCanvasView', () => {
       const rawCanvasComponentsCount = getInputNumber('rawCanvasComponentsCount')
-
-      for (let i = 0; i < rawCanvasComponentsCount; i++) {
-        const componentRawCanvas = new ComponentUIRawCanvasClass(this.view.getContext())
-        const component = new ComponentClass(componentRawCanvas)
-
-        component.addSource(this.dataSource)
-        this.view.addComponent(component)
-      }
-      this.view.start()
+      this.addRawCanvasComponents(rawCanvasComponentsCount)
     })
 
-    this.appElement.appendChild(this.view.start())
+    //
+    // Service buttons
+    //
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
@@ -53,9 +48,29 @@ class ApplicationCanvas implements App {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
       this.moveTest(movedComponentsCount)
     })
+  }
+
+  start() {
+    // View
+    this.view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
+
+    this.dataSource = new DateSourceClass()
+
+    this.appElement.appendChild(this.view.start())
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addRawCanvasComponents(componentsCount: number) {
+    for (let i = 0; i < componentsCount; i++) {
+      const componentRawCanvas = new ComponentUIRawCanvasClass(this.view.getContext())
+      const component = new ComponentClass(componentRawCanvas)
+
+      component.addSource(this.dataSource)
+      this.view.addComponent(component)
+    }
+    this.view.start()
   }
 
   moveTest(movedComponentsCount = 0) {

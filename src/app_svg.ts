@@ -18,30 +18,26 @@ class Application implements App {
     this.appElement = appElement
     this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
+
+    this.initButtonBindings()
   }
 
-  start() {
-    // View
-    this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
-
-    this.dataSource = new DateSourceClass()
+  initButtonBindings() {
+    //
+    // Init add components
+    //
 
     // Add Svg Grouped component
     addClick('addSvgComponentsInSvg', () => {
       const svgElementsCount = getInputNumber('svgElementsInSvgCount')
       const svgComponentsCount = getInputNumber('svgComponentsInSvgCount')
 
-      for (let i = 0; i < svgComponentsCount; i++) {
-        const componentSvgUI = new ComponentUISvgClass(svgElementsCount, 'g')
-        const component = new ComponentClass(componentSvgUI)
-
-        component.addSource(this.dataSource)
-        this.view.addComponent(component)
-      }
-      this.view.start()
+      this.addSvgComponentsInSvg(svgComponentsCount, svgElementsCount)
     })
 
-    this.appElement.appendChild(this.view.start())
+    //
+    // Service buttons
+    //
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
@@ -54,9 +50,27 @@ class Application implements App {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
       this.moveTest(movedComponentsCount)
     })
+  }
+
+  start() {
+    // View
+    this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
+    this.dataSource = new DateSourceClass()
+    this.appElement.appendChild(this.view.start())
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addSvgComponentsInSvg(componentsCount: number, elementsCount: number) {
+    for (let i = 0; i < componentsCount; i++) {
+      const componentSvgUI = new ComponentUISvgClass(elementsCount, 'g')
+      const component = new ComponentClass(componentSvgUI)
+
+      component.addSource(this.dataSource)
+      this.view.addComponent(component)
+    }
+    this.view.start()
   }
 
   moveTest(movedComponentsCount = 0) {
