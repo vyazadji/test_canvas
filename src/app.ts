@@ -7,6 +7,7 @@ import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 import DateSourceClass from './DataSource'
 import CanvasEditor from './CanvasEditor'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import type { DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
 
@@ -19,24 +20,29 @@ interface App {
  */
 class Application implements App {
   appElement: HTMLElement
+  dataSource: DataSource
+  view: ViewClass
 
   constructor(appElement: HTMLElement) {
     this.appElement = appElement
+    this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
+    this.dataSource = new DateSourceClass()
+  }
+
+  addSvgInHtmlComponents(svgComponentsCount: number, svgElementsCount: number) {
+    for (let i = 0; i < svgComponentsCount; i++) {
+      const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
+      const component = new ComponentClass(componentSvgUI)
+
+      component.addSource(this.dataSource)
+      this.view.addComponent(component)
+    }
+    this.view.start()
   }
 
   start() {
     // View
-    const view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
-
-    // component html 1
-    /* const componentHtmlUi = new ComponentUIHtmlClass()
-    const component1 = new ComponentClass(componentHtmlUi)
-    const dataSource1 = new DateSourceClass()
-    component1.addSource(dataSource1)
-    view.addComponent(component1) */
-
-    //
-    const dataSource = new DateSourceClass()
+    this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
 
     // Canvas editor
     const canvasEditor = new CanvasEditor()
@@ -45,10 +51,10 @@ class Application implements App {
         const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
         const component3 = new ComponentClass(componentFabricCanvas)
 
-        component3.addSource(dataSource)
-        view.addComponent(component3)
+        component3.addSource(this.dataSource)
+        this.view.addComponent(component3)
       }
-      view.start()
+      this.view.start()
     }
 
     // SVG components
@@ -56,14 +62,7 @@ class Application implements App {
       const svgElementsCount = getInputNumber('svgElementsInHtmlCount')
       const svgComponentsCount = getInputNumber('svgComponentsInHtmlCount')
 
-      for (let i = 0; i < svgComponentsCount; i++) {
-        const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
-        const component = new ComponentClass(componentSvgUI)
-
-        component.addSource(dataSource)
-        view.addComponent(component)
-      }
-      view.start()
+      this.addSvgInHtmlComponents(svgComponentsCount, svgElementsCount)
     })
 
     // Canvas components
@@ -74,11 +73,11 @@ class Application implements App {
         const componentCanvasUI = new ComponentUICanvasClass()
         const component = new ComponentClass(componentCanvasUI)
 
-        component.addSource(dataSource)
+        component.addSource(this.dataSource)
 
-        view.addComponent(component)
+        this.view.addComponent(component)
       }
-      view.start()
+      this.view.start()
     })
 
     // Add HTML components
@@ -90,36 +89,44 @@ class Application implements App {
         const componentHtmlUI = new ComponentUIHtmlClass(elementsCount)
         const component = new ComponentClass(componentHtmlUI)
 
-        component.addSource(dataSource)
+        component.addSource(this.dataSource)
 
-        view.addComponent(component)
+        this.view.addComponent(component)
       }
-      view.start()
+      this.view.start()
     })
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
       const interval = getInputNumber('updateInterval')
-      dataSource.updateInterval(interval * 1_000)
+      this.dataSource.updateInterval(interval * 1_000)
     })
 
     // Move Test
     addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
-      view.moveTest(movedComponentsCount)
+      this.moveTest(movedComponentsCount)
     })
 
     // Move Test2
     addClick('startMoveTest2', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
-      view.moveTest2(movedComponentsCount)
+      this.view.moveTest2(movedComponentsCount)
     })
 
     // start View
-    this.appElement.appendChild(view.start())
+    this.appElement.appendChild(this.view.start())
 
     // start DataSources
-    dataSource.start()
+    this.dataSource.start()
+  }
+
+  moveTest(movedComponentsCount = 0) {
+    this.view.moveTest(movedComponentsCount)
+  }
+
+  stopDataSource() {
+    this.dataSource.updateInterval(0)
   }
 }
 
