@@ -4,57 +4,66 @@ import ComponentUIRawCanvasClass from './ComponentUIRawCanvas'
 import DateSourceClass from './DataSource'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
-
-interface App {
-  appElement: HTMLElement
-}
+import type { App, DataSource } from './type'
 
 /**
  * Application with Canvas layer
  */
 class ApplicationCanvas implements App {
   appElement: HTMLElement
+  dataSource: DataSource
+  view: ViewCanvas
 
   constructor(appElement: HTMLElement) {
     this.appElement = appElement
+    this.view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
+    this.dataSource = new DateSourceClass()
   }
 
   start() {
     // View
-    const view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
+    this.view = new ViewCanvas(VIEW_HEIGHT, VIEW_WIDTH)
 
-    const dataSource = new DateSourceClass()
+    this.dataSource = new DateSourceClass()
 
     // Add Canvas component
     addClick('addRawCanvasInCanvasView', () => {
       const rawCanvasComponentsCount = getInputNumber('rawCanvasComponentsCount')
 
       for (let i = 0; i < rawCanvasComponentsCount; i++) {
-        const componentRawCanvas = new ComponentUIRawCanvasClass(view.getContext())
+        const componentRawCanvas = new ComponentUIRawCanvasClass(this.view.getContext())
         const component = new ComponentClass(componentRawCanvas)
 
-        component.addSource(dataSource)
-        view.addComponent(component)
+        component.addSource(this.dataSource)
+        this.view.addComponent(component)
       }
-      view.start()
+      this.view.start()
     })
 
-    this.appElement.appendChild(view.start())
+    this.appElement.appendChild(this.view.start())
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
       const interval = getInputNumber('updateInterval')
-      dataSource.updateInterval(interval * 1_000)
+      this.dataSource.updateInterval(interval * 1_000)
     })
 
     // Move Test
     addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
-      view.moveTest(movedComponentsCount)
+      this.moveTest(movedComponentsCount)
     })
 
     // start DataSources
-    dataSource.start()
+    this.dataSource.start()
+  }
+
+  moveTest(movedComponentsCount = 0) {
+    this.view.moveTest(movedComponentsCount)
+  }
+
+  stopDataSource() {
+    this.dataSource.updateInterval(0)
   }
 }
 

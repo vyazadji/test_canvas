@@ -1,5 +1,6 @@
 import FPSMonitor from './FPSMonitor'
 import { addClick } from './utils/helpers'
+import type { App } from './type'
 
 /**
  * This is a test of performance for different technogies
@@ -34,7 +35,7 @@ class PerformanceTest {
     window.location.href = url.toString()
   }
 
-  async test(app) {
+  async test(app: App) {
     console.log('Test #1 html page', app)
 
     const fpsMonitor = new FPSMonitor()

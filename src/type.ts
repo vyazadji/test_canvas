@@ -1,3 +1,11 @@
+// Application
+export interface App {
+  appElement: HTMLElement
+  start: () => void
+  moveTest: (components?: number) => void
+  stopDataSource: () => void
+}
+
 // "scene" for components
 export interface View {
   addComponent: (component: Component) => void
@@ -25,6 +33,7 @@ export interface ComponentUI {
 export interface DataSource {
   start: () => void
   addListener: (listener: DataSourceListener) => void
+  updateInterval: (interval: number) => void
 }
 
 export interface DataSourceListener {

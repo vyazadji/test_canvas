@@ -7,13 +7,9 @@ import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 import DateSourceClass from './DataSource'
 import CanvasEditor from './CanvasEditor'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import type { DataSource } from './type'
+import type { App, DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
-
-interface App {
-  appElement: HTMLElement
-}
 
 /**
  * Application with HTML layer
@@ -27,17 +23,6 @@ class Application implements App {
     this.appElement = appElement
     this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
-  }
-
-  addSvgInHtmlComponents(svgComponentsCount: number, svgElementsCount: number) {
-    for (let i = 0; i < svgComponentsCount; i++) {
-      const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
-      const component = new ComponentClass(componentSvgUI)
-
-      component.addSource(this.dataSource)
-      this.view.addComponent(component)
-    }
-    this.view.start()
   }
 
   start() {
@@ -119,6 +104,17 @@ class Application implements App {
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addSvgInHtmlComponents(svgComponentsCount: number, svgElementsCount: number) {
+    for (let i = 0; i < svgComponentsCount; i++) {
+      const componentSvgUI = new ComponentUISvgClass(svgElementsCount)
+      const component = new ComponentClass(componentSvgUI)
+
+      component.addSource(this.dataSource)
+      this.view.addComponent(component)
+    }
+    this.view.start()
   }
 
   moveTest(movedComponentsCount = 0) {

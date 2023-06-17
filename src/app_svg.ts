@@ -4,26 +4,27 @@ import ComponentUISvgClass from './ComponentUISvg'
 import DateSourceClass from './DataSource'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
-
-interface App {
-  appElement: HTMLElement
-}
+import type { App, DataSource } from './type'
 
 /**
  * Application with SVG layer
  */
 class Application implements App {
   appElement: HTMLElement
+  dataSource: DataSource
+  view: ViewSVGClass
 
   constructor(appElement: HTMLElement) {
     this.appElement = appElement
+    this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
+    this.dataSource = new DateSourceClass()
   }
 
   start() {
     // View
-    const view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
+    this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
 
-    const dataSource = new DateSourceClass()
+    this.dataSource = new DateSourceClass()
 
     // Add Svg Grouped component
     addClick('addSvgComponentsInSvg', () => {
@@ -34,28 +35,36 @@ class Application implements App {
         const componentSvgUI = new ComponentUISvgClass(svgElementsCount, 'g')
         const component = new ComponentClass(componentSvgUI)
 
-        component.addSource(dataSource)
-        view.addComponent(component)
+        component.addSource(this.dataSource)
+        this.view.addComponent(component)
       }
-      view.start()
+      this.view.start()
     })
 
-    this.appElement.appendChild(view.start())
+    this.appElement.appendChild(this.view.start())
 
     // Data Source Settings
     addClick('setDataSourceSettings', () => {
       const interval = getInputNumber('updateInterval')
-      dataSource.updateInterval(interval * 1_000)
+      this.dataSource.updateInterval(interval * 1_000)
     })
 
     // Move Test
     addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
-      view.moveTest(movedComponentsCount)
+      this.moveTest(movedComponentsCount)
     })
 
     // start DataSources
-    dataSource.start()
+    this.dataSource.start()
+  }
+
+  moveTest(movedComponentsCount = 0) {
+    this.view.moveTest(movedComponentsCount)
+  }
+
+  stopDataSource() {
+    this.dataSource.updateInterval(0)
   }
 }
 
