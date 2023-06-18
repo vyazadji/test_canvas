@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search)
   const view = urlParams.get('view') || VIEW_TYPE.HTML
   const test = urlParams.get('test') || null
+  const testStep = urlParams.get('testStep') || 0
 
   const performanceTest = new PerformanceTest()
 
@@ -39,6 +40,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   if (test) {
-    await performanceTest.runTestCase(app, Number(test))
+    await performanceTest.runTestCase(app, Number(test), Number(testStep))
   }
 })
