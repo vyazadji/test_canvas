@@ -22,10 +22,11 @@ class FPSMonitor {
   }
 
   /**
-   * Start fps calculation on some time.
-   * return average fps for this time
+   * Start fps calculation for a defined duration.
+   * @duration in sec
+   * return average FPS for this duration
    */
-  test(time: number): Promise<number> {
+  test(duration: number): Promise<number> {
     // Reset totalFrames, totalSeconds, and lastTime at the start of each test.
     this.totalFrames = 0
     this.totalSeconds = 0
@@ -35,10 +36,10 @@ class FPSMonitor {
 
     return new Promise((resolve) => {
       const interval = setInterval(() => {
-        if (this.totalSeconds >= time) {
+        if (this.totalSeconds >= duration) {
           clearInterval(interval)
           this.shouldCalculateFPS = false
-          resolve(this.totalFrames / this.totalSeconds)
+          resolve(Math.round(this.totalFrames / this.totalSeconds))
         }
       }, 1000)
     })
