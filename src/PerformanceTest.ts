@@ -37,6 +37,9 @@ class PerformanceTest {
     })
 
     this.testCases = [
+      //
+      // HTML view
+      //
       {
         viewType: VIEW_TYPE.HTML,
         note: 'Html view with HTML components',
@@ -74,6 +77,13 @@ class PerformanceTest {
       },
       {
         viewType: VIEW_TYPE.HTML,
+        note: 'Html view with HTML components. Dependence on the number of elements',
+        componentsType: 'HTML',
+        componentsCount: 500,
+        elementsCount: 10,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
         note: 'Html view with SVG components',
         componentsType: 'SVG',
         componentsCount: 100,
@@ -84,13 +94,6 @@ class PerformanceTest {
         note: 'Html view with SVG components',
         componentsType: 'SVG',
         componentsCount: 500,
-        elementsCount: 2,
-      },
-      {
-        viewType: VIEW_TYPE.HTML,
-        note: 'Html view with SVG components',
-        componentsType: 'SVG',
-        componentsCount: 1000,
         elementsCount: 2,
       },
       {
@@ -111,18 +114,19 @@ class PerformanceTest {
         viewType: VIEW_TYPE.HTML,
         note: 'Html view with Canvas components',
         componentsType: 'Canvas',
-        componentsCount: 1000,
+        componentsCount: 500,
         elementsCount: 2,
       },
-      /* {
+      {
         viewType: VIEW_TYPE.HTML,
-        note: 'Html view; html components',
+        note: 'Html view with Canvas components',
+        componentsType: 'Canvas',
+        componentsCount: 2000,
         elementsCount: 2,
-        addComponents: (app: AppHTML, componentsCount: number, elementsCount: number) => {
-          app.addSvgInHtmlComponents(componentsCount, elementsCount)
-        },
       },
-*/
+      //
+      // SVG view
+      //
       {
         viewType: VIEW_TYPE.SVG,
         note: 'SVG view',
@@ -131,10 +135,90 @@ class PerformanceTest {
         elementsCount: 2,
       },
       {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 500,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 1000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 2000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 3000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 5000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.SVG,
+        note: 'SVG view. Dependence on the number of elements',
+        componentsType: 'SVG',
+        componentsCount: 500,
+        elementsCount: 10,
+      },
+      //
+      // Canvas view
+      //
+      {
         viewType: VIEW_TYPE.CANVAS,
         note: 'Canvas view',
         componentsType: 'Canvas',
         componentsCount: 100,
+        elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
+      },
+      {
+        viewType: VIEW_TYPE.CANVAS,
+        note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 500,
+        elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
+      },
+      {
+        viewType: VIEW_TYPE.CANVAS,
+        note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 1000,
+        elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
+      },
+      {
+        viewType: VIEW_TYPE.CANVAS,
+        note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 2000,
+        elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
+      },
+      {
+        viewType: VIEW_TYPE.CANVAS,
+        note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 3000,
+        elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
+      },
+      {
+        viewType: VIEW_TYPE.CANVAS,
+        note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 5000,
         elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
       },
     ]
