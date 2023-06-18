@@ -39,7 +39,7 @@ class FPSMonitor {
         if (this.totalSeconds >= duration) {
           clearInterval(interval)
           this.shouldCalculateFPS = false
-          resolve(Math.round(this.totalFrames / this.totalSeconds))
+          resolve(Math.round(this.totalFrames / (this.totalSeconds - 1))) // -1 because we skip the first FPS value
         }
       }, 1000)
     })
@@ -54,11 +54,17 @@ class FPSMonitor {
     const difference: number = currentTime - this.lastTime
 
     if (difference >= 1000) {
-      console.log('FPS:', this.frameCount)
-      this.totalFrames += this.frameCount
+      // very often on the first step FPS is very different
+      // so let's ignore for average calculation
+      console.log(`FPS ${this.totalSeconds === 0 ? '(ignore)' : ''}:`, this.frameCount)
+      if (this.totalSeconds > 0) {
+        this.totalFrames += this.frameCount
+      }
+      this.totalSeconds++
+
+      // prepare for the next calculation step
       this.frameCount = 0
       this.lastTime = currentTime
-      this.totalSeconds++
     }
 
     requestAnimationFrame(() => this.calculateFPS())
