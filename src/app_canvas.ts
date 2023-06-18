@@ -6,14 +6,14 @@ import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
 import type { App, DataSource } from './type'
 
-export interface AppCanvas extends App {
-  addRawCanvasComponents: (componentsCount: number) => void
-}
+// export interface AppCanvas extends App {
+//   addRawCanvasComponents: (componentsCount: number) => void
+// }
 
 /**
  * Application with Canvas layer
  */
-class ApplicationCanvas implements AppCanvas {
+class ApplicationCanvas implements App {
   appElement: HTMLElement
   dataSource: DataSource
   view: ViewCanvas
@@ -64,6 +64,17 @@ class ApplicationCanvas implements AppCanvas {
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addComponents(componentType: string, componentsCount: number, _elementsCount: number) {
+    switch (componentType) {
+      case 'Canvas':
+        this.addRawCanvasComponents(componentsCount)
+        break
+
+      default:
+        throw new Error(`Canvas App: unknown component type:${componentType}`)
+    }
   }
 
   addRawCanvasComponents(componentsCount: number) {

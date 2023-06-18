@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search)
   const view = urlParams.get('view') || VIEW_TYPE.HTML
   const test = urlParams.get('test') || null
-  console.log('testCase:', test)
 
   const performanceTest = new PerformanceTest()
 

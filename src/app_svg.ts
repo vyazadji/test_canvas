@@ -66,6 +66,17 @@ class Application implements AppSVG {
     this.dataSource.start()
   }
 
+  addComponents(componentType: string, componentsCount: number, elementsCount: number) {
+    switch (componentType) {
+      case 'SVG':
+        this.addSvgComponentsInSvg(componentsCount, elementsCount)
+        break
+
+      default:
+        throw new Error(`SVG App: unknown component type:${componentType}`)
+    }
+  }
+
   addSvgComponentsInSvg(componentsCount: number, elementsCount: number) {
     for (let i = 0; i < componentsCount; i++) {
       const componentSvgUI = new ComponentUISvgClass(elementsCount, 'g')

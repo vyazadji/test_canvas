@@ -11,14 +11,14 @@ import type { App, DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
 
-export interface AppHTML extends App {
+/* export interface AppHTML extends App {
   addSvgInHtmlComponents: (componentsCount: number, elementsCount: number) => void
-}
+} */
 
 /**
  * Application with HTML layer
  */
-class Application implements AppHTML {
+class Application implements App {
   appElement: HTMLElement
   dataSource: DataSource
   view: ViewClass
@@ -96,6 +96,24 @@ class Application implements AppHTML {
 
     // start DataSources
     this.dataSource.start()
+  }
+
+  addComponents(componentType: string, componentsCount: number, elementsCount: number) {
+    switch (componentType) {
+      case 'HTML':
+        this.addHtmlComponents(componentsCount, elementsCount)
+        break
+      case 'SVG':
+        this.addSvgInHtmlComponents(componentsCount, elementsCount)
+        break
+
+      case 'Canvas':
+        this.addCanvasComponents(componentsCount)
+        break
+
+      default:
+        throw new Error(`HTML app: unknown component type:${componentType}`)
+    }
   }
 
   addHtmlComponents(componentsCount: number, elementsCount: number) {

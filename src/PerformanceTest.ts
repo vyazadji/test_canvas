@@ -1,17 +1,14 @@
 import FPSMonitor from './FPSMonitor'
 import { addClick } from './utils/helpers'
 import type { App } from './type'
-import type { AppHTML } from './app'
-import Application from './app'
-import type { AppSVG } from './app_svg'
-import type { AppCanvas } from './app_canvas'
 import { VIEW_TYPE } from './consts'
 
 type TestCase = {
   viewType: string
   note: string
+  componentsCount: number
   elementsCount: number
-  addComponents: (app: App, componentsCount: number, elementsCount?: number) => void
+  componentsType: string
 }
 
 type TestCaseResult = {
@@ -32,7 +29,7 @@ class PerformanceTest {
   localStorageKey: string
 
   constructor() {
-    this.testDuration = 2 // sec
+    this.testDuration = 4 // sec
     this.localStorageKey = 'performanceTest'
 
     addClick('startPerformanceTest', () => {
@@ -42,15 +39,80 @@ class PerformanceTest {
     this.testCases = [
       {
         viewType: VIEW_TYPE.HTML,
-        note: 'Html view; html components',
+        note: 'Html view with HTML components',
+        componentsType: 'HTML',
+        componentsCount: 100,
         elementsCount: 2,
-        addComponents: (app: App, componentsCount: number, elementsCount = 2) => {
-          if (app instanceof Application) {
-            app.addSvgInHtmlComponents(componentsCount, elementsCount)
-          } else {
-            console.warn('Incomplete app type')
-          }
-        },
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with HTML components',
+        componentsType: 'HTML',
+        componentsCount: 500,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with HTML components',
+        componentsType: 'HTML',
+        componentsCount: 1000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with HTML components',
+        componentsType: 'HTML',
+        componentsCount: 2000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with HTML components',
+        componentsType: 'HTML',
+        componentsCount: 3000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with SVG components',
+        componentsType: 'SVG',
+        componentsCount: 100,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with SVG components',
+        componentsType: 'SVG',
+        componentsCount: 500,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with SVG components',
+        componentsType: 'SVG',
+        componentsCount: 1000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with SVG components',
+        componentsType: 'SVG',
+        componentsCount: 2000,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with Canvas components',
+        componentsType: 'Canvas',
+        componentsCount: 100,
+        elementsCount: 2,
+      },
+      {
+        viewType: VIEW_TYPE.HTML,
+        note: 'Html view with Canvas components',
+        componentsType: 'Canvas',
+        componentsCount: 1000,
+        elementsCount: 2,
       },
       /* {
         viewType: VIEW_TYPE.HTML,
@@ -60,21 +122,20 @@ class PerformanceTest {
           app.addSvgInHtmlComponents(componentsCount, elementsCount)
         },
       },
+*/
       {
         viewType: VIEW_TYPE.SVG,
         note: 'SVG view',
+        componentsType: 'SVG',
+        componentsCount: 100,
         elementsCount: 2,
-        addComponents: (app: AppSVG, componentsCount: number, elementsCount: number) => {
-          app.addSvgComponentsInSvg(componentsCount, elementsCount)
-        },
-      }, */
+      },
       {
         viewType: VIEW_TYPE.CANVAS,
         note: 'Canvas view',
+        componentsType: 'Canvas',
+        componentsCount: 100,
         elementsCount: 2, // NOTE we can't change. In Canvas we can create component only from 2 elements
-        addComponents: (app: AppCanvas, componentsCount: number, _el: number) => {
-          app.addRawCanvasComponents(componentsCount)
-        },
       },
     ]
   }
@@ -88,15 +149,16 @@ class PerformanceTest {
   }
 
   async runTestCase(app: App, testNumber: number) {
-    console.log(`Test #${testNumber} html page`)
+    const { viewType, note, componentsType, componentsCount, elementsCount } = this.testCases[testNumber]
+
+    console.log(
+      `Test #${testNumber} View type:${viewType}; Component type:${componentsType}; Components:${componentsCount} ; Elements:${elementsCount}`
+    )
 
     const fpsMonitor = new FPSMonitor()
 
-    const componentsCount = 50
-    const { viewType, note, elementsCount, addComponents } = this.testCases[testNumber]
-
     // add elements
-    addComponents(app, componentsCount, elementsCount)
+    app.addComponents(componentsType, componentsCount, elementsCount)
 
     // start moving
     app.moveTest()
@@ -105,6 +167,7 @@ class PerformanceTest {
     const avarageFPS = await fpsMonitor.test(this.testDuration)
     console.log('Avarage FPS:', avarageFPS)
 
+    console.log('Disable DataSource')
     // stop Data Source
     app.stopDataSource()
     const noDataSourceavarageFPS = await fpsMonitor.test(this.testDuration)
@@ -113,18 +176,18 @@ class PerformanceTest {
     const results: TestCaseResult[] = [
       {
         viewType,
+        note,
         componentsCount,
         elementsCount,
         isDataSource: true,
-        note,
         FPS: avarageFPS,
       },
       {
         viewType,
+        note,
         componentsCount,
         elementsCount,
         isDataSource: false,
-        note,
         FPS: noDataSourceavarageFPS,
       },
     ]
@@ -134,7 +197,10 @@ class PerformanceTest {
     // got to next test
     if (this.testCases.length === testNumber + 1) {
       // this the last test
-      console.log('!!! THIS is the Testing End !!!')
+      console.log('Test is finisined! ')
+      console.warn(
+        'Copy all the results and transfer them to a general table including the characteristics of your hardware'
+      )
       const allResults = this.getResults()
       console.table(allResults)
     } else {

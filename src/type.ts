@@ -2,6 +2,7 @@
 export interface App {
   appElement: HTMLElement
   start: () => void
+  addComponents: (componentType: string, componentsCount: number, elementsCount: number) => void
   moveTest: (components?: number) => void
   stopDataSource: () => void
 }
