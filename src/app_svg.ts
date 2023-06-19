@@ -5,6 +5,7 @@ import DateSourceClass from './DataSource'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
 import type { App, DataSource } from './type'
+import ZoomManager from './ZoomManager'
 
 export interface AppSVG extends App {
   addSvgComponentsInSvg: (componentsCount: number, elementsCount: number) => void
@@ -22,6 +23,11 @@ class Application implements AppSVG {
     this.appElement = appElement
     this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
+
+    const zoom = new ZoomManager()
+    zoom.onChange = (value) => {
+      this.view.zoom(value)
+    }
 
     this.initButtonBindings()
   }
