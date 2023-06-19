@@ -8,10 +8,13 @@ const MIN = 0
 class ZoomManager {
   value: number
   inputEl: HTMLInputElement
+  key: string
 
-  constructor() {
+  constructor(key = 'transform') {
     this.value = 100
-    this.inputEl = document.getElementById('zoom') as HTMLInputElement
+    this.key = key
+
+    this.inputEl = document.getElementById(`zoom-${this.key}`) as HTMLInputElement
 
     this.initButtonBindings()
     this.updateValue(this.value)
@@ -23,12 +26,12 @@ class ZoomManager {
 
   initButtonBindings() {
     // +
-    addClick('zoomAdd', () => {
+    addClick(`zoomAdd-${this.key}`, () => {
       this.updateValue(this.value + 1)
     })
 
     // -
-    addClick('zoomReduce', () => {
+    addClick(`zoomReduce-${this.key}`, () => {
       this.updateValue(this.value - 1)
     })
 
@@ -49,7 +52,7 @@ class ZoomManager {
     this.inputEl.value = newValue.toString()
 
     if (this.onChange) {
-      this.onChange(this.value)
+      this.onChange(this.value / 100) // 1 = 100%. -zoom < 1 ; +zoom > 1
     }
   }
 }

@@ -24,9 +24,14 @@ class Application implements AppSVG {
     this.view = new ViewSVGClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
 
-    const zoom = new ZoomManager()
-    zoom.onChange = (value) => {
-      this.view.zoom(value)
+    const zoomTransform = new ZoomManager('transform')
+    zoomTransform.onChange = (value) => {
+      this.view.zoomTransform(value)
+    }
+
+    const zoomViewBox = new ZoomManager('viewBox')
+    zoomViewBox.onChange = (value) => {
+      this.view.zoomViewBox(value)
     }
 
     this.initButtonBindings()

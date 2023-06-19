@@ -159,8 +159,8 @@ class ViewDashboard {
     countEl.innerText = this.components.length.toString()
   }
 
-  zoom(value: number): void {
-    this.containerEl.style.transform = `scale(${value / 100})`
+  zoomTransform(zoom: number): void {
+    this.containerEl.style.transform = `scale(${zoom})`
   }
 }
 

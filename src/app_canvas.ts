@@ -25,8 +25,8 @@ class ApplicationCanvas implements App {
     this.dataSource = new DateSourceClass()
 
     const zoom = new ZoomManager()
-    zoom.onChange = (value) => {
-      this.view.zoom(value)
+    zoom.onChange = (newZoom) => {
+      this.view.zoomTransform(newZoom)
     }
 
     this.initButtonBindings()

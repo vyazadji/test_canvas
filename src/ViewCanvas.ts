@@ -91,8 +91,8 @@ class ViewCanvasDashboard {
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
   }
 
-  zoom(value: number): void {
-    this.containerEl.style.transform = `scale(${value / 100})`
+  zoomTransform(zoom: number): void {
+    this.containerEl.style.transform = `scale(${zoom})`
   }
 }
 

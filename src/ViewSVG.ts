@@ -95,8 +95,14 @@ class ViewSvgDashboard {
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
   }
 
-  zoom(value: number): void {
-    this.containerEl.style.transform = `scale(${value / 100})`
+  zoomTransform(zoom: number): void {
+    this.containerEl.style.transform = `scale(${zoom})`
+  }
+
+  zoomViewBox(zoom: number): void {
+    const zoomX = this.height / zoom
+    const zoomY = this.width / zoom
+    this.containerEl.setAttribute('viewBox', `0 0 ${zoomX} ${zoomY}`)
   }
 }
 

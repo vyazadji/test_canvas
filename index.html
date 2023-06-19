@@ -66,8 +66,8 @@
             </div>
             <button id="addHtmlComponents">Add Html Components</button>
           </div>
+          <hr/>
         </div>
-        <hr/>
         <!-- /HTML VIEW ONLY -->
 
         <!-- SVG VIEW ONLY -->
@@ -138,14 +138,26 @@
         <a href="./index.html?view=canvas">Canvas layer</a> 
         <!-- /Menu -->
       </div>
-      <div>
-        <h3>Zoom</h3>
+      <div style="padding:0 2rem">
         <div>
-          <span>Zoom</span>
-          <input value="" id="zoom" type="number"/>
+          <h3>Zoom: 'transform: scale()'</h3>
+          <div>
+            <span>Zoom</span>
+            <input value="" id="zoom-transform" type="number"/>
+          </div>
+          <button id="zoomReduce-transform">-</button>
+          <button id="zoomAdd-transform">+</button>
         </div>
-        <button id="zoomReduce">-</button>
-        <button id="zoomAdd">+</button>
+
+        <div class="view_svg_only" style="display: none">
+          <h3>Zoom SVG:ViewBox</h3>
+          <div>
+            <span>Zoom</span>
+            <input value="" id="zoom-viewBox" type="number"/>
+          </div>
+          <button id="zoomReduce-viewBox">-</button>
+          <button id="zoomAdd-viewBox">+</button>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
