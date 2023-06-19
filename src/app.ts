@@ -10,6 +10,7 @@ import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import type { App, DataSource } from './type'
 
 import { getInputNumber, addClick } from './utils/helpers'
+import ZoomManager from './ZoomManager'
 
 /* export interface AppHTML extends App {
   addSvgInHtmlComponents: (componentsCount: number, elementsCount: number) => void
@@ -28,6 +29,10 @@ class Application implements App {
     this.view = new ViewClass(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
 
+    const zoom = new ZoomManager()
+    zoom.onChange = (value) => {
+      this.view.zoom(value)
+    }
     this.initButtonBindings()
   }
 

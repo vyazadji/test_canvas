@@ -158,6 +158,10 @@ class ViewDashboard {
     const countEl = document.getElementById('componentCount') as HTMLButtonElement
     countEl.innerText = this.components.length.toString()
   }
+
+  zoom(value: number): void {
+    this.containerEl.style.transform = `scale(${value / 100})`
+  }
 }
 
 export default ViewDashboard
