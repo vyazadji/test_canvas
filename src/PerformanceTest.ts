@@ -23,7 +23,7 @@ type TestCaseResult = {
 const FPS_THRESHOLD = 25 // FPS
 const TEST_DURATION = 5 // sec
 
-const componentsCountSteps = [50, 500, 1000, 2000, 3000, 5000, 6000]
+const componentsCountSteps = [50, 500, 1000, 2000, 3000, 5000, 6000, 10_000]
 
 const TEST_CASES: TestCase[] = [
   //
