@@ -1,9 +1,10 @@
-import { ComponentUI } from './type'
 import { fabric } from 'fabric'
+
+import { ComponentUI } from './type'
 
 import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
-// UI Fabric Canvas implementation of component
+// UI Fabric UI component implementation for Canvas Fabric view
 class ComponentUICanvasFabricClass implements ComponentUI {
   private containerEl: HTMLCanvasElement
   private canvas: fabric.StaticCanvas

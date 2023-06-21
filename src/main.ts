@@ -2,6 +2,7 @@ import './style.css'
 import app_html from './app'
 import app_svg from './app_svg'
 import app_canvas from './app_canvas'
+import app_canvasFabric from './app_canvasFabric'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
@@ -33,6 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.start()
   } else if (view === VIEW_TYPE.CANVAS) {
     app = new app_canvas(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app.start()
+  } else if (view === VIEW_TYPE.CANVAS_FABRIC) {
+    app = new app_canvasFabric(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
     app.start()
   } else {
     alert('"view" is unknown. Please set correct view')

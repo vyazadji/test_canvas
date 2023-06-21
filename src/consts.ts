@@ -8,4 +8,5 @@ export const VIEW_TYPE = {
   HTML: 'html',
   SVG: 'svg',
   CANVAS: 'canvas',
+  CANVAS_FABRIC: 'canvasFabric',
 } as const

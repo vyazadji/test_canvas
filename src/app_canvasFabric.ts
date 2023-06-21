@@ -1,0 +1,105 @@
+import ViewCanvasFabric from './ViewCanvasFabric'
+// import ComponentClass from './Component'
+import DateSourceClass from './DataSource'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import { getInputNumber, addClick } from './utils/helpers'
+import type { App, DataSource } from './type'
+import ZoomManager from './ZoomManager'
+
+/**
+ * Application with Canvas layer implemented via Fabric.js lib
+ */
+class ApplicationCanvasFabric implements App {
+  appElement: HTMLElement
+  dataSource: DataSource
+  view: ViewCanvasFabric
+
+  constructor(appElement: HTMLElement) {
+    this.appElement = appElement
+
+    // Fabric adds position absolute
+    // So prepare parent element for this
+    this.appElement.style.position = 'relative'
+    this.appElement.style.width = VIEW_WIDTH + 'px'
+    this.appElement.style.height = VIEW_HEIGHT + 'px'
+
+    this.view = new ViewCanvasFabric(VIEW_HEIGHT, VIEW_WIDTH)
+    this.dataSource = new DateSourceClass()
+
+    const zoom = new ZoomManager()
+    zoom.onChange = (newZoom) => {
+      this.view.zoomTransform(newZoom)
+    }
+
+    this.initButtonBindings()
+  }
+
+  initButtonBindings() {
+    //
+    // Init add components
+    //
+    // Add Canvas component
+    addClick('addCanvasFabricInFabricView', () => {
+      const fabricComponentsCount = getInputNumber('fabricComponentsCount')
+      this.addFabricComponents(fabricComponentsCount)
+    })
+    //
+    // Service buttons
+    //
+    // Data Source Settings
+    /* addClick('setDataSourceSettings', () => {
+      const interval = getInputNumber('updateInterval')
+      this.dataSource.updateInterval(interval * 1_000)
+    }) */
+    // Move Test
+    /* addClick('startMoveTest', () => {
+      const movedComponentsCount = getInputNumber('movedComponentsCount')
+      this.moveTest(movedComponentsCount)
+    }) */
+  }
+
+  start() {
+    // View
+    this.view = new ViewCanvasFabric(VIEW_HEIGHT, VIEW_WIDTH)
+
+    this.dataSource = new DateSourceClass()
+
+    this.appElement.appendChild(this.view.start())
+
+    // start DataSources
+    this.dataSource.start()
+  }
+
+  addComponents(componentType: string, componentsCount: number, _elementsCount: number) {
+    switch (componentType) {
+      case 'CanvasFabric':
+        this.addFabricComponents(componentsCount)
+        break
+
+      default:
+        throw new Error(`Canvas Fabric App: unknown component type:${componentType}`)
+    }
+  }
+
+  addFabricComponents(componentsCount: number) {
+    console.log('// TODO implement add Fabric components', componentsCount)
+    /* for (let i = 0; i < componentsCount; i++) {
+      const componentRawCanvas = new ComponentUIRawCanvasClass(this.view.getContext())
+      const component = new ComponentClass(componentRawCanvas)
+
+      component.addSource(this.dataSource)
+      this.view.addComponent(component)
+    } */
+    this.view.start()
+  }
+
+  moveTest(movedComponentsCount = 0) {
+    this.view.moveTest(movedComponentsCount)
+  }
+
+  stopDataSource() {
+    this.dataSource.updateInterval(0)
+  }
+}
+
+export default ApplicationCanvasFabric
