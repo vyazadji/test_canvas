@@ -1,37 +1,38 @@
+import { random } from 'lodash'
 import { fabric } from 'fabric'
 
+import { getRandomColor } from './utils/colors'
 import { ComponentUI } from './type'
 
 import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
 
 // UI Fabric UI component implementation for Canvas Fabric view
 class ComponentUICanvasFabricClass implements ComponentUI {
-  private containerEl: HTMLCanvasElement
-  private canvas: fabric.StaticCanvas
+  private canvas: fabric.Canvas
+  private element: fabric.Rect
 
-  constructor(serializedCanvas: object) {
-    const canvasEl = document.createElement('canvas')
-    canvasEl.height = COMPONENT_HEIGHT
-    canvasEl.width = COMPONENT_WIDTH
+  constructor(canvas: fabric.Canvas) {
+    this.canvas = canvas
 
-    this.containerEl = canvasEl
-
-    this.canvas = new fabric.StaticCanvas(canvasEl)
-    this.canvas.loadFromJSON(serializedCanvas, () => {
-      // console.log('--loadFromJSON callback: ---')
+    const rect = new fabric.Rect({
+      left: random(750), // TODO set depends on view size
+      top: random(750), // TODO set depends on view size
+      fill: getRandomColor(),
+      width: COMPONENT_WIDTH,
+      height: COMPONENT_HEIGHT,
     })
+
+    this.element = rect
   }
 
   draw(number: number) {
-    const textObjects = this.canvas.getObjects('text') as fabric.Text[]
-    textObjects.forEach((text: fabric.Text) => {
-      text.set('text', number.toString())
-    })
-    this.canvas.renderAll()
+    console.log('draw canvas UI. // TODO number', number)
+
+    this.canvas.add(this.element)
   }
 
   getElement() {
-    return this.containerEl
+    return this.element
   }
 }
 

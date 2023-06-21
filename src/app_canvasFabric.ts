@@ -1,6 +1,9 @@
 import ViewCanvasFabric from './ViewCanvasFabric'
-// import ComponentClass from './Component'
 import DateSourceClass from './DataSource'
+
+import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
+import ComponentClass from './Component'
+
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 import { getInputNumber, addClick } from './utils/helpers'
 import type { App, DataSource } from './type'
@@ -82,14 +85,13 @@ class ApplicationCanvasFabric implements App {
   }
 
   addFabricComponents(componentsCount: number) {
-    console.log('// TODO implement add Fabric components', componentsCount)
-    /* for (let i = 0; i < componentsCount; i++) {
-      const componentRawCanvas = new ComponentUIRawCanvasClass(this.view.getContext())
-      const component = new ComponentClass(componentRawCanvas)
+    for (let i = 0; i < componentsCount; i++) {
+      const componentUICanvasFabric = new ComponentUICanvasFabricClass(this.view.getCanvas())
+      const component = new ComponentClass(componentUICanvasFabric)
 
-      component.addSource(this.dataSource)
+      // component.addSource(this.dataSource)
       this.view.addComponent(component)
-    } */
+    }
     this.view.start()
   }
 
