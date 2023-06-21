@@ -3,7 +3,7 @@ import ComponentClass from './Component'
 import ComponentUIHtmlClass from './ComponentUIHtml'
 import ComponentUISvgClass from './ComponentUISvg'
 import ComponentUICanvasClass from './ComponentUICanvas'
-import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
+import ComponentUIHthmlCanvasFabricClass from './ComponentUIHtmlCanvasFabric'
 import DateSourceClass from './DataSource'
 import CanvasEditor from './CanvasEditor'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
@@ -135,7 +135,7 @@ class Application implements App {
 
   addCanvasFabricComponents(serializedCanvas: object, componentsCount: number) {
     for (let i = 0; i < componentsCount; i++) {
-      const componentFabricCanvas = new ComponentUICanvasFabricClass(serializedCanvas)
+      const componentFabricCanvas = new ComponentUIHthmlCanvasFabricClass(serializedCanvas)
       const component3 = new ComponentClass(componentFabricCanvas)
 
       component3.addSource(this.dataSource)
