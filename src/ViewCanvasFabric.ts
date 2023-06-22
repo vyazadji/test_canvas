@@ -1,8 +1,8 @@
 import { fabric } from 'fabric'
 
 import type { Component } from './type'
-// import ComponentUICanvasFabricClass from './ComponentUICanvasFabricClass'
-import PositionManager from './PositionManager'
+// import PositionManager from './PositionManager'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
 
 /**
  * Canvas layer
@@ -14,26 +14,39 @@ class ViewCanvasFabricDashboard {
   canvas: fabric.Canvas
 
   components: Component[]
-  movedComponents: Component[]
-  positionManager: PositionManager
+  // movedComponents: Component[]
+  // positionManager: PositionManager
 
-  constructor(height: number, width: number) {
+  constructor(height: number, width: number, appElement: HTMLElement) {
     this.components = []
     this.width = width
     this.height = height
 
-    this.movedComponents = []
+    /* this.movedComponents = []
     this.positionManager = new PositionManager({
       viewWidth: this.width,
       viewHeight: this.height,
-    })
+    }) */
 
     this.containerEl = document.createElement('canvas')
     this.containerEl.width = this.width
     this.containerEl.height = this.height
     this.containerEl.style.border = '1px solid red'
 
-    this.canvas = new fabric.Canvas(this.containerEl)
+    // Fabric requires existing in DOM element
+    appElement.appendChild(this.containerEl)
+
+    this.canvas = new fabric.Canvas(this.containerEl, { width: VIEW_WIDTH, height: VIEW_HEIGHT })
+
+    const rect = new fabric.Rect({
+      left: 100, // TODO set depends on view size
+      top: 100, // TODO set depends on view size
+      fill: 'red',
+      width: 100,
+      height: 100,
+    })
+
+    this.canvas.add(rect)
   }
 
   getCanvas(): fabric.Canvas {
@@ -46,13 +59,13 @@ class ViewCanvasFabricDashboard {
 
   start() {
     // clear all
-    // this.canvas.clear()
+    // this.canvas.clearContext()
 
     this.components.forEach((component) => {
       component.draw(0)
     })
 
-    this.canvas.renderAll()
+    // this.canvas.renderAll()
 
     this.updateComponentsCount()
 

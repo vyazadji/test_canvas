@@ -15,7 +15,7 @@ import ZoomManager from './ZoomManager'
 class ApplicationCanvasFabric implements App {
   appElement: HTMLElement
   dataSource: DataSource
-  view: ViewCanvasFabric
+  view?: ViewCanvasFabric
 
   constructor(appElement: HTMLElement) {
     this.appElement = appElement
@@ -26,12 +26,12 @@ class ApplicationCanvasFabric implements App {
     this.appElement.style.width = VIEW_WIDTH + 'px'
     this.appElement.style.height = VIEW_HEIGHT + 'px'
 
-    this.view = new ViewCanvasFabric(VIEW_HEIGHT, VIEW_WIDTH)
+    this.view = undefined
     this.dataSource = new DateSourceClass()
 
     const zoom = new ZoomManager()
     zoom.onChange = (newZoom) => {
-      this.view.zoomTransform(newZoom)
+      this.view?.zoomTransform(newZoom)
     }
 
     this.initButtonBindings()
@@ -63,11 +63,11 @@ class ApplicationCanvasFabric implements App {
 
   start() {
     // View
-    this.view = new ViewCanvasFabric(VIEW_HEIGHT, VIEW_WIDTH)
+    this.view = new ViewCanvasFabric(VIEW_HEIGHT, VIEW_WIDTH, this.appElement)
 
     this.dataSource = new DateSourceClass()
 
-    this.appElement.appendChild(this.view.start())
+    // this.appElement.appendChild(this.view.start())
 
     // start DataSources
     this.dataSource.start()
@@ -85,18 +85,20 @@ class ApplicationCanvasFabric implements App {
   }
 
   addFabricComponents(componentsCount: number) {
-    for (let i = 0; i < componentsCount; i++) {
-      const componentUICanvasFabric = new ComponentUICanvasFabricClass(this.view.getCanvas())
-      const component = new ComponentClass(componentUICanvasFabric)
+    if (this.view) {
+      for (let i = 0; i < componentsCount; i++) {
+        const componentUICanvasFabric = new ComponentUICanvasFabricClass(this.view.getCanvas())
+        const component = new ComponentClass(componentUICanvasFabric)
 
-      // component.addSource(this.dataSource)
-      this.view.addComponent(component)
+        // component.addSource(this.dataSource)
+        this.view?.addComponent(component)
+      }
+      this.view?.start()
     }
-    this.view.start()
   }
 
   moveTest(movedComponentsCount = 0) {
-    this.view.moveTest(movedComponentsCount)
+    this.view?.moveTest(movedComponentsCount)
   }
 
   stopDataSource() {
