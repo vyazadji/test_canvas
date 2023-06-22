@@ -50,10 +50,10 @@ class ApplicationCanvasFabric implements App {
     // Service buttons
     //
     // Data Source Settings
-    /* addClick('setDataSourceSettings', () => {
+    addClick('setDataSourceSettings', () => {
       const interval = getInputNumber('updateInterval')
       this.dataSource.updateInterval(interval * 1_000)
-    }) */
+    })
     // Move Test
     /* addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
@@ -90,7 +90,7 @@ class ApplicationCanvasFabric implements App {
         const componentUICanvasFabric = new ComponentUICanvasFabricClass(this.view.getCanvas())
         const component = new ComponentClass(componentUICanvasFabric)
 
-        // component.addSource(this.dataSource)
+        component.addSource(this.dataSource)
         this.view?.addComponent(component)
       }
       this.view?.start()

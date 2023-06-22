@@ -57,6 +57,7 @@ const figureTemplates = [
 class ComponentUICanvasFabricClass implements ComponentUI {
   private canvas: fabric.Canvas
   private figure: fabric.Object
+  private text: fabric.Text
   x: number
   y: number
 
@@ -69,13 +70,17 @@ class ComponentUICanvasFabricClass implements ComponentUI {
 
     const figureNumber = random(figureTemplates.length - 1)
 
+    this.text = new fabric.Text('...', { left: this.x + 20, top: this.y + 20 })
     this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y)
+    this.canvas.add(this.figure)
+    this.canvas.add(this.text)
   }
 
   draw(number: number) {
-    console.log('draw canvas UI. // TODO number', number)
-
-    this.canvas.add(this.figure)
+    this.text.set({ text: number.toString() })
+    // TODO On component's level redraw all canvas isn't efficient.
+    // Need to do it on view level. But it doesn't cover by the current architecture
+    // this.canvas.renderAll()
   }
 
   getElement() {
