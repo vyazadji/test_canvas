@@ -37,16 +37,6 @@ class ViewCanvasFabricDashboard {
     appElement.appendChild(this.containerEl)
 
     this.canvas = new fabric.Canvas(this.containerEl, { width: VIEW_WIDTH, height: VIEW_HEIGHT })
-
-    const rect = new fabric.Rect({
-      left: 100, // TODO set depends on view size
-      top: 100, // TODO set depends on view size
-      fill: 'red',
-      width: 100,
-      height: 100,
-    })
-
-    this.canvas.add(rect)
   }
 
   getCanvas(): fabric.Canvas {

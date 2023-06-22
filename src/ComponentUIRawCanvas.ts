@@ -67,8 +67,6 @@ class ComponentUIRawCanvasClass implements ComponentUI {
   private context: CanvasRenderingContext2D
   x: number
   y: number
-  directionX: number
-  directionY: number
   dataSourceNumber: number
   backgroundColor: string
   randomX: number
@@ -89,10 +87,6 @@ class ComponentUIRawCanvasClass implements ComponentUI {
     this.randomY = random(COMPONENT_HEIGHT)
 
     this.figure = random(figureTemplates.length - 1)
-
-    //init direction. need for moving
-    this.directionX = 0
-    this.directionY = 0
   }
 
   draw(number: number) {
