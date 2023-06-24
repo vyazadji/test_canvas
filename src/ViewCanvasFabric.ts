@@ -1,8 +1,9 @@
 import { fabric } from 'fabric'
 
 import type { Component } from './type'
-// import PositionManager from './PositionManager'
+import PositionManager from './PositionManager'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 
 /**
  * Canvas layer
@@ -14,19 +15,19 @@ class ViewCanvasFabricDashboard {
   canvas: fabric.Canvas
 
   components: Component[]
-  // movedComponents: Component[]
-  // positionManager: PositionManager
+  movedComponents: Component[]
+  positionManager: PositionManager
 
   constructor(height: number, width: number, appElement: HTMLElement) {
     this.components = []
     this.width = width
     this.height = height
 
-    /* this.movedComponents = []
+    this.movedComponents = []
     this.positionManager = new PositionManager({
       viewWidth: this.width,
       viewHeight: this.height,
-    }) */
+    })
 
     this.containerEl = document.createElement('canvas')
     this.containerEl.width = this.width
@@ -72,33 +73,34 @@ class ViewCanvasFabricDashboard {
    * All components be moved progrmatically
    */
   moveTest(movedComponentsCount = 0) {
-    console.log('// TODO Momve test ', movedComponentsCount)
-    /* this.movedComponents = this.components
+    this.movedComponents = this.components
     if (movedComponentsCount !== 0) {
       // 0 - means all components
       this.movedComponents = this.components.slice(0, movedComponentsCount)
     }
     this.movedComponents.forEach((component) => {
-      const el = component.getUIElement() as ComponentUIRawCanvasClass
+      const el = component.getUIElement() as ComponentUICanvasFabricClass
 
       this.positionManager.addPosition(el.x, el.y)
     })
 
-    this.moveElements() */
+    this.moveElements()
   }
 
-  /* moveElements() {
+  moveElements() {
     for (let i = 0; i < this.movedComponents.length; i++) {
       // update position
       const [x, y] = this.positionManager.calculateNextPosition(i)
 
       // set new position
-      const el = this.movedComponents[i].getUIElement() as ComponentUIRawCanvasClass
+      const el = this.movedComponents[i].getUIElement() as ComponentUICanvasFabricClass
       el.move(x, y)
     }
 
+    this.canvas.renderAll()
+
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
-  } */
+  }
 
   zoomTransform(zoom: number): void {
     this.containerEl.style.transform = `scale(${zoom})`

@@ -58,6 +58,7 @@ class ComponentUICanvasFabricClass implements ComponentUI {
   private canvas: fabric.Canvas
   private figure: fabric.Object
   private text: fabric.Text
+  private group: fabric.Group
   x: number
   y: number
 
@@ -72,6 +73,10 @@ class ComponentUICanvasFabricClass implements ComponentUI {
 
     this.text = new fabric.Text('...', { left: this.x + 20, top: this.y + 20 })
     this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y)
+    this.group = new fabric.Group([this.figure, this.text], {
+      left: this.x,
+      top: this.y,
+    })
     this.canvas.add(this.figure)
     this.canvas.add(this.text)
   }
@@ -84,7 +89,13 @@ class ComponentUICanvasFabricClass implements ComponentUI {
   }
 
   getElement() {
-    return this.figure
+    return this
+  }
+
+  move(leftNew: number, topNew: number) {
+    this.group.set({ left: leftNew, top: topNew })
+    // this.figure.set({ left: leftNew, top: topNew })
+    // this.text.set({ left: leftNew + 20, top: topNew + 20 })
   }
 }
 

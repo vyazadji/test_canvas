@@ -55,10 +55,10 @@ class ApplicationCanvasFabric implements App {
       this.dataSource.updateInterval(interval * 1_000)
     })
     // Move Test
-    /* addClick('startMoveTest', () => {
+    addClick('startMoveTest', () => {
       const movedComponentsCount = getInputNumber('movedComponentsCount')
       this.moveTest(movedComponentsCount)
-    }) */
+    })
   }
 
   start() {
