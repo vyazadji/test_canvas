@@ -1,6 +1,6 @@
 import { addClick } from './utils/helpers'
 
-const MAX = 200
+const MAX = 1000
 const MIN = 0
 /**
  *
@@ -26,12 +26,12 @@ class ZoomManager {
 
   initButtonBindings() {
     // +
-    addClick(`zoomAdd-${this.key}`, () => {
+    addClick(`zoomIn-${this.key}`, () => {
       this.updateValue(this.value + 1)
     })
 
     // -
-    addClick(`zoomReduce-${this.key}`, () => {
+    addClick(`zoomOut-${this.key}`, () => {
       this.updateValue(this.value - 1)
     })
 

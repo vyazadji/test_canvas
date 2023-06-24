@@ -105,6 +105,10 @@ class ViewCanvasFabricDashboard {
   zoomTransform(zoom: number): void {
     this.containerEl.style.transform = `scale(${zoom})`
   }
+
+  zoomCanvasFabric(zoom: number): void {
+    this.canvas.zoomToPoint({ x: this.width / 2, y: this.height / 2 }, zoom)
+  }
 }
 
 export default ViewCanvasFabricDashboard

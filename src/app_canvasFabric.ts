@@ -34,6 +34,11 @@ class ApplicationCanvasFabric implements App {
       this.view?.zoomTransform(newZoom)
     }
 
+    const zoomViewBox = new ZoomManager('canvasFabric')
+    zoomViewBox.onChange = (value) => {
+      this.view?.zoomCanvasFabric(value)
+    }
+
     this.initButtonBindings()
   }
 
