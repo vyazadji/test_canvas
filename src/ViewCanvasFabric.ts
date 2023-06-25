@@ -38,6 +38,7 @@ class ViewCanvasFabricDashboard {
     appElement.appendChild(this.containerEl)
 
     this.canvas = new fabric.Canvas(this.containerEl, { width: VIEW_WIDTH, height: VIEW_HEIGHT })
+    // this.canvas.skipOffscreen = true // TODO need to check how it affects the performance
   }
 
   getCanvas(): fabric.Canvas {

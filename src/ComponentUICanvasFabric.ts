@@ -73,12 +73,15 @@ class ComponentUICanvasFabricClass implements ComponentUI {
 
     this.text = new fabric.Text('...', { left: this.x + 20, top: this.y + 20 })
     this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y)
+    // this.text.set('objectCaching', false) // increase FPS but decrease the time of creation
+    // this.figure.set('objectCaching', false)
+
     this.group = new fabric.Group([this.figure, this.text], {
       left: this.x,
       top: this.y,
+      // objectCaching: false,
     })
-    this.canvas.add(this.figure)
-    this.canvas.add(this.text)
+    this.canvas.add(this.group)
   }
 
   draw(number: number) {
