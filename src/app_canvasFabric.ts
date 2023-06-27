@@ -95,7 +95,7 @@ class ApplicationCanvasFabric implements App {
         const componentUICanvasFabric = new ComponentUICanvasFabricClass(this.view.getCanvas())
         const component = new ComponentClass(componentUICanvasFabric)
 
-        component.addSource(this.dataSource)
+        // component.addSource(this.dataSource)
         this.view?.addComponent(component)
       }
       this.view?.start()

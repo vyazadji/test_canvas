@@ -73,14 +73,25 @@ class ComponentUICanvasFabricClass implements ComponentUI {
 
     this.text = new fabric.Text('...', { left: this.x + 20, top: this.y + 20 })
     this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y)
+    const figure2 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x + 10, this.y + 10)
+    const figure3 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x + 30, this.y + 30)
+    const figure4 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x + 30, this.y + 20)
+    const figure5 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x, this.y + 30)
+    const figure6 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x + 10, this.y + 20)
+    const figure7 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x, this.y + 15)
+    const figure8 = figureTemplates[random(figureTemplates.length - 1)].getFigure(this.x + 15, this.y)
     // this.text.set('objectCaching', false) // increase FPS but decrease the time of creation
     // this.figure.set('objectCaching', false)
 
-    this.group = new fabric.Group([this.figure, this.text], {
-      left: this.x,
-      top: this.y,
-      // objectCaching: false,
-    })
+    this.group = new fabric.Group(
+      [this.figure, figure2, figure3, figure4, figure5, figure6, figure7, figure8, this.text],
+      // [this.figure, /* figure2, figure3, figure4, figure5, figure6, figure7, figure8, */ this.text],
+      {
+        left: this.x,
+        top: this.y,
+        // objectCaching: false,
+      }
+    )
     this.canvas.add(this.group)
   }
 
