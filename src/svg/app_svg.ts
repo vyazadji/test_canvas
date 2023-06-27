@@ -1,11 +1,11 @@
 import ViewSVGClass from './ViewSVG'
-import ComponentClass from './Component'
+import ComponentClass from './../Component'
 import ComponentUISvgClass from './ComponentUISvg'
-import DateSourceClass from './DataSource'
-import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import { getInputNumber, addClick } from './utils/helpers'
-import type { App, DataSource } from './type'
-import ZoomManager from './ZoomManager'
+import DateSourceClass from './../DataSource'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import { getInputNumber, addClick } from './../utils/helpers'
+import type { App, DataSource } from './../type'
+import ZoomManager from './../utils/ZoomManager'
 
 export interface AppSVG extends App {
   addSvgComponentsInSvg: (componentsCount: number, elementsCount: number) => void

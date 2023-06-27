@@ -1,8 +1,8 @@
 import { random } from 'lodash'
 
-import type { ComponentUI } from './type'
-import { getRandomColor } from './utils/colors'
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import type { ComponentUI } from './../type'
+import { getRandomColor } from './../utils/colors'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
 
 const randomStr = (number: number): string => random(number).toString()
 

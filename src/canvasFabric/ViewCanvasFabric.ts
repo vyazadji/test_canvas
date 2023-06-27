@@ -1,20 +1,24 @@
-import type { Component } from './type'
-import ComponentUIRawCanvasClass from './ComponentUIRawCanvas'
-import PositionManager from './PositionManager'
+import { fabric } from 'fabric'
+
+import type { Component } from './../type'
+import PositionManager from './../utils/PositionManager'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
 
 /**
  * Canvas layer
  */
-class ViewCanvasDashboard {
+class ViewCanvasFabricDashboard {
   height: number
   width: number
   containerEl: HTMLCanvasElement
-  context: CanvasRenderingContext2D
+  canvas: fabric.Canvas
+
   components: Component[]
   movedComponents: Component[]
   positionManager: PositionManager
 
-  constructor(height: number, width: number) {
+  constructor(height: number, width: number, appElement: HTMLElement) {
     this.components = []
     this.width = width
     this.height = height
@@ -30,11 +34,15 @@ class ViewCanvasDashboard {
     this.containerEl.height = this.height
     this.containerEl.style.border = '1px solid red'
 
-    this.context = this.containerEl.getContext('2d') as CanvasRenderingContext2D
+    // Fabric requires existing in DOM element
+    appElement.appendChild(this.containerEl)
+
+    this.canvas = new fabric.Canvas(this.containerEl, { width: VIEW_WIDTH, height: VIEW_HEIGHT })
+    // this.canvas.skipOffscreen = true // TODO need to check how it affects the performance
   }
 
-  getContext(): CanvasRenderingContext2D {
-    return this.context
+  getCanvas(): fabric.Canvas {
+    return this.canvas
   }
 
   addComponent(component: Component) {
@@ -43,11 +51,13 @@ class ViewCanvasDashboard {
 
   start() {
     // clear all
-    this.context.clearRect(0, 0, this.width, this.height)
+    // this.canvas.clearContext()
 
     this.components.forEach((component) => {
       component.draw(0)
     })
+
+    // this.canvas.renderAll()
 
     this.updateComponentsCount()
 
@@ -70,7 +80,7 @@ class ViewCanvasDashboard {
       this.movedComponents = this.components.slice(0, movedComponentsCount)
     }
     this.movedComponents.forEach((component) => {
-      const el = component.getUIElement() as ComponentUIRawCanvasClass
+      const el = component.getUIElement() as ComponentUICanvasFabricClass
 
       this.positionManager.addPosition(el.x, el.y)
     })
@@ -84,9 +94,11 @@ class ViewCanvasDashboard {
       const [x, y] = this.positionManager.calculateNextPosition(i)
 
       // set new position
-      const el = this.movedComponents[i].getUIElement() as ComponentUIRawCanvasClass
+      const el = this.movedComponents[i].getUIElement() as ComponentUICanvasFabricClass
       el.move(x, y)
     }
+
+    this.canvas.renderAll()
 
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
   }
@@ -94,6 +106,10 @@ class ViewCanvasDashboard {
   zoomTransform(zoom: number): void {
     this.containerEl.style.transform = `scale(${zoom})`
   }
+
+  zoomCanvasFabric(zoom: number): void {
+    this.canvas.zoomToPoint({ x: this.width / 2, y: this.height / 2 }, zoom)
+  }
 }
 
-export default ViewCanvasDashboard
+export default ViewCanvasFabricDashboard

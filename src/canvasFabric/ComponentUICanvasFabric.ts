@@ -1,10 +1,10 @@
 import { random } from 'lodash'
 import { fabric } from 'fabric'
 
-import { getRandomColor } from './utils/colors'
-import { ComponentUI } from './type'
+import { getRandomColor } from './../utils/colors'
+import { ComponentUI } from './../type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
 
 const figureTemplates = [
   {

@@ -1,4 +1,4 @@
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
 
 type Position = {
   directionX: number

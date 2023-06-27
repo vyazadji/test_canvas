@@ -1,8 +1,8 @@
 import './style.css'
-import app_html from './app'
-import app_svg from './app_svg'
-import app_canvas from './app_canvas'
-import app_canvasFabric from './app_canvasFabric'
+import app_html from './html/app'
+import app_svg from './svg/app_svg'
+import app_canvas from './canvas/app_canvas'
+import app_canvasFabric from './canvasFabric/app_canvasFabric'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 

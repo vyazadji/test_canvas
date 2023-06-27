@@ -1,6 +1,6 @@
 import { fabric } from 'fabric'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
 
 class CanvasEditor {
   canvas: fabric.Canvas

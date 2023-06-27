@@ -1,4 +1,4 @@
-import FPSMonitor from './FPSMonitor'
+import FPSMonitor from './utils/FPSMonitor'
 import { addClick } from './utils/helpers'
 import type { App } from './type'
 import { VIEW_TYPE } from './consts'

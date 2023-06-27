@@ -1,11 +1,11 @@
 import ViewCanvas from './ViewCanvas'
-import ComponentClass from './Component'
+import ComponentClass from './../Component'
 import ComponentUIRawCanvasClass from './ComponentUIRawCanvas'
-import DateSourceClass from './DataSource'
-import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import { getInputNumber, addClick } from './utils/helpers'
-import type { App, DataSource } from './type'
-import ZoomManager from './ZoomManager'
+import DateSourceClass from './../DataSource'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import { getInputNumber, addClick } from './../utils/helpers'
+import type { App, DataSource } from './../type'
+import ZoomManager from './../utils/ZoomManager'
 
 // export interface AppCanvas extends App {
 //   addRawCanvasComponents: (componentsCount: number) => void

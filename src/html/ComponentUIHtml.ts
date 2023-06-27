@@ -1,6 +1,6 @@
 import { random } from 'lodash'
-import { ComponentUI } from './type'
-import { getRandomColor } from './utils/colors'
+import { ComponentUI } from './../type'
+import { getRandomColor } from './../utils/colors'
 
 // UI HTML implementation of component
 class ComponentUIHtmlClass implements ComponentUI {

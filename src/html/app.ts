@@ -1,16 +1,16 @@
 import ViewClass from './View'
-import ComponentClass from './Component'
+import ComponentClass from './../Component'
 import ComponentUIHtmlClass from './ComponentUIHtml'
-import ComponentUISvgClass from './ComponentUISvg'
+import ComponentUISvgClass from './../svg/ComponentUISvg'
 import ComponentUICanvasClass from './ComponentUICanvas'
 import ComponentUIHthmlCanvasFabricClass from './ComponentUIHtmlCanvasFabric'
-import DateSourceClass from './DataSource'
+import DateSourceClass from './../DataSource'
 import CanvasEditor from './CanvasEditor'
-import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import type { App, DataSource } from './type'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import type { App, DataSource } from './../type'
 
-import { getInputNumber, addClick } from './utils/helpers'
-import ZoomManager from './ZoomManager'
+import { getInputNumber, addClick } from './../utils/helpers'
+import ZoomManager from './../utils/ZoomManager'
 
 /* export interface AppHTML extends App {
   addSvgInHtmlComponents: (componentsCount: number, elementsCount: number) => void

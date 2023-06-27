@@ -1,6 +1,6 @@
-import { ComponentUI } from './type'
+import { ComponentUI } from './../type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
 
 /**
  * UI Canvas implementation of component.

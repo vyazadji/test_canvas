@@ -1,8 +1,8 @@
 import { random } from 'lodash'
 
-import { ComponentUI } from './type'
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import { getRandomColor } from './utils/colors'
+import { ComponentUI } from './../type'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH, VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import { getRandomColor } from './../utils/colors'
 
 const figureTemplates = [
   {

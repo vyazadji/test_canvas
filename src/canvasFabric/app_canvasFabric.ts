@@ -1,13 +1,13 @@
 import ViewCanvasFabric from './ViewCanvasFabric'
-import DateSourceClass from './DataSource'
+import DateSourceClass from './../DataSource'
 
 import ComponentUICanvasFabricClass from './ComponentUICanvasFabric'
-import ComponentClass from './Component'
+import ComponentClass from './../Component'
 
-import { VIEW_HEIGHT, VIEW_WIDTH } from './consts'
-import { getInputNumber, addClick } from './utils/helpers'
-import type { App, DataSource } from './type'
-import ZoomManager from './ZoomManager'
+import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
+import { getInputNumber, addClick } from './../utils/helpers'
+import type { App, DataSource } from './../type'
+import ZoomManager from './../utils/ZoomManager'
 
 /**
  * Application with Canvas layer implemented via Fabric.js lib

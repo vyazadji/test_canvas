@@ -1,4 +1,4 @@
-import { addClick } from './utils/helpers'
+import { addClick } from './helpers'
 
 const MAX = 1000
 const MIN = 0

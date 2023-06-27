@@ -1,8 +1,8 @@
 import { fabric } from 'fabric'
 
-import { ComponentUI } from './type'
+import { ComponentUI } from './../type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
 
 // UI Fabric Canvas implementation of component for HTML view
 class ComponentUIHthmlCanvasFabricClass implements ComponentUI {

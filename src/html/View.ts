@@ -1,11 +1,11 @@
 import { random } from 'lodash'
 
-import Draggable from './utils/Dragable'
-import PositionManager from './PositionManager'
+import Draggable from './../utils/Dragable'
+import PositionManager from './../utils/PositionManager'
 
-import type { Component } from './type'
+import type { Component } from './../type'
 
-import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './consts'
+import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
 
 class ViewDashboard {
   height: number

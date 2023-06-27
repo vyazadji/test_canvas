@@ -1,5 +1,5 @@
-import type { Component } from './type'
-import PositionManager from './PositionManager'
+import type { Component } from './../type'
+import PositionManager from './../utils/PositionManager'
 
 const SVGNS = 'http://www.w3.org/2000/svg'
 
