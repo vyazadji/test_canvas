@@ -5,7 +5,7 @@ import DateSourceClass from './../DataSource'
 import { VIEW_HEIGHT, VIEW_WIDTH } from './../consts'
 import { getInputNumber, addClick } from './../utils/helpers'
 import type { App, DataSource } from './../type'
-// import ZoomManager from './../utils/ZoomManager'
+import ZoomManager from './../utils/ZoomManager'
 
 /**
  * Application with Pixijs
@@ -20,10 +20,10 @@ class ApplicationPixijs implements App {
     this.view = new ViewPixijs(VIEW_HEIGHT, VIEW_WIDTH)
     this.dataSource = new DateSourceClass()
 
-    /* const zoom = new ZoomManager()
-    zoom.onChange = (newZoom) => {
-      this.view.zoomTransform(newZoom)
-    } */
+    const zoomViewBox = new ZoomManager()
+    zoomViewBox.onChange = (value) => {
+      this.view.zoomScale(value)
+    }
 
     this.initButtonBindings()
   }

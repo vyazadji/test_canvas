@@ -1,6 +1,6 @@
 import { addClick } from './helpers'
 
-const MAX = 1000
+const MAX = 3000
 const MIN = 0
 /**
  *

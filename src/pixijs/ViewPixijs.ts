@@ -27,6 +27,28 @@ class ViewPixijs {
     })
 
     this.app = new PIXI.Application({ width: this.width, height: this.height })
+
+    // Add zoom by mouse
+    // eslint-disable-next-line
+    // @ts-ignore
+    this.app.view.addEventListener('wheel', (event) => {
+      // eslint-disable-next-line
+      // @ts-ignore
+      if (event.deltaY < 0) {
+        // Zoom in
+        this.app.stage.scale.x *= 1.1
+        this.app.stage.scale.y *= 1.1
+      } else {
+        // Zoom out
+        this.app.stage.scale.x /= 1.1
+        this.app.stage.scale.y /= 1.1
+      }
+
+      // NOTE
+      // If you want to manipulate the rendering at a lower level in PixiJS,
+      // you could look into custom shaders, where you have control over the vertex transformations.
+      // However, this would require knowledge of GLSL (the shader language used in WebGL)
+    })
   }
 
   getContext(): PIXI.Container<PIXI.DisplayObject> {
@@ -84,8 +106,9 @@ class ViewPixijs {
     }
   }
 
-  zoomTransform(zoom: number): void {
-    // this.containerEl.style.transform = `scale(${zoom})`
+  zoomScale(zoom: number): void {
+    this.app.stage.scale.x = zoom
+    this.app.stage.scale.y = zoom
   }
 }
 
