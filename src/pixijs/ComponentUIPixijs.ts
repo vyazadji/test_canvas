@@ -8,53 +8,36 @@ import { getRandomColor } from './../utils/colors'
 const figureTemplates = [
   {
     // filled rect
-    getFigure: (
-      context: CanvasRenderingContext2D,
-      backgroundColor: string,
-      x: number,
-      y: number,
-      randomX: number,
-      randomY: number
-    ): void => {
-      context.fillStyle = backgroundColor
-      context.fillRect(x, y, randomX, randomY)
+    getFigure: (graphics: PIXI.Graphics, x: number, y: number, width: number, height: number): void => {
+      graphics.lineStyle(2, getRandomColor())
+      graphics.beginFill(getRandomColor())
+      graphics.drawRect(0, 0, width, height)
+      graphics.x = x
+      graphics.y = y
+      graphics.endFill()
     },
   },
   {
     //Filled triangle
-    getFigure: (
-      context: CanvasRenderingContext2D,
-      backgroundColor: string,
-      x: number,
-      y: number,
-      randomX: number,
-      randomY: number
-    ): void => {
-      const randomX2 = randomX / 2
-      const randomY2 = randomY / 2
-      context.fillStyle = backgroundColor
-      context.beginPath()
-      context.moveTo(x + randomX2, y + randomY2)
-      context.lineTo(x + randomX2 + 20, y + randomY2)
-      context.lineTo(x + randomX2, y + randomY2 + 20)
-      context.fill()
+    getFigure: (graphics: PIXI.Graphics, x: number, y: number, width: number, height: number): void => {
+      graphics.beginFill(getRandomColor())
+      graphics.moveTo(0, 0)
+      graphics.lineTo(width, 0)
+      graphics.lineTo(1, height)
+      graphics.lineTo(0, 0)
+      graphics.endFill()
+      graphics.x = x
+      graphics.y = y
     },
   },
   {
     //circle
-    getFigure: (
-      context: CanvasRenderingContext2D,
-      _backgroundColor: string,
-      x: number,
-      y: number,
-      randomX: number,
-      randomY: number
-    ): void => {
-      const randomX2 = randomX / 2
-      const randomY2 = randomY / 2
-      context.beginPath()
-      context.arc(x + randomX2, y + randomY2, randomX2, 0, Math.PI * 2, true)
-      context.stroke()
+    getFigure: (graphics: PIXI.Graphics, x: number, y: number, height: number, _width: number): void => {
+      graphics.beginFill(getRandomColor())
+      graphics.drawCircle(0, 0, height / 2)
+      graphics.endFill()
+      graphics.x = x
+      graphics.y = y
     },
   },
 ]
@@ -69,55 +52,37 @@ class ComponentUIPixijs implements ComponentUI {
   x: number
   y: number
   dataSourceNumber: number
-  backgroundColor: string
-  randomX: number
-  randomY: number
-  figure: number
+  width: number
+  height: number
   graphics: PIXI.Graphics
 
   constructor(context: PIXI.Container<PIXI.DisplayObject>) {
     this.context = context
     this.dataSourceNumber = 0
-    this.backgroundColor = getRandomColor()
 
     // init position
     this.x = random(VIEW_WIDTH - COMPONENT_WIDTH)
     this.y = random(VIEW_HEIGHT - COMPONENT_HEIGHT)
 
     // random position for figure inside component
-    this.randomX = random(COMPONENT_WIDTH)
-    this.randomY = random(COMPONENT_HEIGHT)
-
-    this.figure = random(figureTemplates.length - 1)
+    this.width = random(2, COMPONENT_WIDTH)
+    this.height = random(2, COMPONENT_HEIGHT)
 
     this.graphics = new PIXI.Graphics()
   }
 
   draw(number: number) {
     this.dataSourceNumber = number
-    // this.graphics = new PIXI.Graphics()
-
-    this.graphics.lineStyle(2, getRandomColor())
-    this.graphics.beginFill(getRandomColor())
-    this.graphics.drawRect(0, 0, this.randomX, this.randomY)
-    this.graphics.x = this.x
-    this.graphics.y = this.y
-    this.graphics.endFill()
 
     // Draw some figure
-    // figureTemplates[this.figure].getFigure(
-    //   this.context,
-    //   this.backgroundColor,
-    //   this.x,
-    //   this.y,
-    //   this.randomX,
-    //   this.randomY
-    // )
+    const figureNumber = random(figureTemplates.length - 1)
+    figureTemplates[figureNumber].getFigure(this.graphics, this.x, this.y, this.width, this.height)
 
     // Draw the number
     // this.context.fillStyle = 'black'
     // this.context.font = '18px Arial'
     // this.context.fillText(number.toString(), this.x + 5, this.y + 20) // adjust position as needed
+
     this.context.addChild(this.graphics)
   }
 
