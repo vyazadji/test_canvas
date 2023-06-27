@@ -54,7 +54,8 @@ class ComponentUIPixijs implements ComponentUI {
   dataSourceNumber: number
   width: number
   height: number
-  graphics: PIXI.Graphics
+  container: PIXI.Container
+  text: PIXI.Text
 
   constructor(context: PIXI.Container<PIXI.DisplayObject>) {
     this.context = context
@@ -68,22 +69,29 @@ class ComponentUIPixijs implements ComponentUI {
     this.width = random(2, COMPONENT_WIDTH)
     this.height = random(2, COMPONENT_HEIGHT)
 
-    this.graphics = new PIXI.Graphics()
+    const graphics = new PIXI.Graphics()
+    // Draw some figure
+    const figureNumber = random(figureTemplates.length - 1)
+    figureTemplates[figureNumber].getFigure(graphics, 0, 0, this.width, this.height)
+
+    // Create text
+    this.text = new PIXI.Text('22', { fontSize: 24, fill: 'red' })
+
+    this.container = new PIXI.Container()
+
+    this.container.addChild(graphics)
+    this.container.addChild(this.text)
+    // this.container.cacheAsBitmap = true
+
+    // add in view
+    this.context.addChild(this.container)
   }
 
   draw(number: number) {
     this.dataSourceNumber = number
 
-    // Draw some figure
-    const figureNumber = random(figureTemplates.length - 1)
-    figureTemplates[figureNumber].getFigure(this.graphics, this.x, this.y, this.width, this.height)
-
-    // Draw the number
-    // this.context.fillStyle = 'black'
-    // this.context.font = '18px Arial'
-    // this.context.fillText(number.toString(), this.x + 5, this.y + 20) // adjust position as needed
-
-    this.context.addChild(this.graphics)
+    this.container.x = this.x
+    this.container.y = this.y
   }
 
   move(leftNew: number, topNew: number) {
@@ -92,8 +100,8 @@ class ComponentUIPixijs implements ComponentUI {
     this.x = leftNew
     this.y = topNew
 
-    this.graphics.x = this.x
-    this.graphics.y = this.y
+    this.container.x = leftNew
+    this.container.y = topNew
     // this.draw(this.dataSourceNumber)
   }
 
