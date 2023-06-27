@@ -9,4 +9,5 @@ export const VIEW_TYPE = {
   SVG: 'svg',
   CANVAS: 'canvas',
   CANVAS_FABRIC: 'canvasFabric',
+  PIXIJS: 'pixijs',
 } as const

@@ -3,6 +3,7 @@ import app_html from './html/app'
 import app_svg from './svg/app_svg'
 import app_canvas from './canvas/app_canvas'
 import app_canvasFabric from './canvasFabric/app_canvasFabric'
+import app_pixijs from './pixijs/app_pixijs'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
@@ -37,6 +38,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.start()
   } else if (view === VIEW_TYPE.CANVAS_FABRIC) {
     app = new app_canvasFabric(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app.start()
+  } else if (view === VIEW_TYPE.PIXIJS) {
+    app = new app_pixijs(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
     app.start()
   } else {
     alert('"view" is unknown. Please set correct view')
