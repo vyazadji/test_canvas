@@ -36,7 +36,7 @@ const figureTemplates = [
       graphics.beginFill(getRandomColor())
       graphics.drawCircle(0, 0, height / 2)
       graphics.endFill()
-      graphics.x = x
+      graphics.x = x // Note: not necessary when we use grouping by Container
       graphics.y = y
     },
   },
