@@ -143,7 +143,8 @@ class ViewCanvasKonvaDashboard {
 
       // set new position
       const el = this.movedComponents[i].getUIElement() as ComponentUICanvasKonvaClass
-      el.figure.position({ x, y })
+      // el.figure.position({ x, y })
+      el.move(x, y)
     }
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
   }

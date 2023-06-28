@@ -88,7 +88,7 @@ class ApplicationCanvasKonva implements App {
         const componentUI = new ComponentUICanvasKonvaClass(this.view.getLayer())
         const component = new ComponentClass(componentUI)
 
-        // component.addSource(this.dataSource)
+        component.addSource(this.dataSource)
         this.view?.addComponent(component)
       }
       this.view?.start()

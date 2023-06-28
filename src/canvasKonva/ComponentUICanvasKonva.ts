@@ -53,7 +53,8 @@ class ComponentUICanvasKonvaClass implements ComponentUI {
   x: number
   y: number
   private layer: Konva.Layer
-  figure: Konva.Shape
+  group: Konva.Group
+  text: Konva.Text
 
   constructor(canvas: Konva.Layer) {
     this.layer = canvas
@@ -68,16 +69,30 @@ class ComponentUICanvasKonvaClass implements ComponentUI {
 
     const figureNumber = random(figureTemplates.length - 1)
 
-    this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y, width, height)
+    const figure = figureTemplates[figureNumber].getFigure(0, 0, width, height)
 
-    this.layer.add(this.figure)
+    this.group = new Konva.Group({
+      x: this.x,
+      y: this.y,
+      draggable: true,
+    })
+
+    this.text = new Konva.Text({
+      x: 20,
+      y: 20,
+      text: '..',
+      fontSize: 30,
+      fill: getRandomColor(),
+    })
+
+    this.group.add(figure)
+    this.group.add(this.text)
+
+    this.layer.add(this.group)
   }
 
   draw(number: number) {
-    // this.text.set({ text: number.toString() })
-    // TODO On component's level redraw all canvas isn't efficient.
-    // Need to do it on view level. But it doesn't cover by the current architecture
-    // this.canvas.renderAll()
+    this.text.text(number.toString())
   }
 
   getElement() {
@@ -85,7 +100,7 @@ class ComponentUICanvasKonvaClass implements ComponentUI {
   }
 
   move(leftNew: number, topNew: number) {
-    this.figure.move({ x: leftNew, y: topNew })
+    this.group.position({ x: leftNew, y: topNew })
   }
 }
 
