@@ -4,6 +4,7 @@ import app_svg from './svg/app_svg'
 import app_canvas from './canvas/app_canvas'
 import app_canvasFabric from './canvasFabric/app_canvasFabric'
 import app_pixijs from './pixijs/app_pixijs'
+import app_canvasKonva from './canvasKonva/app_canvasKonva'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
@@ -27,20 +28,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // start app
   let app
+  const appEl = document.querySelector<HTMLDivElement>('#app') as HTMLDivElement
   if (view === VIEW_TYPE.HTML) {
-    app = new app_html(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app = new app_html(appEl)
     app.start()
   } else if (view === VIEW_TYPE.SVG) {
-    app = new app_svg(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app = new app_svg(appEl)
     app.start()
   } else if (view === VIEW_TYPE.CANVAS) {
-    app = new app_canvas(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app = new app_canvas(appEl)
     app.start()
   } else if (view === VIEW_TYPE.CANVAS_FABRIC) {
-    app = new app_canvasFabric(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app = new app_canvasFabric(appEl)
     app.start()
   } else if (view === VIEW_TYPE.PIXIJS) {
-    app = new app_pixijs(document.querySelector<HTMLDivElement>('#app') as HTMLDivElement)
+    app = new app_pixijs(appEl)
+    app.start()
+  } else if (view === VIEW_TYPE.CANVAS_KONVA) {
+    app = new app_canvasKonva(appEl)
     app.start()
   } else {
     alert('"view" is unknown. Please set correct view')

@@ -1381,6 +1381,11 @@ json-stable-stringify-without-jsonify@^1.0.1:
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
 
+konva@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/konva/-/konva-9.2.0.tgz#3739e539724b0e6b76d697a322efdaa01baa1508"
+  integrity sha512-+woI76Sk+VFVl9z7zPkuTnN2zFpEYg27YWz8BCdQXpt5IS3pdnSPAPQVPPMidcbDi9/G5b/IOIp35/KqMGiYPA==
+
 levn@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/levn/-/levn-0.4.1.tgz#ae4562c007473b932a6200d403268dd2fffc6ade"
