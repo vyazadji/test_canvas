@@ -50,9 +50,10 @@ const figureTemplates = [
 
 // UI Konva UI component implementation for Canvas Konva view
 class ComponentUICanvasKonvaClass implements ComponentUI {
-  private layer: Konva.Layer
   x: number
   y: number
+  private layer: Konva.Layer
+  figure: Konva.Shape
 
   constructor(canvas: Konva.Layer) {
     this.layer = canvas
@@ -67,9 +68,9 @@ class ComponentUICanvasKonvaClass implements ComponentUI {
 
     const figureNumber = random(figureTemplates.length - 1)
 
-    const figure = figureTemplates[figureNumber].getFigure(this.x, this.y, width, height)
+    this.figure = figureTemplates[figureNumber].getFigure(this.x, this.y, width, height)
 
-    this.layer.add(figure)
+    this.layer.add(this.figure)
   }
 
   draw(number: number) {
@@ -84,9 +85,7 @@ class ComponentUICanvasKonvaClass implements ComponentUI {
   }
 
   move(leftNew: number, topNew: number) {
-    this.group.set({ left: leftNew, top: topNew })
-    // this.figure.set({ left: leftNew, top: topNew })
-    // this.text.set({ left: leftNew + 20, top: topNew + 20 })
+    this.figure.move({ x: leftNew, y: topNew })
   }
 }
 

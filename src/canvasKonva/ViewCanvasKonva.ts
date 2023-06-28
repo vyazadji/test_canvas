@@ -84,6 +84,26 @@ class ViewCanvasKonvaDashboard {
     })
 
     this.moveElements()
+
+    // TODO need to test this approach
+    /* const anim = new Konva.Animation((frame) => {
+      // const time = frame.time,
+      //   timeDiff = frame.timeDiff,
+      //   frameRate = frame.frameRate
+
+      for (let i = 0; i < this.movedComponents.length; i++) {
+        // update position
+        const [x, y] = this.positionManager.calculateNextPosition(i)
+
+        const dist = x * (frame.timeDiff / 1000)
+
+        // set new position
+        const el = this.movedComponents[i].getUIElement() as ComponentUICanvasKonvaClass
+        el.move(dist, 0)
+      }
+    }, this.layer)
+
+    anim.start() */
   }
 
   moveElements() {
@@ -93,20 +113,13 @@ class ViewCanvasKonvaDashboard {
 
       // set new position
       const el = this.movedComponents[i].getUIElement() as ComponentUICanvasKonvaClass
-      el.move(x, y)
+      el.figure.position({ x, y })
     }
-
-    this.canvas.renderAll()
-
     requestAnimationFrame(() => this.moveElements()) // Continue moving element in the next frame
   }
 
   zoomTransform(zoom: number): void {
     this.containerEl.style.transform = `scale(${zoom})`
-  }
-
-  zoomCanvasFabric(zoom: number): void {
-    this.canvas.zoomToPoint({ x: this.width / 2, y: this.height / 2 }, zoom)
   }
 }
 
