@@ -27,12 +27,12 @@ class ZoomManager {
   initButtonBindings() {
     // +
     addClick(`zoomIn-${this.key}`, () => {
-      this.updateValue(this.value + 1)
+      this.updateValue(this.value + 5)
     })
 
     // -
     addClick(`zoomOut-${this.key}`, () => {
-      this.updateValue(this.value - 1)
+      this.updateValue(this.value - 5)
     })
 
     this.inputEl.addEventListener('change', () => {
