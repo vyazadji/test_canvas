@@ -2,6 +2,7 @@ import { addClick } from './helpers'
 
 const MAX = 3000
 const MIN = 0
+const SCALE_STEP = 15
 /**
  *
  */
@@ -27,12 +28,12 @@ class ZoomManager {
   initButtonBindings() {
     // +
     addClick(`zoomIn-${this.key}`, () => {
-      this.updateValue(this.value + 5)
+      this.updateValue(this.value + SCALE_STEP)
     })
 
     // -
     addClick(`zoomOut-${this.key}`, () => {
-      this.updateValue(this.value - 5)
+      this.updateValue(this.value - SCALE_STEP)
     })
 
     this.inputEl.addEventListener('change', () => {
