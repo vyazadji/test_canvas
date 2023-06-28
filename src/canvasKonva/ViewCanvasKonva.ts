@@ -10,6 +10,7 @@ import ComponentUICanvasKonvaClass from './ComponentUICanvasKonva'
 class ViewCanvasKonvaDashboard {
   height: number
   width: number
+  stage: Konva.Stage
   layer: Konva.Layer
 
   components: Component[]
@@ -27,7 +28,7 @@ class ViewCanvasKonvaDashboard {
       viewHeight: this.height,
     })
 
-    const stage = new Konva.Stage({
+    this.stage = new Konva.Stage({
       container: appElement,
       width: this.width,
       height: this.height,
@@ -36,7 +37,36 @@ class ViewCanvasKonvaDashboard {
     // then create layer
     this.layer = new Konva.Layer()
 
-    stage.add(this.layer)
+    this.stage.add(this.layer)
+
+    // zoom in / out
+    // by mouse
+    window.addEventListener(
+      'wheel',
+      (e) => {
+        e.preventDefault()
+
+        const stage = this.stage
+
+        const oldScale = stage.scaleX()
+
+        const mousePointTo = {
+          x: stage.getPointerPosition()!.x / oldScale - stage.x() / oldScale,
+          y: stage.getPointerPosition()!.y / oldScale - stage.y() / oldScale,
+        }
+
+        const newScale = e.deltaY > 0 ? oldScale * 1.1 : oldScale / 1.1
+        stage.scale({ x: newScale, y: newScale })
+
+        const newPos = {
+          x: -(mousePointTo.x - stage.getPointerPosition()!.x / newScale) * newScale,
+          y: -(mousePointTo.y - stage.getPointerPosition()!.y / newScale) * newScale,
+        }
+        stage.position(newPos)
+        stage.batchDraw()
+      },
+      { passive: false }
+    )
   }
 
   getLayer(): Konva.Layer {
@@ -119,7 +149,13 @@ class ViewCanvasKonvaDashboard {
   }
 
   zoomTransform(zoom: number): void {
-    this.containerEl.style.transform = `scale(${zoom})`
+    this.stage.scale({ x: zoom, y: zoom })
+    const newPos = {
+      x: this.stage.width() / 2 - (this.stage.width() / 2) * zoom,
+      y: this.stage.height() / 2 - (this.stage.height() / 2) * zoom,
+    }
+    this.stage.position(newPos)
+    this.stage.batchDraw()
   }
 }
 
