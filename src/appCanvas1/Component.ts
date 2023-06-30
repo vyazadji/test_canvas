@@ -14,12 +14,14 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   x: number
   y: number
   data: number
+  index: number // index number
 
-  constructor(componentUI: ComponentUIBar) {
+  constructor(componentUI: ComponentUIBar, index: number) {
     this.x = 0
     this.y = 0
     this.data = 0
     this.componentUI = componentUI
+    this.index = index
   }
 
   //
@@ -29,8 +31,8 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
     // return this.componentUI.getElement()
   }
 
-  draw(data: number) {
-    return this.componentUI.draw(this.x, this.y, data)
+  draw() {
+    return this.componentUI.draw(this.x, this.y, this.data, this.index)
   }
 
   addSource(dataSource: DataSource) {

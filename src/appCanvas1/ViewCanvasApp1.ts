@@ -67,8 +67,8 @@ class ViewCanvasApp1 {
   }
 
   drawComponents() {
-    this.components.forEach((component, i) => {
-      component.draw(i + 1)
+    this.components.forEach((component) => {
+      component.draw()
     })
   }
 
@@ -113,8 +113,10 @@ class ViewCanvasApp1 {
     const dy = event.clientY - this.lastPosition.y
 
     // Update the offsets.
-    this.offsetX += dx / this.zoomFactor
-    this.offsetY += dy / this.zoomFactor
+    // this.offsetX += dx / this.zoomFactor
+    // this.offsetY += dy / this.zoomFactor
+    this.offsetX += dx
+    this.offsetY += dy
 
     // Update the last position.
     this.lastPosition = { x: event.clientX, y: event.clientY }

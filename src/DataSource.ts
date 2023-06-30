@@ -1,6 +1,6 @@
 import type { DataSource, DataSourceListener } from './type'
 
-const UPDATE_INTERVAL = 1_000 // 1 sec
+const UPDATE_INTERVAL = 1_000 // 1 sec in ms
 
 class DataSourceClass implements DataSource {
   data: number
@@ -8,10 +8,15 @@ class DataSourceClass implements DataSource {
   intervalId: number | null
   private interval: number
 
-  constructor() {
+  /**
+   * Create data a fake data source that return a number
+   * @constructor
+   * @param {number} interval - interval of update DataSource in milliseconds (ms)
+   */
+  constructor(interval?: number) {
     this.data = 0
     this.listeners = []
-    this.interval = UPDATE_INTERVAL
+    this.interval = interval ?? UPDATE_INTERVAL
     this.intervalId = null
   }
 
@@ -33,6 +38,10 @@ class DataSourceClass implements DataSource {
     }
   }
 
+  /**
+   * Update interval
+   * @param {number} newInterval - new interval in milliseconds
+   */
   updateInterval(newInterval: number) {
     if (newInterval === 0) {
       this.stop()
