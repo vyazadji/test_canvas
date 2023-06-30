@@ -5,10 +5,10 @@ import ComponentClass from './Component'
 // import { getInputNumber, addClick } from './../utils/helpers'
 import ComponentUIBar from './ComponentUIBar'
 
-const VIEW_WIDTH = 2000
-const VIEW_HEIGHT = 1100
-const COMPONENT_WIDTH = 50
-const COMPONENT_HEIGHT = 50
+const VIEW_WIDTH = 1500
+const VIEW_HEIGHT = 1000
+const COMPONENT_WIDTH = 10
+const COMPONENT_HEIGHT = 10
 
 /**
  * Application test 1 base on Canvas layer
@@ -53,7 +53,8 @@ class ApplicationCanvas1 {
 
     this.appElement.appendChild(this.view.start())
 
-    this.addBarComponent(500)
+    const COMPONENTS_COUNT = 10_000
+    this.addBarComponent(COMPONENTS_COUNT)
     // start DataSources
     // this.dataSource.start()
   }

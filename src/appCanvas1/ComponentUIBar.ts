@@ -26,14 +26,16 @@ class ComponentUIBar {
     this.x = x
     this.y = y
 
-    const width = 30
-    const height = 45
+    const width = 6
+    const height = 9
 
     this.context.fillStyle = 'green'
     this.context.fillRect(this.x, this.y, width, height)
-    this.context.fillStyle = 'black'
-    this.context.font = '12px Arial'
-    this.context.fillText(data.toString(), this.x + 7, this.y + height) // adjust position as needed
+    this.context.fillStyle = 'red'
+    this.context.fillRect(this.x + 1, this.y, width - 3, height - 2)
+    // this.context.fillStyle = 'black'
+    // this.context.font = '3px Arial'
+    // this.context.fillText(data.toString(), this.x + 1, this.y + height) // adjust position as needed
   }
 
   /* move(leftNew: number, topNew: number) {
