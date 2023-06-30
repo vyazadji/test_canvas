@@ -5,12 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/test_canvas/cat.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Research</title>
-    <script type="module" crossorigin src="/test_canvas/assets/index-c8420353.js"></script>
-    <link rel="stylesheet" href="/test_canvas/assets/index-5ac051a3.css">
+    <script type="module" crossorigin src="/test_canvas/assets/index-70b186f0.js"></script>
+    <link rel="stylesheet" href="/test_canvas/assets/index-64ea07ba.css">
   </head>
   <body>
     <h1>Test <span id="viewName">...</span> layer component decomposition</h1>
-    <div class="apps">
+    <div class="apps" id="apps1">
       <div id="app" class="app"></div>
       <div>
         <!-- HTML VIEW ONLY -->
@@ -64,12 +64,12 @@
             </div>
             <div>
               <span>Count of HTML Component</span>
-              <input value="1000" id="htmlComponentsCount" type="number"/>
+              <input value="100" id="htmlComponentsCount" type="number"/>
             </div>
             <button id="addHtmlComponents">Add Html Components</button>
           </div>
+          <hr/>
         </div>
-        <hr/>
         <!-- /HTML VIEW ONLY -->
 
         <!-- SVG VIEW ONLY -->
@@ -99,6 +99,44 @@
           <hr/>
         </div>
         <!-- /Canvas ONLY -->
+
+        <!-- CANVAS Fabric VIEW ONLY -->
+        <div class="view_canvasFabric_only" style="display: none">
+          <h3>Add Canvas Fabric component</h3>
+          <div>
+            <span>Count of raw Canvas Fabric Components</span>
+            <input value="5" id="fabricComponentsCount" />
+          </div>
+          <button id="addCanvasFabricInFabricView">Add Canvas Components</button>
+          <hr/>
+        </div>
+        <!-- /CANVAS Fabric VIEW ONLY -->
+
+
+        <!-- Pixijs VIEW ONLY -->
+        <div class="view_pixijs_only" style="display: none">
+          <h3>Add Pixijs component</h3>
+          <div>
+            <span>Count of Pixijs Components</span>
+            <input value="10000" id="pixijsComponentsCount" />
+          </div>
+          <button id="addPixijsComponents">Add Pixijs Components</button>
+          <hr/>
+        </div>
+        <!-- /Pixijs VIEW ONLY -->
+
+
+        <!-- CANVAS Konva VIEW ONLY -->
+        <div class="view_canvasKonva_only" style="display: none">
+          <h3>Add Canvas Konva component</h3>
+          <div>
+            <span>Count of Canvas Konva Components</span>
+            <input value="5" id="konvaComponentsCount" />
+          </div>
+          <button id="addCanvasKonvaComponent">Add Konva Components</button>
+          <hr/>
+        </div>
+        <!-- /CANVAS Konva VIEW ONLY -->
 
         <!-- General -->
         <div>
@@ -134,12 +172,51 @@
         </div>
         <!-- /General -->
 
-        <!-- Menu -->
-        <a href="./index.html?view=html">HTML layer</a>
-        <a href="./index.html?view=svg">SVG layer</a> 
-        <a href="./index.html?view=canvas">Canvas layer</a> 
-        <!-- /Menu -->
       </div>
+
+      <div style="padding:0 2rem">
+        <div>
+          <h3>Zoom: 'transform: scale()'</h3>
+          <div>
+            <span>Zoom</span>
+            <input value="" id="zoom-transform" type="number"/>
+          </div>
+          <button id="zoomOut-transform" title="zoom-out">-</button>
+          <button id="zoomIn-transform" title="zoom-in">+</button>
+        </div>
+
+        <div class="view_svg_only" style="display: none">
+          <h3>Zoom SVG:ViewBox</h3>
+          <div>
+            <span>Zoom</span>
+            <input value="" id="zoom-viewBox" type="number"/>
+          </div>
+          <button id="zoomOut-viewBox">-</button>
+          <button id="zoomIn-viewBox">+</button>
+        </div>
+
+        <div class="view_canvasFabric_only" style="display: none">
+          <h3>Zoom Canvas Fabric</h3>
+          <div>
+            <span>Zoom</span>
+            <input value="" id="zoom-canvasFabric" type="number"/>
+          </div>
+          <button id="zoomOut-canvasFabric">-</button>
+          <button id="zoomIn-canvasFabric">+</button>
+        </div>
+      </div>
+    </div>
+    <div id="apps2" style="display: none"></div>
+    <div>
+      <!-- Menu -->
+      <a href="./index.html?view=html">HTML</a> |
+      <a href="./index.html?view=svg">SVG</a>|
+      <a href="./index.html?view=canvas">Canvas</a> |
+      <a href="./index.html?view=canvasFabric">Canvas Fabric</a>|
+      <a href="./index.html?view=pixijs">Pixijs</a> |
+      <a href="./index.html?view=canvasKonva">Canvas Konva</a> |
+      <a href="./index.html?view=appCanvas1">App Canvas</a>
+      <!-- /Menu -->
     </div>
     
   </body>
