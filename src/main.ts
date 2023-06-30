@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return
   }
 
-  if (test) {
+  if (test && app) {
     await performanceTest.runTestCase(app, Number(test), Number(testStep))
   }
 })
