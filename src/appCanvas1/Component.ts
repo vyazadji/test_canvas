@@ -15,6 +15,7 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   y: number
   data: number
   index: number // index number
+  needsRedraw: boolean
 
   constructor(componentUI: ComponentUIBar, index: number) {
     this.x = 0
@@ -22,16 +23,18 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
     this.data = 0
     this.componentUI = componentUI
     this.index = index
+    this.needsRedraw = false
   }
 
   //
   // Component interface
   //
-  getUIElement() {
-    // return this.componentUI.getElement()
-  }
+  // getUIElement() {
+  // return this.componentUI.getElement()
+  // }
 
   draw() {
+    this.needsRedraw = false
     return this.componentUI.draw(this.x, this.y, this.data, this.index)
   }
 
@@ -44,6 +47,7 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   //
   onDataChange(data: number) {
     this.data = data
+    this.needsRedraw = true
   }
 
   //

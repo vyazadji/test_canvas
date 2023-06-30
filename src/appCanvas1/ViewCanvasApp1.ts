@@ -73,7 +73,8 @@ class ViewCanvasApp1 {
   }
 
   draw() {
-    if (this.needsRedraw) {
+    const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
+    if (this.needsRedraw || componentNeedsRedraw) {
       this.context.save()
 
       // Clear the canvas
@@ -130,6 +131,32 @@ class ViewCanvasApp1 {
   handleMouseUp = (_event: MouseEvent) => {
     this.isPanning = false
   }
+
+  /* handleWheel = (event: WheelEvent) => {
+    event.preventDefault()
+
+    const scaleAmount = 1.1
+
+    // Calculate mouseX and mouseY relative to the canvas, not the window.
+    const rect = this.canvas.getBoundingClientRect()
+    const mouseX = event.clientX - rect.left
+    const mouseY = event.clientY - rect.top
+
+    if (event.deltaY < 0) {
+      // zoom in
+      this.zoomFactor *= scaleAmount
+      this.offsetX -= ((scaleAmount - 1) * (mouseX - this.offsetX)) / this.zoomFactor
+      this.offsetY -= ((scaleAmount - 1) * (mouseY - this.offsetY)) / this.zoomFactor
+    } else {
+      // zoom out
+      this.zoomFactor /= scaleAmount
+      this.offsetX += ((1 - 1 / scaleAmount) * (mouseX - this.offsetX)) / this.zoomFactor
+      this.offsetY += ((1 - 1 / scaleAmount) * (mouseY - this.offsetY)) / this.zoomFactor
+    }
+
+    // Flag that a redraw is needed
+    this.needsRedraw = true
+  } */
 
   handleWheel = (event: WheelEvent) => {
     event.preventDefault()
