@@ -8,6 +8,8 @@ import app_canvasKonva from './canvasKonva/app_canvasKonva'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
+import app_canvas1 from './appCanvas1/app_canvas1'
+
 document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search)
   const view = urlParams.get('view') || VIEW_TYPE.HTML
@@ -47,6 +49,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else if (view === VIEW_TYPE.CANVAS_KONVA) {
     app = new app_canvasKonva(appEl)
     app.start()
+  } else if (view === VIEW_TYPE.APP_CANVAS_1) {
+    const apps1 = document.getElementById('apps1') as HTMLElement
+    apps1.style.display = 'none'
+
+    const apps2 = document.getElementById('apps2') as HTMLElement
+    apps2.style.display = 'block'
+
+    const appTest = new app_canvas1(apps2)
+    appTest.start()
   } else {
     alert('"view" is unknown. Please set correct view')
     return

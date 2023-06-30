@@ -11,4 +11,5 @@ export const VIEW_TYPE = {
   CANVAS_FABRIC: 'canvasFabric',
   PIXIJS: 'pixijs',
   CANVAS_KONVA: 'canvasKonva',
+  APP_CANVAS_1: 'appCanvas1',
 } as const

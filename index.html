@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Test <span id="viewName">...</span> layer component decomposition</h1>
-    <div class="apps">
+    <div class="apps" id="apps1">
       <div id="app" class="app"></div>
       <div>
         <!-- HTML VIEW ONLY -->
@@ -170,14 +170,6 @@
         </div>
         <!-- /General -->
 
-        <!-- Menu -->
-        <a href="./index.html?view=html">HTML</a> |
-        <a href="./index.html?view=svg">SVG</a>|
-        <a href="./index.html?view=canvas">Canvas</a> |
-        <a href="./index.html?view=canvasFabric">Canvas Fabric</a>|
-        <a href="./index.html?view=pixijs">Pixijs</a> |
-        <a href="./index.html?view=canvasKonva">Canvas Konva</a>
-        <!-- /Menu -->
       </div>
 
       <div style="padding:0 2rem">
@@ -211,6 +203,18 @@
           <button id="zoomIn-canvasFabric">+</button>
         </div>
       </div>
+    </div>
+    <div id="apps2" style="display: none"></div>
+    <div>
+      <!-- Menu -->
+      <a href="./index.html?view=html">HTML</a> |
+      <a href="./index.html?view=svg">SVG</a>|
+      <a href="./index.html?view=canvas">Canvas</a> |
+      <a href="./index.html?view=canvasFabric">Canvas Fabric</a>|
+      <a href="./index.html?view=pixijs">Pixijs</a> |
+      <a href="./index.html?view=canvasKonva">Canvas Konva</a> |
+      <a href="./index.html?view=appCanvas1">App Canvas</a>
+      <!-- /Menu -->
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
