@@ -42,9 +42,16 @@ class ComponentUIBar {
     this.context.fillStyle = 'green'
     this.context.fillRect(this.x, this.y, width, height)
 
+    //circle example
+    this.context.beginPath()
+    this.context.arc(x + 3, y + 3, 2, 0, Math.PI * 2, true)
+    this.context.stroke()
+
     // bar value
     this.context.fillStyle = this.barColor
     this.context.fillRect(this.x + 1, this.y + (height - barValueHeight), barValueWidth, barValueHeight)
+
+    //
 
     // text
     if (index !== undefined) {

@@ -32,7 +32,7 @@ class ApplicationCanvas1 {
     this.appElement.appendChild(this.view.start())
 
     const COMPONENTS_COUNT = 10_000
-    // const COMPONENTS_COUNT = 10
+    // const COMPONENTS_COUNT = 1_000
     this.addBarComponent(COMPONENTS_COUNT)
 
     // start DataSources
