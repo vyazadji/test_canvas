@@ -37,8 +37,8 @@ class ViewCanvasApp1 {
     // clear all
     this.context.clearRect(0, 0, this.width, this.height)
 
-    this.components.forEach((component) => {
-      component.draw(0)
+    this.components.forEach((component, i) => {
+      component.draw(i + 1)
     })
     return this.canvasEl
   }

@@ -7,8 +7,8 @@ import ComponentUIBar from './ComponentUIBar'
 
 const VIEW_WIDTH = 2000
 const VIEW_HEIGHT = 1100
-const COMPONENT_WIDTH = 10
-const COMPONENT_HEIGHT = 10
+const COMPONENT_WIDTH = 50
+const COMPONENT_HEIGHT = 50
 
 /**
  * Application test 1 base on Canvas layer
@@ -53,7 +53,7 @@ class ApplicationCanvas1 {
 
     this.appElement.appendChild(this.view.start())
 
-    this.addBarComponent(10000)
+    this.addBarComponent(500)
     // start DataSources
     // this.dataSource.start()
   }
@@ -65,7 +65,7 @@ class ApplicationCanvas1 {
       const x = (COMPONENT_WIDTH * i) % VIEW_WIDTH
       const y = Math.floor((COMPONENT_WIDTH * i) / VIEW_WIDTH) * COMPONENT_HEIGHT
       component.position(x, y)
-      console.log('add component')
+      // console.log('add component')
 
       // component.addSource(this.dataSource)
       this.view.addComponent(component)
