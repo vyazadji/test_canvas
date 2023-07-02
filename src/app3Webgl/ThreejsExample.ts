@@ -16,9 +16,7 @@ class ThreejsExample {
   constructor(appElement: HTMLElement) {
     this.appElement = appElement
     this.circles = []
-  }
 
-  start() {
     // Create scene, camera and renderer
     this.scene = new THREE.Scene()
     this.camera = new THREE.OrthographicCamera(
@@ -34,13 +32,15 @@ class ThreejsExample {
     this.renderer = new THREE.WebGLRenderer()
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     this.appElement.appendChild(this.renderer.domElement)
+  }
 
+  start() {
     const CIRCLE_SEGMENTS_COUNT = 32 // 32 is default value
     // Create 10,000 circles
 
     // The same type for all circles
     const geometry = new THREE.CircleGeometry(random(3, 10), CIRCLE_SEGMENTS_COUNT)
-    const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+    const material = new THREE.MeshBasicMaterial({ color: generateRandomColor() })
 
     this.circles = []
 
