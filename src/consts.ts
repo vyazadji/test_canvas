@@ -16,4 +16,5 @@ export const VIEW_TYPE = {
   // apps with POC realization
   APP_2_CANVAS: 'app2Canvas',
   APP_3_WEBGL: 'app3Webgl',
+  APP_4_OFFSCREEN_CANVAS: 'app4OffscreenCanvas',
 } as const

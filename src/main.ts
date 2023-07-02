@@ -10,6 +10,8 @@ import { VIEW_TYPE } from './consts'
 
 import app_2_canvas from './app2Canvas/app2_canvas'
 import app_3_webgl from './app3Webgl/app3_webgl'
+import app_4_offscreenCanvas from './app4OffscreenCanvas/app4_offscreenCanvas'
+
 import { getElementById } from './utils/helpers'
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -53,18 +55,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.start()
   } else if (view === VIEW_TYPE.APP_2_CANVAS) {
     getElementById('apps1').style.display = 'none'
-    const app2El = getElementById('apps2')
-    app2El.style.display = 'block'
+    const appEl = getElementById('apps2')
+    appEl.style.display = 'block'
 
-    const app2 = new app_2_canvas(app2El)
-    app2.start()
+    const app = new app_2_canvas(appEl)
+    app.start()
   } else if (view === VIEW_TYPE.APP_3_WEBGL) {
     getElementById('apps1').style.display = 'none'
-    const app3El = getElementById('apps3')
-    app3El.style.display = 'block'
+    const appEl = getElementById('apps3')
+    appEl.style.display = 'block'
 
-    const app3 = new app_3_webgl(app3El)
-    app3.start()
+    const app = new app_3_webgl(appEl)
+    app.start()
+  } else if (view === VIEW_TYPE.APP_4_OFFSCREEN_CANVAS) {
+    getElementById('apps1').style.display = 'none'
+
+    const appEl = getElementById('apps4')
+    appEl.style.display = 'block'
+
+    const app = new app_4_offscreenCanvas(appEl)
+    app.start()
   } else {
     alert('"view" is unknown. Please set correct view')
     return
