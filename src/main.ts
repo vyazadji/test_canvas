@@ -9,6 +9,8 @@ import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
 import app_canvas1 from './appCanvas1/app_canvas1'
+import app_3_webgl from './app3Webgl/app3_webgl'
+import { getElementById } from './utils/helpers'
 
 document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search)
@@ -49,15 +51,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else if (view === VIEW_TYPE.CANVAS_KONVA) {
     app = new app_canvasKonva(appEl)
     app.start()
-  } else if (view === VIEW_TYPE.APP_CANVAS_1) {
-    const apps1 = document.getElementById('apps1') as HTMLElement
-    apps1.style.display = 'none'
+  } else if (view === VIEW_TYPE.APP_2_CANVAS) {
+    getElementById('apps1').style.display = 'none'
+    const app2El = getElementById('apps3')
+    app2El.style.display = 'block'
 
-    const apps2 = document.getElementById('apps2') as HTMLElement
-    apps2.style.display = 'block'
+    const app2 = new app_canvas1(app2El)
+    app2.start()
+  } else if (view === VIEW_TYPE.APP_3_WEBGL) {
+    getElementById('apps1').style.display = 'none'
+    const app3El = getElementById('apps3')
+    app3El.style.display = 'block'
 
-    const appTest = new app_canvas1(apps2)
-    appTest.start()
+    const app3 = new app_3_webgl(app3El)
+    app3.start()
   } else {
     alert('"view" is unknown. Please set correct view')
     return
