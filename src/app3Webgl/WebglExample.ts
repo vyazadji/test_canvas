@@ -45,7 +45,7 @@ class WebglExample {
       this.positions.push({
         x: random(),
         y: random(),
-        r: Math.random() / 10,
+        r: Math.random() / 5,
         direction: Math.random() > 0.5 ? -1 : 1,
         color: [Math.random(), Math.random(), Math.random(), 1.0], // RGB and Alpha
       })
@@ -66,12 +66,13 @@ class WebglExample {
     }
 
     const vertShaderSrc = `
-      attribute vec2 a_position;
-      uniform vec2 u_position;
-      void main(void) {
-        gl_Position = vec4(a_position + u_position, 0.0, 1.0);
-      }
-    `
+        attribute vec2 a_position;
+        uniform vec2 u_position;
+        uniform float u_radius;
+        void main(void) {
+        gl_Position = vec4(a_position * u_radius + u_position, 0.0, 1.0);
+        }
+        `
     const fragShaderSrc = `
         precision mediump float;
         uniform vec4 u_color;
@@ -207,6 +208,11 @@ class WebglExample {
       const position = [centerX, this.positions[index].y]
       const positionLocation = gl.getUniformLocation(program, 'u_position')
       gl.uniform2fv(positionLocation, position)
+
+      // Set radius
+      const radius = this.positions[index].r
+      const radiusLocation = gl.getUniformLocation(program, 'u_radius')
+      gl.uniform1f(radiusLocation, radius)
 
       // Draw the circle
       gl.drawArrays(gl.TRIANGLE_FAN, 0, 101)
