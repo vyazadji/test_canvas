@@ -8,7 +8,7 @@ import app_canvasKonva from './canvasKonva/app_canvasKonva'
 import PerformanceTest from './PerformanceTest'
 import { VIEW_TYPE } from './consts'
 
-import app_canvas1 from './appCanvas1/app_canvas1'
+import app_2_canvas from './app2Canvas/app2_canvas'
 import app_3_webgl from './app3Webgl/app3_webgl'
 import { getElementById } from './utils/helpers'
 
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const app2El = getElementById('apps3')
     app2El.style.display = 'block'
 
-    const app2 = new app_canvas1(app2El)
+    const app2 = new app_2_canvas(app2El)
     app2.start()
   } else if (view === VIEW_TYPE.APP_3_WEBGL) {
     getElementById('apps1').style.display = 'none'
