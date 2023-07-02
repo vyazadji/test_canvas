@@ -4,7 +4,7 @@ import * as THREE from 'three'
 const COMPONENTS_COUNT = 10_000
 
 /**
- * Example of drawwing circles on 2D  via Three js
+ * Example of drawwing circles on 2D via Three js
  */
 class ThreejsExample {
   appElement: HTMLElement
@@ -35,16 +35,17 @@ class ThreejsExample {
     this.renderer.setSize(window.innerWidth, window.innerHeight)
     this.appElement.appendChild(this.renderer.domElement)
 
-    const CIRCLE_SEGMENTS_COUNT = 162
+    const CIRCLE_SEGMENTS_COUNT = 32 // 32 is default value
     // Create 10,000 circles
-    // one type
+
+    // The same type for all circles
     const geometry = new THREE.CircleGeometry(random(3, 10), CIRCLE_SEGMENTS_COUNT)
     const material = new THREE.MeshBasicMaterial({ color: 0xffff00 })
 
     this.circles = []
 
     for (let i = 0; i < COMPONENTS_COUNT; i++) {
-      // different circles
+      // Different type for each circles
       // const geometry = new THREE.CircleGeometry(random(3, 10), CIRCLE_SEGMENTS_COUNT)
       // const material = new THREE.MeshBasicMaterial({ color: generateRandomColor() })
 

@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.start()
   } else if (view === VIEW_TYPE.APP_2_CANVAS) {
     getElementById('apps1').style.display = 'none'
-    const app2El = getElementById('apps3')
+    const app2El = getElementById('apps2')
     app2El.style.display = 'block'
 
     const app2 = new app_2_canvas(app2El)

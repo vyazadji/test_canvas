@@ -1,5 +1,5 @@
-import ThreejsExample from './ThreejsExample'
 import WebglExample from './WebglExample'
+import ThreejsExample from './ThreejsExample'
 
 /**
  * Application test 3 for testing WEBG approach
@@ -12,11 +12,19 @@ class Application3Webgl {
   }
 
   start() {
-    // three js
-    const example = new ThreejsExample(this.appElement)
+    const urlParams = new URLSearchParams(window.location.search)
+    const exampleParam = urlParams.get('example')
 
-    // Webgl raw example
-    // const example = new WebglExample(this.appElement)
+    let example
+
+    if (exampleParam === 'webgl') {
+      // Webgl raw example
+      example = new WebglExample(this.appElement)
+    } else {
+      // three js
+      example = new ThreejsExample(this.appElement)
+    }
+
     example.start()
   }
 }
