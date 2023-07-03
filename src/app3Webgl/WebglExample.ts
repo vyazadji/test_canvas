@@ -45,7 +45,7 @@ class WebglExample {
       this.positions.push({
         x: random(),
         y: random(),
-        r: Math.random() / 5,
+        r: Math.random() / 2,
         direction: Math.random() > 0.5 ? -1 : 1,
         color: [Math.random(), Math.random(), Math.random(), 1.0], // RGB and Alpha
       })
@@ -116,7 +116,7 @@ class WebglExample {
     return vertexBuffer as WebGLBuffer
   }
 
-  drawCircles() {
+  /* drawCircles() {
     // this.drawCircle(webGLConfig, , 0, 0.5, 100)
     for (let i = 0; i < COMPONENTS_COUNT; i++) {
       this.drawCircle(
@@ -128,9 +128,9 @@ class WebglExample {
         this.positions[i].color
       )
     }
-  }
+  } */
 
-  drawCircle(
+  /* drawCircle(
     config: WebGLConfig,
     centerX: number,
     centerY: number,
@@ -164,7 +164,7 @@ class WebglExample {
     gl.enableVertexAttribArray(coord)
     gl.drawArrays(gl.TRIANGLE_FAN, 0, numSegments + 1)
     gl.disableVertexAttribArray(coord)
-  }
+  } */
 
   animate() {
     const { gl, program } = this.webGLConfig
