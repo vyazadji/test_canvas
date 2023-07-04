@@ -1,7 +1,7 @@
 import { DataSourceListener, DataSource } from './../type'
 import ComponentUIBar from './ComponentUIBar'
 
-interface ComponentApp1 {
+interface ComponentApp4 {
   componentUI: ComponentUIBar // TODO use general component type
   x: number // position of component
   y: number // position of component
@@ -9,33 +9,33 @@ interface ComponentApp1 {
   data: number // value of component, can be different for different types. This is the simplest solution
 }
 
-class ComponentClass implements DataSourceListener, ComponentApp1 {
+class ComponentClass implements DataSourceListener, ComponentApp4 {
   componentUI: ComponentUIBar
   x: number
   y: number
   data: number
-  index: number // index number
+  id: string
   needsRedraw: boolean
 
-  constructor(componentUI: ComponentUIBar, index: number) {
+  constructor(componentUI: ComponentUIBar, id: string) {
     this.x = 0
     this.y = 0
     this.data = 0
     this.componentUI = componentUI
-    this.index = index
+    this.id = id
     this.needsRedraw = false
   }
 
   //
   // Component interface
   //
-  // getUIElement() {
-  // return this.componentUI.getElement()
-  // }
+  getUIElement() {
+    return this.componentUI
+  }
 
   draw() {
     this.needsRedraw = false
-    return this.componentUI.draw(this.x, this.y, this.data, this.index)
+    return this.componentUI.draw(this.id, this.x, this.y, this.data)
   }
 
   addSource(dataSource: DataSource) {

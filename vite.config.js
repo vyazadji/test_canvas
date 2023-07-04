@@ -10,4 +10,8 @@ export default {
       promiseImportName: (i) => `__tla_${i}`,
     }),
   ],
+  build: {
+    // Enable worker bundling
+    worker: true,
+  },
 }

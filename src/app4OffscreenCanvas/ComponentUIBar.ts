@@ -1,79 +1,34 @@
-// import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
-
-import { getRandomColor } from '../utils/colors'
+import Layer from './Layer'
 
 /**
  * UI Canvas implementation of Bar component.
- * It contains raw Canvas elements
+ * It's main part that we use in Component
+ * Draw will do in the worker's part of this component
  */
 class ComponentUIBar {
-  private context: CanvasRenderingContext2D
-  x: number
-  y: number
-  data: number
-  barColor: string
+  id: string
+  layer: Layer | null
 
-  constructor(context: CanvasRenderingContext2D) {
-    this.context = context
-    this.data = 0
+  constructor(id: string) {
+    this.id = id
+    this.layer = null
+  }
 
-    this.barColor = getRandomColor()
-    // init position
-    this.x = 0
-    this.y = 0
+  addInLayer(layer: Layer) {
+    this.layer = layer
+    this.layer.addComponent(this.id)
   }
 
   /**
    * Draw the component
    */
-  draw(x: number, y: number, data: number, index?: number) {
-    this.data = data
-    // this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
-
-    this.x = x
-    this.y = y
-
-    const width = 6
-    const height = 9
-    const barValueWidth = width - 2
-    const barValueHeight = Math.round((height * data) / 100)
-
-    // bar component
-    this.context.fillStyle = 'green'
-    this.context.fillRect(this.x, this.y, width, height)
-
-    //circle example
-    this.context.beginPath()
-    this.context.arc(x + 3, y + 3, 2, 0, Math.PI * 2, true)
-    this.context.stroke()
-
-    // bar value
-    this.context.fillStyle = this.barColor
-    this.context.fillRect(this.x + 1, this.y + (height - barValueHeight), barValueWidth, barValueHeight)
-
-    //
-
-    // text
-    if (index !== undefined) {
-      this.context.fillStyle = 'black'
-      this.context.font = '3px Arial'
-      this.context.fillText(index.toString(), this.x, this.y + height) // adjust position as needed
+  draw(id: string, x: number, y: number, data: number) {
+    if (this.layer) {
+      this.layer.draw(id, x, y, data)
+    } else {
+      console.warn('Try to draw ComponentUIBar without layer; id=', this.id)
     }
   }
-
-  /* move(leftNew: number, topNew: number) {
-    // Clear the previous drawing
-    this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
-
-    this.x = leftNew
-    this.y = topNew
-
-    this.draw(this.data)
-  } */
-
-  /* getElement() {
-    return this
-  } */
 }
 
 export default ComponentUIBar

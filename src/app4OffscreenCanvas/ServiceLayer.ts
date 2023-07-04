@@ -1,18 +1,12 @@
-// import type { Component } from './../type'
-
-import ComponentClass from './Component'
-
 /**
- * Canvas layer
+ * @class
+ * This is a service layer
+ * It handle mouse events
  */
-class ViewCanvasApp1 {
+class ServiceLayer {
   canvas: HTMLCanvasElement
-  context: CanvasRenderingContext2D
-
   height: number
   width: number
-
-  components: ComponentClass[]
 
   zoomFactor: number
   offsetX: number
@@ -21,13 +15,9 @@ class ViewCanvasApp1 {
   lastPosition: { x: number; y: number }
   needsRedraw: boolean
 
-  draggingComponent: ComponentClass | null
-
   constructor(height: number, width: number) {
     this.width = width
     this.height = height
-
-    this.components = []
 
     this.zoomFactor = 1
     this.offsetX = 0
@@ -36,68 +26,15 @@ class ViewCanvasApp1 {
     this.lastPosition = { x: 0, y: 0 }
     this.needsRedraw = false
 
-    this.draggingComponent = null
-
     this.canvas = document.createElement('canvas')
     this.canvas.width = this.width
     this.canvas.height = this.height
-    this.canvas.style.border = '1px solid blue'
-
-    this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
 
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseup', this.handleMouseUp)
     this.canvas.addEventListener('mouseout', this.handleMouseUp) // Stop panning when mouse leaves canvas.
     this.canvas.addEventListener('wheel', this.handleWheel)
-  }
-
-  getContext(): CanvasRenderingContext2D {
-    return this.context
-  }
-
-  addComponent(component: ComponentClass) {
-    this.components.push(component)
-  }
-
-  start() {
-    // clear all
-    this.context.clearRect(0, 0, this.width, this.height)
-
-    this.needsRedraw = true
-    this.draw()
-
-    return this.canvas
-  }
-
-  drawComponents() {
-    this.components.forEach((component) => {
-      component.draw()
-    })
-  }
-
-  draw() {
-    const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
-    if (this.needsRedraw || componentNeedsRedraw) {
-      this.context.save()
-
-      // Clear the canvas
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
-      // Translate and scale context
-      this.context.translate(this.offsetX, this.offsetY)
-      this.context.scale(this.zoomFactor, this.zoomFactor)
-
-      // Draw my scene here
-      this.drawComponents()
-
-      this.context.restore()
-      // Reset the flag
-      this.needsRedraw = false
-    }
-
-    // Request the next frame
-    requestAnimationFrame(this.draw.bind(this))
   }
 
   //
@@ -219,4 +156,4 @@ class ViewCanvasApp1 {
   }
 }
 
-export default ViewCanvasApp1
+export default ServiceLayer
