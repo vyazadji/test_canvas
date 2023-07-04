@@ -15,7 +15,7 @@ class ServiceLayer {
   lastPosition: { x: number; y: number }
   needsRedraw: boolean
 
-  constructor(height: number, width: number) {
+  constructor(width: number, height: number) {
     this.width = width
     this.height = height
 
@@ -29,12 +29,17 @@ class ServiceLayer {
     this.canvas = document.createElement('canvas')
     this.canvas.width = this.width
     this.canvas.height = this.height
+    this.canvas.style.position = 'absolute'
 
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
     this.canvas.addEventListener('mouseup', this.handleMouseUp)
     this.canvas.addEventListener('mouseout', this.handleMouseUp) // Stop panning when mouse leaves canvas.
     this.canvas.addEventListener('wheel', this.handleWheel)
+  }
+
+  getCanvas() {
+    return this.canvas
   }
 
   //
@@ -133,6 +138,7 @@ class ServiceLayer {
   }
 
   handleWheel = (event: WheelEvent) => {
+    console.log('!!!!!handleWheel!!!!!!')
     event.preventDefault()
 
     const scaleAmount = 1.1
@@ -150,6 +156,8 @@ class ServiceLayer {
       this.offsetX += ((1 - 1 / scaleAmount) * (mouseX - this.offsetX)) / this.zoomFactor
       this.offsetY += ((1 - 1 / scaleAmount) * (mouseY - this.offsetY)) / this.zoomFactor
     }
+
+    console.log('mouse wheel', { zoom: this.zoomFactor })
 
     this.needsRedraw = true
     // this.draw()
