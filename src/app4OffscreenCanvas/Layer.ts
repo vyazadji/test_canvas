@@ -60,6 +60,23 @@ class Layer {
       command: 'clear',
     })
   }
+
+  setScale(zoomFactor: number, offsetX: number, offsetY: number) {
+    this.worker.postMessage({
+      command: 'setScale',
+      payload: {
+        zoomFactor,
+        offsetX,
+        offsetY,
+      },
+    })
+  }
+
+  contextRestore() {
+    this.worker.postMessage({
+      command: 'contextRestore',
+    })
+  }
 }
 
 export default Layer
