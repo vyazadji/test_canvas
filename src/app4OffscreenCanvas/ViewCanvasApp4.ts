@@ -1,8 +1,10 @@
 import ComponentClass from './Component'
 import Layer from './Layer'
 
+const LAYERS_COUNT = 3
+
 /**
- * Canvas layer
+ * Canvas app with offscreenCanvas in separate layers
  */
 class ViewCanvasApp4 {
   element: HTMLElement
@@ -46,18 +48,28 @@ class ViewCanvasApp4 {
 
     this.layers = []
 
-    // create a Layer
-    const layer = new Layer(this.element, width, height)
-    this.layers.push(layer)
+    this.createLayers()
+  }
+
+  createLayers() {
+    for (let index = 0; index < LAYERS_COUNT; index++) {
+      const layer = new Layer(this.width, this.height)
+      const canvasLayer = layer.getCanvas()
+      this.element.appendChild(canvasLayer)
+      this.layers.push(layer)
+    }
   }
 
   getContext(): HTMLElement {
     return this.element
   }
 
-  addComponent(component: ComponentClass) {
+  addComponent(component: ComponentClass, index: number) {
+    // get layer number
+    const targetLayerNumber = index % LAYERS_COUNT
+
     // add UI in layer
-    const layer = this.layers[0]
+    const layer = this.layers[targetLayerNumber]
     component.getUIElement().addInLayer(layer)
 
     // add component

@@ -10,7 +10,7 @@ class Layer {
 
   worker: Worker
 
-  constructor(parentElement: HTMLElement, width: number, height: number) {
+  constructor(width: number, height: number) {
     this.width = width
     this.height = height
 
@@ -19,7 +19,6 @@ class Layer {
     this.canvas.height = this.height
     this.canvas.style.position = 'absolute'
 
-    parentElement.appendChild(this.canvas)
     // convert to offscreen
     const offscreen: OffscreenCanvas = <OffscreenCanvas>this.canvas.transferControlToOffscreen()
 
@@ -28,6 +27,10 @@ class Layer {
     this.worker.postMessage({ canvas: offscreen }, [offscreen]) // Transfer the OffscreenCanvas to the worker
 
     console.log('init layer', { width, height })
+  }
+
+  getCanvas() {
+    return this.canvas
   }
 
   addComponent(id: string) {

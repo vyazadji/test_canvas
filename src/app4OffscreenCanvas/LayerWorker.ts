@@ -26,13 +26,11 @@ const clear = () => {
 }
 
 const addComponent = (id: string) => {
-  console.log('add component', id)
   if (ctx) {
     const newComponentUI = new ComponentUIBarWorker(ctx)
-
     componentsUI[id] = newComponentUI
   } else {
-    console.warn('LayoutWorker: context is not defined')
+    console.warn('LayoutWorker addComponent(): context is not defined')
   }
 }
 

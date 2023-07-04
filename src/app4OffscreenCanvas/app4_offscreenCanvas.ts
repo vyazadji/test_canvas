@@ -50,7 +50,7 @@ class ApplicationOffscreenCanvas {
       component.position(x, y)
 
       component.addSource(i % 2 ? this.dataSource1 : this.dataSource2)
-      this.view.addComponent(component)
+      this.view.addComponent(component, i)
     }
     this.view.start()
   }
