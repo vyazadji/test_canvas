@@ -1,3 +1,4 @@
+import Component from './Component'
 /**
  * @class
  * This is a service layer
@@ -14,6 +15,9 @@ class ServiceLayer {
   isPanning: boolean
   lastPosition: { x: number; y: number }
   needsRedraw: boolean
+
+  components: Component[]
+  draggingComponent: Component | null
 
   constructor(width: number, height: number) {
     this.width = width
@@ -36,6 +40,9 @@ class ServiceLayer {
     this.canvas.addEventListener('mouseup', this.handleMouseUp)
     this.canvas.addEventListener('mouseout', this.handleMouseUp) // Stop panning when mouse leaves canvas.
     this.canvas.addEventListener('wheel', this.handleWheel)
+
+    this.components = []
+    this.draggingComponent = null
   }
 
   getCanvas() {
@@ -85,7 +92,7 @@ class ServiceLayer {
         mouseY >= component.y &&
         mouseY <= component.y + COMPONENT_HEIGHT
       ) {
-        console.log('click on component', component.index, component)
+        console.log('click on component', component.id, component)
         this.draggingComponent = component
         return
       }
