@@ -25,33 +25,26 @@ class Layer {
     this.worker = new Worker(new URL('./LayerWorker.ts', import.meta.url), { type: 'module' })
 
     this.worker.postMessage({ canvas: offscreen }, [offscreen]) // Transfer the OffscreenCanvas to the worker
-
-    console.log('init layer', { width, height })
   }
 
   getCanvas() {
     return this.canvas
   }
 
-  addComponent(id: string) {
+  addComponent(id: string, index: number) {
     // TODO need to also set type of UI element
     this.worker.postMessage({
       command: 'addComponent',
       payload: {
         id,
+        index,
       },
     })
   }
 
-  draw(id: string, x: number, y: number, data: number) {
+  draw() {
     this.worker.postMessage({
       command: 'draw',
-      payload: {
-        id,
-        x,
-        y,
-        data,
-      },
     })
   }
 
@@ -75,6 +68,27 @@ class Layer {
   contextRestore() {
     this.worker.postMessage({
       command: 'contextRestore',
+    })
+  }
+
+  setComponentPosition(id: string, x: number, y: number) {
+    this.worker.postMessage({
+      command: 'setComponentPosition',
+      payload: {
+        id,
+        x,
+        y,
+      },
+    })
+  }
+
+  setComponentData(id: string, data: number) {
+    this.worker.postMessage({
+      command: 'setComponentData',
+      payload: {
+        id,
+        data,
+      },
     })
   }
 }

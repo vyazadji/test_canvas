@@ -145,7 +145,6 @@ class ServiceLayer {
   }
 
   handleWheel = (event: WheelEvent) => {
-    console.log('!!!!!handleWheel!!!!!!')
     event.preventDefault()
 
     const scaleAmount = 1.1

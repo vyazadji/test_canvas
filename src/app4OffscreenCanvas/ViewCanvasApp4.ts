@@ -2,7 +2,7 @@ import ComponentClass from './Component'
 // import ServiceLayer from './ServiceLayer'
 import Layer from './Layer'
 
-const LAYERS_COUNT = 2
+const LAYERS_COUNT = 5
 
 /**
  * Canvas app with offscreenCanvas in separate layers
@@ -83,7 +83,12 @@ class ViewCanvasApp4 {
 
     // add UI in layer
     const layer = this.layers[targetLayerNumber]
-    component.getUIElement().addInLayer(layer)
+    component.getUIElement().addInLayer(layer, index)
+
+    // this is a work around because only here we have
+    // initialized all object: layer and componentUI
+    // do it to set position in componentUI
+    component.position(component.x, component.y)
 
     // add component
     this.components.push(component)
@@ -116,28 +121,32 @@ class ViewCanvasApp4 {
 
   draw() {
     const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
+
     if (this.needsRedraw || componentNeedsRedraw) {
       this.clearLayers()
 
       this.setScaleInLayers()
-      /* this.context.save()
-      // Clear the canvas
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-      // Translate and scale context
-      this.context.translate(this.offsetX, this.offsetY)
-      this.context.scale(this.zoomFactor, this.zoomFactor)
-*/
+      // redraw all layers
+      this.layers.forEach((layer) => {
+        layer.draw()
+      })
 
       // Draw my scene here
-      this.components.forEach((component) => {
+      /* this.components.forEach((component) => {
         component.draw()
-      })
+      }) */
 
       this.contextRestorLayers()
 
       // Reset the flag
       this.needsRedraw = false
+
+      // workaround disabble needsRedraw in all components
+      for (let index = 0; index < this.components.length; index++) {
+        const component = this.components[index]
+        component.needsRedraw = false
+      }
     }
 
     // Request the next frame

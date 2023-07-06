@@ -12,9 +12,13 @@ class ComponentUIBarWorker {
   data: number
   barColor: string
 
-  constructor(context: OffscreenCanvasRenderingContext2D) {
+  index: number // index of element. Use for debug only
+
+  constructor(context: OffscreenCanvasRenderingContext2D, index: number) {
     this.context = context
     this.data = 0
+
+    this.index = index
 
     this.barColor = getRandomColor()
     // init position
@@ -22,20 +26,23 @@ class ComponentUIBarWorker {
     this.y = 0
   }
 
+  position(x: number, y: number) {
+    this.x = x
+    this.y = y
+  }
+
+  setData(data: number) {
+    this.data = data
+  }
+
   /**
    * Draw the component
    */
-  draw(x: number, y: number, data: number, index?: string) {
-    this.data = data
-    // this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
-
-    this.x = x
-    this.y = y
-
+  draw() {
     const width = 6
     const height = 9
     const barValueWidth = width - 2
-    const barValueHeight = Math.round((height * data) / 100)
+    const barValueHeight = Math.round((height * this.data) / 100)
 
     // bar component
     this.context.fillStyle = 'green'
@@ -43,20 +50,18 @@ class ComponentUIBarWorker {
 
     //circle example
     this.context.beginPath()
-    this.context.arc(x + 3, y + 3, 2, 0, Math.PI * 2, true)
+    this.context.arc(this.x + 3, this.y + 3, 2, 0, Math.PI * 2, true)
     this.context.stroke()
 
     // bar value
     this.context.fillStyle = this.barColor
     this.context.fillRect(this.x + 1, this.y + (height - barValueHeight), barValueWidth, barValueHeight)
 
-    //
-
     // text
-    if (index !== undefined) {
+    if (this.index !== undefined) {
       this.context.fillStyle = 'black'
       this.context.font = '3px Arial'
-      this.context.fillText(index.toString(), this.x, this.y + height) // adjust position as needed
+      this.context.fillText(this.index.toString(), this.x, this.y + height) // adjust position as needed
     }
   }
 }

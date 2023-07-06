@@ -11,10 +11,10 @@ onmessage = function (e: MessageEvent) {
     const offscreen: OffscreenCanvas = <OffscreenCanvas>e.data.canvas
     ctx = <OffscreenCanvasRenderingContext2D>offscreen.getContext('2d')
   } else if (e.data.command === 'addComponent') {
-    addComponent(e.data.payload.id)
+    const { id, index }: { id: string; index: number } = e.data.payload
+    addComponent(id, index)
   } else if (e.data.command === 'draw') {
-    const { id, x, y, data }: { id: string; x: number; y: number; data: number } = e.data.payload
-    draw(id, x, y, data)
+    draw()
   } else if (e.data.command === 'clear') {
     clear()
   } else if (e.data.command === 'setScale') {
@@ -22,26 +22,40 @@ onmessage = function (e: MessageEvent) {
     setScale(zoomFactor, offsetX, offsetY)
   } else if (e.data.command === 'contextRestore') {
     contextRestore()
+  } else if (e.data.command === 'setComponentPosition') {
+    const { id, x, y }: { id: string; x: number; y: number } = e.data.payload
+    setComponentPosition(id, x, y)
+  } else if (e.data.command === 'setComponentData') {
+    const { id, data }: { id: string; data: number } = e.data.payload
+    setComponentData(id, data)
   } else {
     console.warn('LayoutWorker: Unknown command', { data: e.data })
   }
 }
 
-const addComponent = (id: string) => {
+const addComponent = (id: string, index: number) => {
   if (ctx) {
-    const newComponentUI = new ComponentUIBarWorker(ctx)
+    const newComponentUI = new ComponentUIBarWorker(ctx, index)
     componentsUI[id] = newComponentUI
   } else {
     console.warn('LayoutWorker addComponent(): context is not defined')
   }
 }
 
-function draw(id: string, x: number, y: number, data: number) {
-  if (ctx) {
+const setComponentPosition = (id: string, x: number, y: number) => {
+  const componentUI = componentsUI[id]
+  componentUI.position(x, y)
+}
+
+const setComponentData = (id: string, data: number) => {
+  const componentUI = componentsUI[id]
+  componentUI.setData(data)
+}
+
+const draw = () => {
+  for (const id in componentsUI) {
     const componentUI = componentsUI[id]
-    componentUI.draw(x, y, data, id)
-  } else {
-    console.warn('LayoutWorker draw(): context is not defined')
+    componentUI.draw()
   }
 }
 

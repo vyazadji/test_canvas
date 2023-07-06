@@ -33,11 +33,6 @@ class ComponentClass implements DataSourceListener, ComponentApp4 {
     return this.componentUI
   }
 
-  draw() {
-    this.needsRedraw = false
-    return this.componentUI.draw(this.id, this.x, this.y, this.data)
-  }
-
   addSource(dataSource: DataSource) {
     dataSource.addListener(this)
   }
@@ -47,6 +42,7 @@ class ComponentClass implements DataSourceListener, ComponentApp4 {
   //
   onDataChange(data: number) {
     this.data = data
+    this.componentUI.setData(data)
     this.needsRedraw = true
   }
 
@@ -56,6 +52,7 @@ class ComponentClass implements DataSourceListener, ComponentApp4 {
   position(x: number, y: number) {
     this.x = x
     this.y = y
+    this.componentUI.position(x, y)
   }
 }
 

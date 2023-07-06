@@ -31,8 +31,8 @@ class ApplicationOffscreenCanvas {
 
     this.appElement.appendChild(this.view.start())
 
-    const COMPONENTS_COUNT = 5_000
-    // const COMPONENTS_COUNT = 500
+    const COMPONENTS_COUNT = 10_000
+    // const COMPONENTS_COUNT = 10
     this.addBarComponent(COMPONENTS_COUNT)
 
     // start DataSources

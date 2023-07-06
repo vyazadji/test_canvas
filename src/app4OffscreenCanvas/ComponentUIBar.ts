@@ -14,21 +14,33 @@ class ComponentUIBar {
     this.layer = null
   }
 
-  addInLayer(layer: Layer) {
+  addInLayer(layer: Layer, index: number) {
     this.layer = layer
-    this.layer.addComponent(this.id)
+    this.layer.addComponent(this.id, index)
+  }
+
+  position(x: number, y: number) {
+    if (this.layer) {
+      this.layer.setComponentPosition(this.id, x, y)
+    }
+  }
+
+  setData(data: number) {
+    if (this.layer) {
+      this.layer.setComponentData(this.id, data)
+    }
   }
 
   /**
    * Draw the component
    */
-  draw(id: string, x: number, y: number, data: number) {
+  /* draw(id: string, x: number, y: number, data: number) {
     if (this.layer) {
       this.layer.draw(id, x, y, data)
     } else {
       console.warn('Try to draw ComponentUIBar without layer; id=', this.id)
     }
-  }
+  } */
 }
 
 export default ComponentUIBar
