@@ -48,12 +48,6 @@ class Layer {
     })
   }
 
-  clear() {
-    this.worker.postMessage({
-      command: 'clear',
-    })
-  }
-
   setScale(zoomFactor: number, offsetX: number, offsetY: number) {
     this.worker.postMessage({
       command: 'setScale',
@@ -62,12 +56,6 @@ class Layer {
         offsetX,
         offsetY,
       },
-    })
-  }
-
-  contextRestore() {
-    this.worker.postMessage({
-      command: 'contextRestore',
     })
   }
 

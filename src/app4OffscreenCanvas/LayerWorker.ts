@@ -6,6 +6,10 @@ import ComponentUIBarWorker from './ComponentUIBarWorker'
 let ctx: OffscreenCanvasRenderingContext2D | null = null
 const componentsUI: Record<string, ComponentUIBarWorker> = {}
 
+let zoomFactor = 1
+let offsetX = 0
+let offsetY = 0
+
 onmessage = function (e: MessageEvent) {
   if (e.data.canvas) {
     const offscreen: OffscreenCanvas = <OffscreenCanvas>e.data.canvas
@@ -15,13 +19,10 @@ onmessage = function (e: MessageEvent) {
     addComponent(id, index)
   } else if (e.data.command === 'draw') {
     draw()
-  } else if (e.data.command === 'clear') {
-    clear()
   } else if (e.data.command === 'setScale') {
-    const { zoomFactor, offsetX, offsetY }: { zoomFactor: number; offsetX: number; offsetY: number } = e.data.payload
-    setScale(zoomFactor, offsetX, offsetY)
-  } else if (e.data.command === 'contextRestore') {
-    contextRestore()
+    zoomFactor = e.data.payload.zoomFactor
+    offsetX = e.data.payload.offsetX
+    offsetY = e.data.payload.offsetY
   } else if (e.data.command === 'setComponentPosition') {
     const { id, x, y }: { id: string; x: number; y: number } = e.data.payload
     setComponentPosition(id, x, y)
@@ -53,32 +54,26 @@ const setComponentData = (id: string, data: number) => {
 }
 
 const draw = () => {
-  for (const id in componentsUI) {
-    const componentUI = componentsUI[id]
-    componentUI.draw()
-  }
-}
-
-const clear = () => {
-  // TODO get real dimensions
-  const width = 1500
-  const height = 1000
-
   if (ctx) {
+    // TODO get real dimensions
+    const width = 1500
+    const height = 1000
+
+    // clear all
     ctx.clearRect(0, 0, width, height)
-  }
-}
 
-const setScale = (zoomFactor: number, offsetX: number, offsetY: number) => {
-  if (ctx) {
+    // set zoom and scale
     ctx.save()
     ctx.translate(offsetX, offsetY)
     ctx.scale(zoomFactor, zoomFactor)
-  }
-}
 
-const contextRestore = () => {
-  if (ctx) {
+    // redraw all components
+    for (const id in componentsUI) {
+      const componentUI = componentsUI[id]
+      componentUI.draw()
+    }
+
+    // restore ctx
     ctx.restore()
   }
 }

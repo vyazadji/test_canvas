@@ -2,7 +2,7 @@ import ComponentClass from './Component'
 // import ServiceLayer from './ServiceLayer'
 import Layer from './Layer'
 
-const LAYERS_COUNT = 5
+const LAYERS_COUNT = 2
 
 /**
  * Canvas app with offscreenCanvas in separate layers
@@ -79,7 +79,10 @@ class ViewCanvasApp4 {
 
   addComponent(component: ComponentClass, index: number) {
     // get layer number
-    const targetLayerNumber = index % LAYERS_COUNT
+    let targetLayerNumber = 0
+    if (LAYERS_COUNT > 1) {
+      targetLayerNumber = index % LAYERS_COUNT
+    }
 
     // add UI in layer
     const layer = this.layers[targetLayerNumber]
@@ -102,20 +105,9 @@ class ViewCanvasApp4 {
     return this.element
   }
 
-  clearLayers() {
-    this.layers.forEach((layer) => {
-      layer.clear()
-    })
-  }
   setScaleInLayers() {
     this.layers.forEach((layer) => {
       layer.setScale(this.zoomFactor, this.offsetX, this.offsetY)
-    })
-  }
-
-  contextRestorLayers() {
-    this.layers.forEach((layer) => {
-      layer.contextRestore()
     })
   }
 
@@ -123,21 +115,10 @@ class ViewCanvasApp4 {
     const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
 
     if (this.needsRedraw || componentNeedsRedraw) {
-      this.clearLayers()
-
-      this.setScaleInLayers()
-
       // redraw all layers
       this.layers.forEach((layer) => {
         layer.draw()
       })
-
-      // Draw my scene here
-      /* this.components.forEach((component) => {
-        component.draw()
-      }) */
-
-      this.contextRestorLayers()
 
       // Reset the flag
       this.needsRedraw = false
@@ -222,8 +203,8 @@ class ViewCanvasApp4 {
       // Update the last position.
       this.lastPosition = { x: event.clientX, y: event.clientY }
 
-      // Redraw the scene.
-      // this.draw()
+      // set changes of panning in layers
+      this.setScaleInLayers()
       // Flag that a redraw is needed
       this.needsRedraw = true
     }
@@ -267,6 +248,8 @@ class ViewCanvasApp4 {
       this.offsetX += ((1 - 1 / scaleAmount) * (mouseX - this.offsetX)) / this.zoomFactor
       this.offsetY += ((1 - 1 / scaleAmount) * (mouseY - this.offsetY)) / this.zoomFactor
     }
+
+    this.setScaleInLayers()
     this.needsRedraw = true
   }
 }
