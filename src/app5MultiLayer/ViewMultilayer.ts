@@ -87,8 +87,10 @@ class ViewMultilayer {
       layerCanvas.addComponent(component)
     } else {
       // HTML Layer
-      const htmlLayerElement = this.layers[1].getElement() // TODO not to use index to get html layer
+      const layerHtml = this.layers[1] // TODO not to use index to get html layer
+      const htmlLayerElement = layerHtml.getElement()
       const componentUI: ComponentUI = new ComponentUIBarHTML(htmlLayerElement, component.x, component.y)
+      layerHtml.addComponent(component)
       component.componentUI = componentUI
     }
 
@@ -104,8 +106,9 @@ class ViewMultilayer {
   draw() {
     const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
     if (this.needsRedraw || componentNeedsRedraw) {
+      console.log('draw()', { zoom: this.zoomFactor, offsetX: this.offsetX, offsetY: this.offsetY })
       this.layers.forEach((layer: Layer) => {
-        layer.draw()
+        layer.draw(this.zoomFactor, this.offsetX, this.offsetY)
       })
       // Reset the flag
       this.needsRedraw = false

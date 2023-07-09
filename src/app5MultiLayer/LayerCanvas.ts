@@ -46,7 +46,7 @@ class LayerCanvas implements Layer {
     }
   }
 
-  draw() {
+  draw(zoomFactor: number, offsetX: number, offsetY: number) {
     console.log('LayerCanvas draw()')
     this.context.save()
 
@@ -54,8 +54,8 @@ class LayerCanvas implements Layer {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     // Translate and scale context
-    // this.context.translate(this.offsetX, this.offsetY)
-    // this.context.scale(this.zoomFactor, this.zoomFactor)
+    this.context.translate(offsetX, offsetY)
+    this.context.scale(zoomFactor, zoomFactor)
 
     // Draw my scene here
     this.drawComponents()

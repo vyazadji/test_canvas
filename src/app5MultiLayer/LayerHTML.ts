@@ -1,4 +1,5 @@
 import type { Layer } from './types'
+import ComponentClass from './Component'
 
 /**
  * Implementation a independent HTML Layer
@@ -8,6 +9,7 @@ class LayerHtml implements Layer {
   height: number
 
   element: HTMLElement
+  components: ComponentClass[]
 
   constructor(width: number, height: number) {
     this.width = width
@@ -17,14 +19,28 @@ class LayerHtml implements Layer {
     this.element.style.width = this.width + 'px'
     this.element.style.height = this.height + 'px'
     this.element.style.position = 'absolute'
+    this.element.style.top = '0'
+    this.element.style.left = '0'
+
+    this.components = []
   }
 
   getElement() {
     return this.element
   }
 
-  draw() {
-    // hmm what to do here?
+  addComponent(component: ComponentClass) {
+    this.components.push(component)
+  }
+
+  draw(zoomFactor: number, offsetX: number, offsetY: number) {
+    this.element.style.transformOrigin = 'top left'
+    this.element.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${zoomFactor})`
+
+    for (let index = 0; index < this.components.length; index++) {
+      const component = this.components[index]
+      component.draw()
+    }
   }
 }
 
