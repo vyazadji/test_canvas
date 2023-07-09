@@ -5,6 +5,7 @@ import LayerCanvas from './LayerCanvas'
 import LayerHtml from './LayerHTML'
 import ComponentUIBarCanvas from './ComponentUIBarCanvas'
 import ComponentUIBarHTML from './ComponentUIBarHTML'
+import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 /**
  * Multilayer View
@@ -48,6 +49,7 @@ class ViewMultilayer {
     this.element.style.width = this.width + 'px'
     this.element.style.height = this.height + 'px'
     this.element.style.position = 'relative'
+    this.element.style.overflow = 'hidden'
     this.element.style.border = '1px solid blue'
 
     // create layers
@@ -82,14 +84,19 @@ class ViewMultilayer {
       // Canvas Layer
       const layerCanvas = this.layers[0] as LayerCanvas // TODO not to use predefined layer's indexes
       const context = layerCanvas.getContext()
-      const componentUI: ComponentUI = new ComponentUIBarCanvas(context)
+      const componentUI: ComponentUI = new ComponentUIBarCanvas(context, component.index)
       component.componentUI = componentUI // TODO use a set method for this?
       layerCanvas.addComponent(component)
     } else {
       // HTML Layer
       const layerHtml = this.layers[1] // TODO not to use index to get html layer
       const htmlLayerElement = layerHtml.getElement()
-      const componentUI: ComponentUI = new ComponentUIBarHTML(htmlLayerElement, component.x, component.y)
+      const componentUI: ComponentUI = new ComponentUIBarHTML(
+        htmlLayerElement,
+        component.x,
+        component.y,
+        component.index
+      )
       layerHtml.addComponent(component)
       component.componentUI = componentUI
     }
@@ -150,16 +157,13 @@ class ViewMultilayer {
     mouseX /= this.zoomFactor
     mouseY /= this.zoomFactor
 
-    // TODO hardcoded components dimensions
-    const COMPONENT_WIDTH = 10
-    const COMPONENT_HEIGHT = 10
     // Identify which component was clicked
     for (const component of this.components) {
       if (
         mouseX >= component.x &&
-        mouseX <= component.x + COMPONENT_WIDTH &&
+        mouseX <= component.x + ELEMENT_WIDTH &&
         mouseY >= component.y &&
-        mouseY <= component.y + COMPONENT_HEIGHT
+        mouseY <= component.y + ELEMENT_HEIGHT
       ) {
         console.log('click on component', component.index, component)
         this.draggingComponent = component
@@ -233,7 +237,6 @@ class ViewMultilayer {
     }
 
     this.needsRedraw = true
-    // this.draw()
   }
 }
 

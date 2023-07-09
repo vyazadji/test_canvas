@@ -2,6 +2,7 @@
 
 import type { ComponentUI } from './types'
 import { getRandomColor } from '../utils/colors'
+import { ELEMENT_VIEW_HEIGHT, ELEMENT_VIEW_WIDTH } from './constants'
 
 /**
  * UI Canvas implementation of Bar component.
@@ -12,22 +13,24 @@ class ComponentUIBarHTML implements ComponentUI {
   x: number
   y: number
   data: number
-  barColor: string
+
+  index: number // for debug
 
   width: number
   height: number
 
   containerEl: HTMLElement
+  barEl: HTMLElement
 
-  constructor(layerElement: HTMLElement, x: number, y: number) {
+  constructor(layerElement: HTMLElement, x: number, y: number, index: number) {
     this.layerElement = layerElement
 
     this.data = 0
+    this.index = index
 
-    this.width = 10 // TODO where to set it?
-    this.height = 10
+    this.width = ELEMENT_VIEW_WIDTH
+    this.height = ELEMENT_VIEW_HEIGHT
 
-    this.barColor = getRandomColor()
     // init position
     this.x = x
     this.y = y
@@ -47,7 +50,24 @@ class ComponentUIBarHTML implements ComponentUI {
     this.containerEl.style.fontSize = '4px'
     this.containerEl.style.backgroundColor = 'orange'
 
-    const textEl = document.createTextNode('[...]')
+    // revers for bar positions
+    this.containerEl.style.display = 'flex'
+    this.containerEl.style.flexDirection = 'column-reverse'
+
+    this.barEl = document.createElement('div')
+    this.barEl.style.backgroundColor = getRandomColor()
+    this.barEl.style.position = 'relative'
+    this.barEl.style.left = '1px'
+    this.barEl.style.width = this.width - 2 + 'px'
+
+    this.containerEl.appendChild(this.barEl)
+
+    // const textEl = document.createTextNode(this.index.toString())
+    const textEl = document.createElement('div')
+    textEl.innerText = index.toString()
+    textEl.style.fontSize = '3px'
+    textEl.style.lineHeight = '2px'
+    textEl.style.position = 'absolute'
     this.containerEl.appendChild(textEl)
 
     this.layerElement.appendChild(this.containerEl)
@@ -56,37 +76,15 @@ class ComponentUIBarHTML implements ComponentUI {
   /**
    * Draw the component
    */
-  draw(x: number, y: number, data: number, index?: number) {
-    this.data = data
-    // this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
+  draw(x: number, y: number, data: number) {
+    if (data !== this.data) {
+      this.data = data
+      const barValueHeight = Math.round((this.height * data) / 100)
+      this.barEl.style.height = barValueHeight + 'px'
+    }
 
     this.x = x
     this.y = y
-
-    // this.context.fillStyle = 'green'
-    // this.context.fillRect(this.x, this.y, width, height)
-
-    //circle example
-    // this.context.beginPath()
-    // this.context.arc(x + 3, y + 3, 2, 0, Math.PI * 2, true)
-    // this.context.stroke()
-
-    // bar value
-    // this.context.fillStyle = this.barColor
-    // this.context.fillRect(this.x + 1, this.y + (height - barValueHeight), barValueWidth, barValueHeight)
-
-    //
-
-    // text
-    if (index !== undefined) {
-      // the last node must be the text node with datasource value
-      const lastNode = this.containerEl.childNodes[this.containerEl.childNodes.length - 1]
-      if (lastNode.nodeType === Node.TEXT_NODE) {
-        lastNode.textContent = data.toString()
-      }
-      // this.context.font = '3px Arial'
-      // this.context.fillText(index.toString(), this.x, this.y + height) // adjust position as needed
-    }
   }
 }
 

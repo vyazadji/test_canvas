@@ -7,5 +7,5 @@ export interface Layer {
 }
 
 export interface ComponentUI {
-  draw(x: number, y: number, data: number, index?: number): void
+  draw(x: number, y: number, data: number): void
 }
