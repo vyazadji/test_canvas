@@ -17,4 +17,5 @@ export const VIEW_TYPE = {
   APP_2_CANVAS: 'app2Canvas',
   APP_3_WEBGL: 'app3Webgl',
   APP_4_OFFSCREEN_CANVAS: 'app4OffscreenCanvas',
+  APP_5_MULTILAYER: 'app5Multilayer',
 } as const

@@ -11,6 +11,7 @@ import { VIEW_TYPE } from './consts'
 import app_2_canvas from './app2Canvas/app2_canvas'
 import app_3_webgl from './app3Webgl/app3_webgl'
 import app_4_offscreenCanvas from './app4OffscreenCanvas/app4_offscreenCanvas'
+import app_5_multilayer from './app5MultiLayer/app5_multilayer'
 
 import { getElementById } from './utils/helpers'
 
@@ -74,6 +75,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     appEl.style.display = 'block'
 
     const app = new app_4_offscreenCanvas(appEl)
+    app.start()
+  } else if (view === VIEW_TYPE.APP_5_MULTILAYER) {
+    getElementById('apps1').style.display = 'none'
+
+    const appEl = getElementById('apps5')
+    appEl.style.display = 'block'
+
+    const app = new app_5_multilayer(appEl)
     app.start()
   } else {
     alert('"view" is unknown. Please set correct view')
