@@ -113,7 +113,7 @@ class ViewMultilayer {
   draw() {
     const componentNeedsRedraw = this.components.some((c) => c.needsRedraw)
     if (this.needsRedraw || componentNeedsRedraw) {
-      console.log('draw()', { zoom: this.zoomFactor, offsetX: this.offsetX, offsetY: this.offsetY })
+      // run redraw in all layers
       this.layers.forEach((layer: Layer) => {
         layer.draw(this.zoomFactor, this.offsetX, this.offsetY)
       })

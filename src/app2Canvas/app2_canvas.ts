@@ -4,6 +4,9 @@ import DateSourceClass from './../DataSource'
 import { DataSource } from '../type'
 import ComponentUIBar from './ComponentUIBar'
 
+const COMPONENTS_COUNT = 10_000
+// const COMPONENTS_COUNT = 1_000
+
 const VIEW_WIDTH = 1500
 const VIEW_HEIGHT = 1000
 const COMPONENT_WIDTH = 10
@@ -31,8 +34,6 @@ class ApplicationCanvas1 {
 
     this.appElement.appendChild(this.view.start())
 
-    const COMPONENTS_COUNT = 10_000
-    // const COMPONENTS_COUNT = 1_000
     this.addBarComponent(COMPONENTS_COUNT)
 
     // start DataSources

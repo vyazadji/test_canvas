@@ -3,6 +3,9 @@ import ComponentClass from './Component'
 import DateSourceClass from './../DataSource'
 import { DataSource } from '../type'
 
+// const COMPONENTS_COUNT = 5_000
+const COMPONENTS_COUNT = 100
+
 const VIEW_WIDTH = 1500
 const VIEW_HEIGHT = 1000
 const COMPONENT_WIDTH = 10
@@ -28,8 +31,6 @@ class Application5Multilayer {
   start() {
     this.appElement.appendChild(this.view.start())
 
-    // const COMPONENTS_COUNT = 10_000
-    const COMPONENTS_COUNT = 10
     this.addBarComponent(COMPONENTS_COUNT)
 
     // start DataSources

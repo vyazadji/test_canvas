@@ -77,14 +77,20 @@ class ComponentUIBarHTML implements ComponentUI {
    * Draw the component
    */
   draw(x: number, y: number, data: number) {
+    // console.log('draw html component', { x, y })
     if (data !== this.data) {
       this.data = data
       const barValueHeight = Math.round((this.height * data) / 100)
       this.barEl.style.height = barValueHeight + 'px'
     }
 
-    this.x = x
-    this.y = y
+    if (x !== this.x || y !== this.y) {
+      this.x = x
+      this.y = y
+
+      this.containerEl.style.left = this.x + 'px'
+      this.containerEl.style.top = this.y + 'px'
+    }
   }
 }
 
