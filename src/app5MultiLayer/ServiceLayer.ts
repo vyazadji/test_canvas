@@ -20,6 +20,12 @@ class ServiceLayer {
 
   private eventEmitter: EventEmitter
 
+  // selection
+  isSelecting: boolean
+  selectionStart: { x: number; y: number }
+  selectionRectangle: { x: number; y: number; width: number; height: number } | null
+  selectedComponents: ComponentCoordinates[]
+
   constructor(width: number, height: number) {
     this.eventEmitter = new EventEmitter()
 
@@ -35,6 +41,12 @@ class ServiceLayer {
     this.canvas.style.position = 'absolute'
 
     this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
+
+    // multiselection
+    this.isSelecting = false
+    this.selectionStart = { x: 0, y: 0 }
+    this.selectionRectangle = null
+    this.selectedComponents = []
 
     // Add listeners on the main canvas
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
@@ -68,23 +80,49 @@ class ServiceLayer {
   }
 
   draw() {
+    this.context.save()
+    // Clear the canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+    // Translate and scale context
+    this.context.translate(this.offsetX, this.offsetY)
+    this.context.scale(this.zoomFactor, this.zoomFactor)
 
     //
     // draw components service borders if need
     //
     if (this.draggingComponent) {
-      const x = this.draggingComponent.x * this.zoomFactor + this.offsetX
-      const y = this.draggingComponent.y * this.zoomFactor + this.offsetY
-      const width = this.draggingComponent.width * this.zoomFactor
-      const height = this.draggingComponent.height * this.zoomFactor
+      const x = this.draggingComponent.x
+      const y = this.draggingComponent.y
+      const width = this.draggingComponent.width
+      const height = this.draggingComponent.height
 
       this.context.beginPath()
       this.context.rect(x, y, width, height)
-      this.context.lineWidth = 3
+      this.context.lineWidth = 0.5
       this.context.strokeStyle = 'blue'
       this.context.stroke()
     }
+
+    //
+    //Draw multiselection area if need
+    //
+    if (this.isSelecting && this.selectionRectangle) {
+      this.context.beginPath()
+      this.context.rect(
+        this.selectionRectangle.x,
+        this.selectionRectangle.y,
+        this.selectionRectangle.width,
+        this.selectionRectangle.height
+      )
+      this.context.lineWidth = 0.5
+      this.context.strokeStyle = 'blue'
+      this.context.stroke()
+      this.context.fillStyle = 'rgba(0, 0, 255, 0.5)' // Semi-transparent blue
+      this.context.fill()
+    }
+
+    this.context.restore()
   }
 
   //
@@ -132,6 +170,11 @@ class ServiceLayer {
         return
       }
     }
+
+    // othervise we click on free space
+    // so start multi selection
+    this.isSelecting = true
+    this.selectionStart = { x: mouseX, y: mouseY }
   }
 
   handleMouseMove = (event: MouseEvent) => {
@@ -167,11 +210,44 @@ class ServiceLayer {
       const y = (mouseY - this.offsetY) / this.zoomFactor
       this.draggingComponent.setPosition(x, y)
     }
+
+    if (this.isSelecting) {
+      const rect = this.canvas.getBoundingClientRect()
+      // const mouseX = event.clientX - rect.left - this.offsetX
+      // const mouseY = event.clientY - rect.top - this.offsetY
+      const mouseX = (event.clientX - rect.left - this.offsetX) / this.zoomFactor
+      const mouseY = (event.clientY - rect.top - this.offsetY) / this.zoomFactor
+
+      // Update selection rectangle
+      this.selectionRectangle = {
+        x: Math.min(mouseX, this.selectionStart.x),
+        y: Math.min(mouseY, this.selectionStart.y),
+        width: Math.abs(mouseX - this.selectionStart.x),
+        height: Math.abs(mouseY - this.selectionStart.y),
+      }
+
+      // Select components within selection rectangle
+      this.selectedComponents = this.components.filter(
+        (component) =>
+          this.selectionRectangle &&
+          component.x + component.width >= this.selectionRectangle.x &&
+          component.x <= this.selectionRectangle.x + this.selectionRectangle.width &&
+          component.y + component.height >= this.selectionRectangle.y &&
+          component.y <= this.selectionRectangle.y + this.selectionRectangle.height
+      )
+    }
   }
 
   handleMouseUp = (_event: MouseEvent) => {
     this.isPanning = false
     this.draggingComponent = null
+
+    if (this.isSelecting) {
+      // return selected items
+      console.log('~Selected Items:', this.selectedComponents)
+    }
+    this.isSelecting = false
+    this.selectionRectangle = null
   }
 
   handleWheel = (event: WheelEvent) => {

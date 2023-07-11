@@ -140,12 +140,11 @@ class ViewMultilayer {
         layer.draw(this.zoomFactor, this.offsetX, this.offsetY)
       })
 
-      // draw if need service borders
-      this.serviceLayer.draw()
-
       // Reset the flag
       this.needsRedraw = false
     }
+    // draw if need service borders
+    this.serviceLayer.draw() // TODO optimize it
 
     // Request the next frame
     requestAnimationFrame(this.draw.bind(this))
