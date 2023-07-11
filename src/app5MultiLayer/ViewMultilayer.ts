@@ -4,7 +4,6 @@ import LayerCanvas from './LayerCanvas'
 import LayerHtml from './LayerHTML'
 import ComponentUIBarCanvas from './ComponentUIBarCanvas'
 import ComponentUIBarHTML from './ComponentUIBarHTML'
-// import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 import ServiceLayer from './ServiceLayer'
 
 type ViewPosition = {
@@ -140,6 +139,10 @@ class ViewMultilayer {
       this.layers.forEach((layer: Layer) => {
         layer.draw(this.zoomFactor, this.offsetX, this.offsetY)
       })
+
+      // draw if need service borders
+      this.serviceLayer.draw()
+
       // Reset the flag
       this.needsRedraw = false
     }

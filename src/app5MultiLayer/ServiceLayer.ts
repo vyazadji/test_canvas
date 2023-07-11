@@ -7,6 +7,7 @@ import type { Callback, ComponentCoordinates } from './types'
  */
 class ServiceLayer {
   canvas: HTMLCanvasElement
+  private context: CanvasRenderingContext2D
 
   zoomFactor: number
   offsetX: number
@@ -32,6 +33,8 @@ class ServiceLayer {
     this.canvas.width = width
     this.canvas.height = height
     this.canvas.style.position = 'absolute'
+
+    this.context = this.canvas.getContext('2d') as CanvasRenderingContext2D
 
     // Add listeners on the main canvas
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
@@ -62,6 +65,26 @@ class ServiceLayer {
    */
   addComponent(component: ComponentCoordinates) {
     this.components.push(component)
+  }
+
+  draw() {
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+    //
+    // draw components service borders if need
+    //
+    if (this.draggingComponent) {
+      const x = this.draggingComponent.x * this.zoomFactor + this.offsetX
+      const y = this.draggingComponent.y * this.zoomFactor + this.offsetY
+      const width = this.draggingComponent.width * this.zoomFactor
+      const height = this.draggingComponent.height * this.zoomFactor
+
+      this.context.beginPath()
+      this.context.rect(x, y, width, height)
+      this.context.lineWidth = 3
+      this.context.strokeStyle = 'blue'
+      this.context.stroke()
+    }
   }
 
   //
