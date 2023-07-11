@@ -92,22 +92,11 @@ class ServiceLayer {
     // draw components service borders if need
     //
     if (this.draggingComponent) {
-      const x = this.draggingComponent.x
-      const y = this.draggingComponent.y
-      const width = this.draggingComponent.width
-      const height = this.draggingComponent.height
-
-      this.context.beginPath()
-      this.context.rect(x, y, width, height)
-      this.context.lineWidth = 0.5
-      this.context.strokeStyle = 'blue'
-      this.context.stroke()
-    }
-
-    //
-    //Draw multiselection area if need
-    //
-    if (this.isSelecting && this.selectionRectangle) {
+      this.drawServiceBorderAroundComponent(this.draggingComponent)
+    } else if (this.isSelecting && this.selectionRectangle) {
+      //
+      //Draw multiselection area
+      //
       this.context.beginPath()
       this.context.rect(
         this.selectionRectangle.x,
@@ -120,9 +109,27 @@ class ServiceLayer {
       this.context.stroke()
       this.context.fillStyle = 'rgba(0, 0, 255, 0.5)' // Semi-transparent blue
       this.context.fill()
+    } else if (this.selectedComponents.length > 0) {
+      //
+      // draw borders around selected components
+      //
+      this.selectedComponents.forEach((component) => this.drawServiceBorderAroundComponent(component))
     }
 
     this.context.restore()
+  }
+
+  drawServiceBorderAroundComponent(component: ComponentCoordinates) {
+    const x = component.x
+    const y = component.y
+    const width = component.width
+    const height = component.height
+
+    this.context.beginPath()
+    this.context.rect(x, y, width, height)
+    this.context.lineWidth = 0.5
+    this.context.strokeStyle = 'blue'
+    this.context.stroke()
   }
 
   //
@@ -175,6 +182,7 @@ class ServiceLayer {
     // so start multi selection
     this.isSelecting = true
     this.selectionStart = { x: mouseX, y: mouseY }
+    this.selectedComponents = []
   }
 
   handleMouseMove = (event: MouseEvent) => {
