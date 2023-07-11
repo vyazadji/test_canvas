@@ -1,8 +1,5 @@
-// import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
-
 import type { ComponentUI } from './types'
 import { getRandomColor } from '../utils/colors'
-import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 /**
  * UI Canvas implementation of Bar component.
@@ -22,22 +19,24 @@ class ComponentUIBarHTML implements ComponentUI {
   containerEl: HTMLElement
   barEl: HTMLElement
 
+  barTopPadding: number // padding-top for bar value
+
   constructor(layerElement: HTMLElement, x: number, y: number, index: number) {
     this.layerElement = layerElement
 
     this.data = 0
     this.index = index
 
-    this.width = ELEMENT_WIDTH
-    this.height = ELEMENT_HEIGHT
+    this.width = 0
+    this.height = 0
 
     // init position
     this.x = x
     this.y = y
 
     // view dimensions
-    const width = this.width - 4
-    const height = this.height - 1
+    const width = this.width
+    const height = this.height
 
     // bar component
     this.containerEl = document.createElement('div')
@@ -53,11 +52,12 @@ class ComponentUIBarHTML implements ComponentUI {
     this.containerEl.style.display = 'flex'
     this.containerEl.style.flexDirection = 'column-reverse'
 
+    this.barTopPadding = 2
     this.barEl = document.createElement('div')
     this.barEl.style.backgroundColor = getRandomColor()
     this.barEl.style.position = 'relative'
     this.barEl.style.left = '1px'
-    this.barEl.style.width = width - 2 + 'px'
+    this.barEl.style.width = width - this.barTopPadding + 'px'
 
     this.containerEl.appendChild(this.barEl)
 
@@ -75,7 +75,7 @@ class ComponentUIBarHTML implements ComponentUI {
   /**
    * Draw the component
    */
-  draw(x: number, y: number, data: number) {
+  draw(x: number, y: number, width: number, height: number, data: number) {
     // console.log('draw html component', { x, y })
     if (data !== this.data) {
       this.data = data
@@ -89,6 +89,20 @@ class ComponentUIBarHTML implements ComponentUI {
 
       this.containerEl.style.left = this.x + 'px'
       this.containerEl.style.top = this.y + 'px'
+    }
+
+    if (this.width !== width) {
+      this.width = width
+      this.containerEl.style.width = width + 'px'
+
+      this.barEl.style.width = width - this.barTopPadding + 'px'
+    }
+
+    if (this.height !== height) {
+      this.height = height
+      this.containerEl.style.height = height + 'px'
+
+      this.barEl.style.width = width - this.barTopPadding + 'px'
     }
   }
 }

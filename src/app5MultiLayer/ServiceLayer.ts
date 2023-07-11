@@ -1,7 +1,5 @@
-// import Component from './Component'
 import EventEmitter from './utils/EventEmmiter'
 import type { Callback, ComponentCoordinates } from './types'
-import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 /**
  * @class
  * This is a service layer
@@ -9,15 +7,12 @@ import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
  */
 class ServiceLayer {
   canvas: HTMLCanvasElement
-  height: number
-  width: number
 
   zoomFactor: number
   offsetX: number
   offsetY: number
   isPanning: boolean
   lastPosition: { x: number; y: number }
-  needsRedraw: boolean
 
   components: ComponentCoordinates[]
   draggingComponent: ComponentCoordinates | null
@@ -25,9 +20,6 @@ class ServiceLayer {
   private eventEmitter: EventEmitter
 
   constructor(width: number, height: number) {
-    this.width = width
-    this.height = height
-
     this.eventEmitter = new EventEmitter()
 
     this.zoomFactor = 1
@@ -35,11 +27,10 @@ class ServiceLayer {
     this.offsetY = 0
     this.isPanning = false
     this.lastPosition = { x: 0, y: 0 }
-    this.needsRedraw = false
 
     this.canvas = document.createElement('canvas')
-    this.canvas.width = this.width
-    this.canvas.height = this.height
+    this.canvas.width = width
+    this.canvas.height = height
     this.canvas.style.position = 'absolute'
 
     // Add listeners on the main canvas
@@ -109,9 +100,9 @@ class ServiceLayer {
     for (const component of this.components) {
       if (
         mouseX >= component.x &&
-        mouseX <= component.x + ELEMENT_WIDTH &&
+        mouseX <= component.x + component.width &&
         mouseY >= component.y &&
-        mouseY <= component.y + ELEMENT_HEIGHT
+        mouseY <= component.y + component.height
       ) {
         console.log('click on component', component)
         this.draggingComponent = component
@@ -130,8 +121,6 @@ class ServiceLayer {
       const dy = event.clientY - this.lastPosition.y
 
       // Update the offsets.
-      // this.offsetX += dx / this.zoomFactor
-      // this.offsetY += dy / this.zoomFactor
       this.offsetX += dx
       this.offsetY += dy
 
@@ -154,7 +143,6 @@ class ServiceLayer {
       const x = (mouseX - this.offsetX) / this.zoomFactor
       const y = (mouseY - this.offsetY) / this.zoomFactor
       this.draggingComponent.setPosition(x, y)
-      this.needsRedraw = true
     }
   }
 
@@ -182,11 +170,7 @@ class ServiceLayer {
       this.offsetY += ((1 - 1 / scaleAmount) * (mouseY - this.offsetY)) / this.zoomFactor
     }
 
-    console.log('mouse wheel', { zoom: this.zoomFactor })
-
     this.eventEmitter.emit('zoom', { zoomFactor: this.zoomFactor, offsetX: this.offsetX, offsetY: this.offsetY })
-    // this.needsRedraw = true
-    // this.draw()
   }
 }
 

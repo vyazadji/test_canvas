@@ -28,7 +28,7 @@ export interface Layer {
 }
 
 export interface ComponentUI {
-  draw(x: number, y: number, data: number): void
+  draw(x: number, y: number, widht: number, height: number, data: number): void
 }
 
 export type Callback = (...args: any[]) => void

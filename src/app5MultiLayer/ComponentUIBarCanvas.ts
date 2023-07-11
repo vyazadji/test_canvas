@@ -1,8 +1,5 @@
-// import { COMPONENT_HEIGHT, COMPONENT_WIDTH } from './../consts'
-
 import type { ComponentUI } from './types'
 import { getRandomColor } from '../utils/colors'
-import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 /**
  * UI Canvas implementation of Bar component.
@@ -29,30 +26,31 @@ class ComponentUIBarCanvas implements ComponentUI {
     this.x = 0
     this.y = 0
 
-    this.width = ELEMENT_WIDTH
-    this.height = ELEMENT_HEIGHT
+    this.width = 0
+    this.height = 0
   }
 
   /**
    * Draw the component
    */
-  draw(x: number, y: number, data: number) {
+  draw(x: number, y: number, width: number, height: number, data: number) {
     this.data = data
-    // this.context.clearRect(this.x, this.y, COMPONENT_WIDTH, COMPONENT_HEIGHT)
 
     this.x = x
     this.y = y
+    this.width = width
+    this.height = height
 
     // view dimensions
-    const width = this.width - 4
-    const height = this.height - 1
+    const widthBar = this.width - 4
+    const heightBar = this.height - 1
 
-    const barValueWidth = width - 2
-    const barValueHeight = Math.round((height * data) / 100)
+    const barValueWidth = widthBar - 2
+    const barValueHeight = Math.round((heightBar * data) / 100)
 
     // bar component
     this.context.fillStyle = 'green'
-    this.context.fillRect(this.x, this.y, width, height)
+    this.context.fillRect(this.x, this.y, this.width, this.height)
 
     //circle example
     this.context.beginPath()

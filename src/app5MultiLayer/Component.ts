@@ -1,5 +1,6 @@
 import { DataSourceListener, DataSource } from './../type'
 import type { ComponentUI, Component } from './types'
+import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 class ComponentClass implements DataSourceListener, Component {
   componentUI: ComponentUI | null
@@ -14,8 +15,8 @@ class ComponentClass implements DataSourceListener, Component {
   constructor(index: number) {
     this.x = 0
     this.y = 0
-    this.width = 0
-    this.height = 0
+    this.width = ELEMENT_WIDTH // set default width
+    this.height = ELEMENT_HEIGHT // set default height
 
     this.data = 0
     this.needsRedraw = false
@@ -28,14 +29,11 @@ class ComponentClass implements DataSourceListener, Component {
   //
   // Component interface
   //
-  // getUIElement() {
-  // return this.componentUI.getElement()
-  // }
 
   draw() {
     this.needsRedraw = false
     if (this.componentUI) {
-      return this.componentUI.draw(this.x, this.y, this.data)
+      return this.componentUI.draw(this.x, this.y, this.width, this.height, this.data)
     } else {
       console.warn('this.componentUI is not initilaized!')
     }
@@ -59,7 +57,7 @@ class ComponentClass implements DataSourceListener, Component {
   setPosition(x: number, y: number) {
     this.x = x
     this.y = y
-    // TODO set also in UI component?
+    this.needsRedraw = true
   }
 }
 
