@@ -1,18 +1,12 @@
 import { DataSourceListener, DataSource } from './../type'
-import type { ComponentUI } from './types'
+import type { ComponentUI, Component } from './types'
 
-interface ComponentApp1 {
-  componentUI: ComponentUI | null
-  x: number // position of component
-  y: number // position of component
-  position: (x: number, y: number) => void // change position of component
-  data: number // value of component, can be different for different types. This is the simplest solution
-}
-
-class ComponentClass implements DataSourceListener, ComponentApp1 {
+class ComponentClass implements DataSourceListener, Component {
   componentUI: ComponentUI | null
   x: number
   y: number
+  width: number
+  height: number
   data: number
   index: number // index number of component, use for debug
   needsRedraw: boolean
@@ -20,6 +14,8 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   constructor(index: number) {
     this.x = 0
     this.y = 0
+    this.width = 0
+    this.height = 0
 
     this.data = 0
     this.needsRedraw = false
@@ -39,7 +35,7 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   draw() {
     this.needsRedraw = false
     if (this.componentUI) {
-      return this.componentUI.draw(this.x, this.y, this.data, this.index)
+      return this.componentUI.draw(this.x, this.y, this.data)
     } else {
       console.warn('this.componentUI is not initilaized!')
     }
@@ -60,7 +56,7 @@ class ComponentClass implements DataSourceListener, ComponentApp1 {
   //
   //ComponentApp1 interface
   //
-  position(x: number, y: number) {
+  setPosition(x: number, y: number) {
     this.x = x
     this.y = y
     // TODO set also in UI component?

@@ -2,7 +2,7 @@
 
 import type { ComponentUI } from './types'
 import { getRandomColor } from '../utils/colors'
-import { ELEMENT_VIEW_HEIGHT, ELEMENT_VIEW_WIDTH } from './constants'
+import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 /**
  * UI Canvas implementation of Bar component.
@@ -28,22 +28,21 @@ class ComponentUIBarHTML implements ComponentUI {
     this.data = 0
     this.index = index
 
-    this.width = ELEMENT_VIEW_WIDTH
-    this.height = ELEMENT_VIEW_HEIGHT
+    this.width = ELEMENT_WIDTH
+    this.height = ELEMENT_HEIGHT
 
     // init position
     this.x = x
     this.y = y
 
-    // const width = 6
-    // const height = 9
-    // const barValueWidth = width - 2
-    // const barValueHeight = Math.round((height * data) / 100)
+    // view dimensions
+    const width = this.width - 4
+    const height = this.height - 1
 
     // bar component
     this.containerEl = document.createElement('div')
-    this.containerEl.style.width = this.width + 'px'
-    this.containerEl.style.height = this.height + 'px'
+    this.containerEl.style.width = width + 'px'
+    this.containerEl.style.height = height + 'px'
     this.containerEl.style.position = 'absolute'
     this.containerEl.style.left = this.x + 'px'
     this.containerEl.style.top = this.y + 'px'
@@ -58,7 +57,7 @@ class ComponentUIBarHTML implements ComponentUI {
     this.barEl.style.backgroundColor = getRandomColor()
     this.barEl.style.position = 'relative'
     this.barEl.style.left = '1px'
-    this.barEl.style.width = this.width - 2 + 'px'
+    this.barEl.style.width = width - 2 + 'px'
 
     this.containerEl.appendChild(this.barEl)
 

@@ -2,7 +2,7 @@
 
 import type { ComponentUI } from './types'
 import { getRandomColor } from '../utils/colors'
-import { ELEMENT_VIEW_HEIGHT, ELEMENT_VIEW_WIDTH } from './constants'
+import { ELEMENT_HEIGHT, ELEMENT_WIDTH } from './constants'
 
 /**
  * UI Canvas implementation of Bar component.
@@ -12,6 +12,8 @@ class ComponentUIBarCanvas implements ComponentUI {
   private context: CanvasRenderingContext2D
   x: number
   y: number
+  width: number
+  height: number
   data: number
   barColor: string
 
@@ -26,6 +28,9 @@ class ComponentUIBarCanvas implements ComponentUI {
     // init position
     this.x = 0
     this.y = 0
+
+    this.width = ELEMENT_WIDTH
+    this.height = ELEMENT_HEIGHT
   }
 
   /**
@@ -38,8 +43,10 @@ class ComponentUIBarCanvas implements ComponentUI {
     this.x = x
     this.y = y
 
-    const width = ELEMENT_VIEW_WIDTH
-    const height = ELEMENT_VIEW_HEIGHT
+    // view dimensions
+    const width = this.width - 4
+    const height = this.height - 1
+
     const barValueWidth = width - 2
     const barValueHeight = Math.round((height * data) / 100)
 

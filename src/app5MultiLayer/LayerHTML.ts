@@ -1,5 +1,4 @@
-import type { Layer } from './types'
-import ComponentClass from './Component'
+import type { Layer, ComponentCore } from './types'
 
 /**
  * Implementation a independent HTML Layer
@@ -9,7 +8,7 @@ class LayerHtml implements Layer {
   height: number
 
   element: HTMLElement
-  components: ComponentClass[]
+  components: ComponentCore[]
 
   constructor(width: number, height: number) {
     this.width = width
@@ -29,7 +28,7 @@ class LayerHtml implements Layer {
     return this.element
   }
 
-  addComponent(component: ComponentClass) {
+  addComponent(component: ComponentCore) {
     this.components.push(component)
   }
 

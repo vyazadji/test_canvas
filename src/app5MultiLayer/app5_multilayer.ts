@@ -25,7 +25,7 @@ class Application5Multilayer {
     this.dataSource1 = new DateSourceClass(2000)
     this.dataSource2 = new DateSourceClass(4000)
 
-    this.view = new ViewMultilayer(VIEW_HEIGHT, VIEW_WIDTH)
+    this.view = new ViewMultilayer(VIEW_WIDTH, VIEW_HEIGHT)
   }
 
   start() {
@@ -43,7 +43,7 @@ class Application5Multilayer {
       const component = new ComponentClass(i)
       const x = (COMPONENT_WIDTH * i) % VIEW_WIDTH
       const y = Math.floor((COMPONENT_WIDTH * i) / VIEW_WIDTH) * COMPONENT_HEIGHT
-      component.position(x, y)
+      component.setPosition(x, y)
 
       component.addSource(i % 2 ? this.dataSource1 : this.dataSource2)
       this.view.addComponent(component)

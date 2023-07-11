@@ -1,5 +1,4 @@
-import type { Layer } from './types'
-import ComponentClass from './Component'
+import type { Layer, ComponentCore } from './types'
 
 /**
  * Implementation a independent Canvas Layer
@@ -11,7 +10,7 @@ class LayerCanvas implements Layer {
   canvas: HTMLCanvasElement
   context: CanvasRenderingContext2D
 
-  components: ComponentClass[]
+  components: ComponentCore[]
 
   constructor(width: number, height: number) {
     this.width = width
@@ -35,7 +34,7 @@ class LayerCanvas implements Layer {
     return this.context
   }
 
-  addComponent(component: ComponentClass) {
+  addComponent(component: ComponentCore) {
     this.components.push(component)
   }
 
@@ -47,7 +46,7 @@ class LayerCanvas implements Layer {
   }
 
   draw(zoomFactor: number, offsetX: number, offsetY: number) {
-    console.log('LayerCanvas draw()')
+    // console.log('LayerCanvas draw()')
     this.context.save()
 
     // Clear the canvas
